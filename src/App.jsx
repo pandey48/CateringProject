@@ -8,7 +8,7 @@ import Menu from './components/Menu'
 import Events from './pages/Events'
 import Staff from './pages/Staff'
 import Billing from './pages/Billing'
-import { Home } from "./WebPages/Home";
+import  Home  from "./WebPages/Home";
 
 export default function App(){
   return (
