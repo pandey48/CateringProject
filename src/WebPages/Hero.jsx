@@ -1,4 +1,5 @@
 import cateringImg from "../assets/images/catering.jpg";
+import { Phone, Instagram, Menu, X } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -26,7 +27,17 @@ export default function Hero() {
   >
     Book Now
   </a>
+  <div className="hidden md:flex gap-3">
+          <a href="https://www.instagram.com/pandey_caterrs" target="_blank" rel="noopener noreferrer">
+            <Instagram className="w-6 h-6 text-pink-600" />
+          </a>
+
+          <a href="tel:+917389368597">
+            <Phone className="w-6 h-6 text-green-600" />
+          </a>
+        </div>
 </div>
+ 
 
     </section>
   );
