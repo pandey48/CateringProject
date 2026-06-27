@@ -1,26 +1,29 @@
 import React from "react";
 
-import { Routes, Route } from 'react-router-dom'
-import Layout from './components/layout/Layout'
-import Login from './pages/Login'
-import Dashboard from './pages/Dashboard'
-import Menu from './components/Menu'
-import Events from './pages/Events'
-import Staff from './pages/Staff'
-import Billing from './pages/Billing'
+import { Routes, Route } from 'react-router-dom';
+
+import AdminLayout from "./admin/AdminLayout";
+import Dashboard from "./admin/Dashboard";
+import Users from "./admin/Users";
 import  Home  from "./WebPages/Home";
+import  Enqury  from "./WebPages/Enqury";
+import Bookings from "./admin/Bookings";
+
+
 
 export default function App(){
   return (
     <>
     <Routes>
-      <Route path="/" element={<Home/>}/>
-      <Route path="/login" element={<Login/>} />
-      <Route path="/Dashboard" element={<Layout><Dashboard/></Layout>} /> 
-      <Route path="/menu" element={<Layout><Menu/></Layout>} />
-      <Route path="/events" element={<Layout><Events/></Layout>} />
-      <Route path="/staff" element={<Layout><Staff/></Layout>} />
-      <Route path="/billing" element={<Layout><Billing/></Layout>} />
+    <Route path="/" element={<Home/>}/>
+    <Route path="dashboard" element={<Dashboard />} />
+    <Route path="adminLayout" element={<AdminLayout/>}/>
+    <Route path="users" element={<Users />} />
+    <Route path="enqury" element={<Enqury/>}/>;
+    
+    </Routes>
+    <Routes>
+      <Route path="/admin/bookings" element={<Bookings />} />
     </Routes>
    
     </>

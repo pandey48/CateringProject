@@ -7,6 +7,7 @@ import Contact from "./Booking";
 import Footer from "./Footer";
 import Pnavbar from "./Pnavbar";
 import ServicesSection from "./ServicesSection";
+import  Enqury from "./Enqury";
 
 export default function Home(){
     return(
@@ -17,6 +18,7 @@ export default function Home(){
              <ServicesSection/>
             <About/>
             <Contact/>
+            <Enqury/>
             <Footer/>
 
         </div>

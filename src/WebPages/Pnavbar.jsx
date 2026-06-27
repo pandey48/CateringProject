@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import logo from "../assets/logopc.png";
 import { Phone, Instagram, Menu, X } from "lucide-react";
 
+
 export default function Pnavbar() {
   const [open, setOpen] = useState(false);
 

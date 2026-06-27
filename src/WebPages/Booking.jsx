@@ -1,124 +1,139 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-export default function Contact() {
-  const [form, setForm] = useState({
-    name: "",
+export default function Booking() {
+  const [booking, setBooking] = useState({
+    customerName: "",
     phone: "",
-    email: "",
+    eventDate: "",
     eventType: "",
-    guests: "",
-    date: "",
-    location: "",
-    message: "",
+    persons: "",
+    address: "",
   });
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setBooking({
+      ...booking,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Booking Data:", form);
 
-    alert("Your booking request has been submitted!");
+    try {
+      const res = await fetch("http://localhost:5000/api/bookings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(booking),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("Booking Created Successfully ✅");
+
+        setBooking({
+          customerName: "",
+          phone: "",
+          eventDate: "",
+          eventType: "",
+          persons: "",
+          address: "",
+        });
+      } else {
+        alert(data.message || "Something went wrong");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Server Error");
+    }
   };
 
   return (
-    <section id="contact" className="max-w-4xl mx-auto p-10">
-      <h2 className="text-4xl font-bold mb-6 text-center text-yellow-600">
-        Book Catering Service
-      </h2>
+    <div className="min-h-screen bg-gray-100 py-10">
+      <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-xl p-8">
 
-      <form
-        onSubmit={handleSubmit}
-        className="grid grid-cols-1 md:grid-cols-2 gap-5 bg-white p-8 shadow-lg rounded-xl"
-      >
-        <input
-          className="border p-3 rounded"
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
+        <h2 className="text-3xl font-bold text-center mb-8">
+          Catering Booking Form
+        </h2>
 
-        <input
-          className="border p-3 rounded"
-          type="text"
-          name="phone"
-          placeholder="Phone Number"
-          value={form.phone}
-          onChange={handleChange}
-          required
-        />
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
-        <input
-          className="border p-3 rounded"
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          value={form.email}
-          onChange={handleChange}
-        />
+          <input
+            type="text"
+            name="customerName"
+            placeholder="Customer Name"
+            value={booking.customerName}
+            onChange={handleChange}
+            className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
 
-        <select
-          className="border p-3 rounded"
-          name="eventType"
-          value={form.eventType}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select Event Type</option>
-          <option value="Wedding">Wedding</option>
-          <option value="Birthday">Birthday</option>
-          <option value="Corporate">Corporate Event</option>
-          <option value="House Party">House Party</option>
-        </select>
+          <input
+            type="text"
+            name="phone"
+            placeholder="Phone Number"
+            value={booking.phone}
+            onChange={handleChange}
+            className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
 
-        <input
-          className="border p-3 rounded"
-          type="number"
-          name="guests"
-          placeholder="Number of Guests"
-          value={form.guests}
-          onChange={handleChange}
-        />
+          <input
+            type="date"
+            name="eventDate"
+            value={booking.eventDate}
+            onChange={handleChange}
+            className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
 
-        <input
-          className="border p-3 rounded"
-          type="date"
-          name="date"
-          value={form.date}
-          onChange={handleChange}
-        />
+          <select
+            name="eventType"
+            value={booking.eventType}
+            onChange={handleChange}
+            className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          >
+            <option value="">Select Event</option>
+            <option>Wedding</option>
+            <option>Birthday</option>
+            <option>Reception</option>
+            <option>Engagement</option>
+            <option>Corporate</option>
+            <option>House Party</option>
+          </select>
 
-        <input
-          className="border p-3 rounded"
-          type="text"
-          name="location"
-          placeholder="Event Location"
-          value={form.location}
-          onChange={handleChange}
-          required
-        />
+          <input
+            type="number"
+            name="persons"
+            placeholder="Number of Persons"
+            value={booking.persons}
+            onChange={handleChange}
+            className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
 
-        <textarea
-          className="border p-3 rounded md:col-span-2"
-          name="message"
-          placeholder="Additional Message / Requirements"
-          rows="4"
-          value={form.message}
-          onChange={handleChange}
-        ></textarea>
+          <textarea
+            name="address"
+            placeholder="Event Address"
+            value={booking.address}
+            onChange={handleChange}
+            className="border rounded-lg p-3 md:col-span-2 h-28 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
 
-        <button
-          type="submit"
-          className="md:col-span-2 bg-yellow-500 text-white p-3 rounded font-semibold hover:bg-yellow-600 transition"
-        >
-          Submit Booking
-        </button>
-      </form>
-    </section>
+          <button
+            type="submit"
+            className="md:col-span-2 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition"
+          >
+            Book Now
+          </button>
+
+        </form>
+      </div>
+    </div>
   );
 }
