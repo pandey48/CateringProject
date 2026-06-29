@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { generatePurchasePDF } from "../utils/generatePurchasePDF";
+import API_URL from "../config";
 
 
 export default function MaterialCalculator() {
@@ -11,7 +12,7 @@ export default function MaterialCalculator() {
   
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/bookings")
+    fetch(`${API_URL}/api/bookings`)
       .then((res) => res.json())
       .then((data) => setBookings(data));
   }, []);
@@ -24,7 +25,7 @@ export default function MaterialCalculator() {
     
 
     const res = await fetch(
-      `http://localhost:5000/api/material/${selectedBooking}`
+      `${API_URL}/api/material/${selectedBooking}`
     );
 
     const data = await res.json();

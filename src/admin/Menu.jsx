@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Trash2, Search } from "lucide-react";
+import API_URL from "../config";
 
 
 export default function Menu() {
@@ -35,7 +36,7 @@ const handleIngredientChange = (index, e) => {
 };
 
   const fetchMenus = async () => {
-    const res = await fetch("http://localhost:5000/api/menu");
+    const res = await fetch(`${API_URL}/api/menu`);
     const data = await res.json();
     setMenus(data);
   };
@@ -54,7 +55,7 @@ const handleIngredientChange = (index, e) => {
   const addMenu = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:5000/api/menu", {
+    const res = await fetch(`${API_URL}/api/menu`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -89,7 +90,7 @@ const handleIngredientChange = (index, e) => {
 
     if (!confirmDelete) return;
 
-    await fetch(`http://localhost:5000/api/menu/${id}`, {
+    await fetch(`${API_URL}/api/menu/${id}`, {
       method: "DELETE",
     });
 

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import API_URL from "../config";
 
 export default function Booking() {
   const [booking, setBooking] = useState({
@@ -15,7 +16,7 @@ export default function Booking() {
 const [menus, setMenus] = useState([]);
 const [selectedMenus, setSelectedMenus] = useState([]);
 useEffect(() => {
-  fetch("http://localhost:5000/api/menu")
+  fetch("https://pandey-catering-api.onrender.com/api/menu")
     .then((res) => res.json())
     .then((data) => setMenus(data))
     .catch((err) => console.error(err));
@@ -32,7 +33,7 @@ useEffect(() => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/api/bookings", {
+      const res = await fetch(`${API_URL}/api/bookings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

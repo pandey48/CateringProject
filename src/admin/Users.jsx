@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import API_URL from "../config";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/users")
+    fetch(`${API_URL}http:///api/users`)
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, []);

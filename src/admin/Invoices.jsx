@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import API_URL from "../config";
 
 export default function Invoices() {
   const [bookings, setBookings] = useState([]);
@@ -8,7 +9,7 @@ export default function Invoices() {
   // Fetch Bookings
   const fetchBookings = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/bookings");
+      const res = await fetch(`${API_URL}/api/bookings`);
       const data = await res.json();
       setBookings(data);
     } catch (err) {
@@ -19,7 +20,7 @@ export default function Invoices() {
   // Fetch Invoices
   const fetchInvoices = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/invoices");
+      const res = await fetch(`${API_URL}/invoices`);
       const data = await res.json();
       setInvoices(data);
     } catch (err) {
@@ -36,7 +37,7 @@ export default function Invoices() {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/invoices/${selectedBooking}`,
+        `${API_URL}/api/invoices/${selectedBooking}`,
         {
           method: "POST",
         }

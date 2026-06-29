@@ -1,4 +1,5 @@
 import { useState } from "react";
+import API_URL from "../config";
 
 
 export default function Enqury() {
@@ -6,11 +7,12 @@ export default function Enqury() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await fetch("http://localhost:5000/api/users/register", {
+    await fetch(`${API_URL}/api/users/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
