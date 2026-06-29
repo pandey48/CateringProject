@@ -1,23 +1,24 @@
-export default function Navbar() {
+import { Menu } from "lucide-react";
+
+export default function Navbar({ setOpen }) {
   return (
-    <div className="bg-white shadow px-6 py-4 flex justify-between items-center">
+    <div className="h-16 bg-amber-600 shadow flex items-center justify-between px-5">
 
-      <h2 className="text-2xl font-bold">
-        Dashboard
-      </h2>
+      {/* Mobile Menu Button */}
+      <button
+        onClick={() => setOpen(true)}
+        className="md:hidden"
+      >
+        <Menu size={28} />
+      </button>
 
-      <div className="flex items-center gap-3">
-        <img
+      <h1 className="text-xl font-bold">
+        Catering Admin
+      </h1>
+      <img
           src="https://i.pravatar.cc/40"
           className="rounded-full"
         />
-
-        <div>
-          <p className="font-semibold">
-            Admin
-          </p>
-        </div>
-      </div>
 
     </div>
   );

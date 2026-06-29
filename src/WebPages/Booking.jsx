@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function Booking() {
   const [booking, setBooking] = useState({
@@ -9,6 +10,16 @@ export default function Booking() {
     persons: "",
     address: "",
   });
+  
+
+const [menus, setMenus] = useState([]);
+const [selectedMenus, setSelectedMenus] = useState([]);
+useEffect(() => {
+  fetch("http://localhost:5000/api/menu")
+    .then((res) => res.json())
+    .then((data) => setMenus(data))
+    .catch((err) => console.error(err));
+}, []);
 
   const handleChange = (e) => {
     setBooking({
@@ -26,7 +37,10 @@ export default function Booking() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(booking),
+        body: JSON.stringify({
+  ...booking,
+  menuItems: selectedMenus,
+}),
       });
 
       const data = await res.json();
@@ -52,8 +66,21 @@ export default function Booking() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10">
-      <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-xl p-8">
+<div
+  className="min-h-screen bg-cover bg-center py-20 px-4"
+  style={{
+    backgroundImage:
+      "url('https://images.unsplash.com/photo-1555244162-803834f70033?w=1600')",
+  }}
+>
+      <div className="max-w-5xl mx-auto
+bg-white/10
+backdrop-blur-xl
+border border-white/20
+shadow-2xl
+rounded-3xl
+p-8
+text-white">
 
         <h2 className="text-3xl font-bold text-center mb-8">
           Catering Booking Form
@@ -124,6 +151,49 @@ export default function Booking() {
             className="border rounded-lg p-3 md:col-span-2 h-28 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
+          <div className="md:col-span-2">
+  <h3 className="text-lg font-semibold mb-3">
+    Select Menu
+  </h3>
+
+  <div className="grid grid-cols-2 gap-3">
+
+    {menus.map((menu) => (
+
+      <label
+        key={menu._id}
+        className="flex items-center gap-2 border p-3 rounded-lg cursor-pointer hover:bg-gray-100"
+      >
+
+        <input
+          type="checkbox"
+          value={menu._id}
+          onChange={(e) => {
+
+            if (e.target.checked) {
+              setSelectedMenus([
+                ...selectedMenus,
+                menu._id,
+              ]);
+            } else {
+              setSelectedMenus(
+                selectedMenus.filter(
+                  (id) => id !== menu._id
+                )
+              );
+            }
+
+          }}
+        />
+
+        {menu.dishName}
+
+      </label>
+
+    ))}
+
+  </div>
+</div>
 
           <button
             type="submit"
@@ -131,8 +201,14 @@ export default function Booking() {
           >
             Book Now
           </button>
+          <Link to="/"> back</Link>
+          <Link to="/login"> login admin</Link>
+
+        
+
 
         </form>
+        
       </div>
     </div>
   );
