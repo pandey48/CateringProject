@@ -9,6 +9,15 @@ export default function MaterialCalculator() {
   const [material, setMaterial] = useState([]);
   const [booking, setBooking] = useState(null);
   const [summary, setSummary] = useState([]);
+  const groupedSummary = summary.reduce((acc, item) => {
+  if (!acc[item.category]) {
+    acc[item.category] = [];
+  }
+
+  acc[item.category].push(item);
+
+  return acc;
+}, {});
   
 
   useEffect(() => {
@@ -29,28 +38,66 @@ export default function MaterialCalculator() {
     );
 
     const data = await res.json();
+    console.log(data);
 
     setBooking(data.booking);
     setMaterial(data.material);
     setSummary(data.summary);
   };
   const sendWhatsApp = () => {
-  if (!booking) {
-    alert("Please select a booking first.");
+  if (!booking || summary.length === 0) {
+    alert("Please calculate material first.");
     return;
   }
 
   const phone = booking.phone.replace(/\D/g, "");
 
-  const message = `Hello ${booking.customerName},
+  // Category wise group
+  const grouped = summary.reduce((acc, item) => {
+    if (!acc[item.category]) {
+      acc[item.category] = [];
+    }
+    acc[item.category].push(item);
+    return acc;
+  }, {});
 
-Your catering material list is ready.
+  let materialText = "";
 
-Event: ${booking.eventType}
-Persons: ${booking.persons}
+  Object.keys(grouped).forEach((category) => {
 
-Regards,
-Pandey Catering`;
+    const categoryName =
+      category === "Vegetable"
+        ? "🥬 सब्जी"
+        : category === "Grocery"
+        ? "🛒 किराना"
+        : category === "Dairy"
+        ? "🥛 डेयरी"
+        : category === "Spices"
+        ? "🌶️ मसाले"
+        : category === "Dry Fruits"
+        ? "🥜 ड्राई फ्रूट"
+        : "📦 अन्य";
+
+    materialText += `\n${categoryName}\n`;
+
+    grouped[category].forEach((item) => {
+      materialText += `• ${item.ingredient} - ${item.quantity.toFixed(
+        2
+      )} ${item.unit}\n`;
+    });
+
+    materialText += "\n";
+  });
+
+  const message = `📋 *Pandey Caterers*
+
+👤 Customer : ${booking.customerName}
+🎉 Event : ${booking.eventType}
+👥 Persons : ${booking.persons}
+
+${materialText}
+
+🙏 धन्यवाद`;
 
   window.open(
     `https://wa.me/91${phone}?text=${encodeURIComponent(message)}`,
@@ -200,48 +247,86 @@ Pandey Catering`;
   </button>
 
 </div>
-          <div className="bg-white mt-8 rounded-xl shadow overflow-hidden">
+<div className="bg-white mt-8 rounded-xl shadow p-6">
 
-  <h2 className="text-2xl font-bold p-5">
+  <h2 className="text-2xl font-bold mb-6">
     Total Purchase Material
   </h2>
 
-  <table className="w-full">
+  {Object.keys(groupedSummary).map((category) => (
 
-    <thead className="bg-green-600 text-white">
+    <div key={category} className="mb-8">
 
-      <tr>
-        <th className="p-4">Ingredient</th>
-        <th>Quantity</th>
-        <th>Unit</th>
-      </tr>
+      <h3 className="text-xl font-bold bg-green-600 text-white p-3 rounded">
 
-    </thead>
+        {category === "Vegetable" && "🥬 सब्जी"}
 
-    <tbody>
+        {category === "Grocery" && "🛒 किराना"}
 
-      {summary.map((item, index) => (
+        {category === "Dairy" && "🥛 डेयरी"}
 
-        <tr
-          key={index}
-          className="border-b"
-        >
+        {category === "Spices" && "🌶️ मसाले"}
 
-          <td className="p-4">
-            {item.ingredient}
-          </td>
+        {category === "Dry Fruits" && "🥜 ड्राई फ्रूट"}
 
-          <td>{item.quantity}</td>
+        {category === "Other" && "📦 अन्य"}
 
-          <td>{item.unit}</td>
+      </h3>
 
-        </tr>
+      <table className="w-full mt-3">
 
-      ))}
+        <thead className="bg-gray-100">
 
-    </tbody>
+          <tr>
 
-  </table>
+            <th className="p-3 text-left">
+              Ingredient
+            </th>
+
+            <th>
+              Quantity
+            </th>
+
+            <th>
+              Unit
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          {groupedSummary[category].map((item, index) => (
+
+            <tr
+              key={index}
+              className="border-b"
+            >
+
+              <td className="p-3">
+                {item.ingredient}
+              </td>
+
+              <td>
+                {item.quantity.toFixed(2)}
+              </td>
+
+              <td>
+                {item.unit}
+              </td>
+
+            </tr>
+
+          ))}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  ))}
 
 </div>
 

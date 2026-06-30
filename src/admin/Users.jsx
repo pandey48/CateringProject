@@ -1,57 +1,132 @@
 import { useEffect, useState } from "react";
+import { Trash2, Search } from "lucide-react";
 import API_URL from "../config";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
+  const [search, setSearch] = useState("");
+
+  const fetchUsers = async () => {
+    const res = await fetch(`${API_URL}/api/bookings`);
+    const data = await res.json();
+
+    // Latest booking first
+    data.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
+    setUsers(data);
+  };
 
   useEffect(() => {
-    fetch(`${API_URL}http:///api/users`)
-      .then((res) => res.json())
-      .then((data) => setUsers(data));
+    fetchUsers();
   }, []);
 
+  const deleteUser = async (id) => {
+    const confirmDelete = window.confirm(
+      "क्या आप इस Booking को Delete करना चाहते हैं?"
+    );
+
+    if (!confirmDelete) return;
+
+    await fetch(`${API_URL}/api/bookings/${id}`, {
+      method: "DELETE",
+    });
+
+    fetchUsers();
+  };
+
+  const filteredUsers = users.filter((user) =>
+    user.customerName
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+
   return (
-    <div className="p-8">
+    <div className="p-8 bg-cyan-100 min-h-screen">
 
       <h1 className="text-3xl font-bold mb-6">
-        Registered Users
+        Customer List
       </h1>
 
-      <table className="w-full border">
+      <div className="flex justify-between items-center mb-5">
 
-        <thead className="bg-gray-900 text-white">
+        <div className="flex items-center gap-2">
+          <Search size={20} />
 
-          <tr>
+          <input
+            type="text"
+            placeholder="Search Customer..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="border p-3 rounded-lg w-80"
+          />
+        </div>
 
-            <th className="p-3">Name</th>
-            <th className="p-3">Email</th>
-            <th className="p-3">Phone</th>
-            <th className="p-3">Date</th>
+        <div className="bg-blue-600 text-white px-5 py-3 rounded-lg">
+          Total Customers : {filteredUsers.length}
+        </div>
 
-          </tr>
+      </div>
 
-        </thead>
+      <div className="overflow-x-auto bg-white rounded-xl shadow">
 
-        <tbody>
+        <table className="w-full">
 
-          {users.map((user) => (
+          <thead className="bg-gray-900 text-white">
 
-            <tr key={user._id} className="border-b">
-
-              <td className="p-3">{user.name}</td>
-              <td className="p-3">{user.email}</td>
-              <td className="p-3">{user.phone}</td>
-              <td className="p-3">
-                {new Date(user.createdAt).toLocaleDateString()}
-              </td>
-
+            <tr>
+              <th className="p-4">Customer</th>
+              <th>Phone</th>
+              <th>Event</th>
+              <th>Persons</th>
+              <th>Booking Date</th>
+              <th>Action</th>
             </tr>
 
-          ))}
+          </thead>
 
-        </tbody>
+          <tbody>
 
-      </table>
+            {filteredUsers.map((user) => (
+
+              <tr
+                key={user._id}
+                className="border-b hover:bg-gray-100"
+              >
+
+                <td className="p-4 font-semibold">
+                  {user.customerName}
+                </td>
+
+                <td>{user.phone}</td>
+
+                <td>{user.eventType}</td>
+
+                <td>{user.persons}</td>
+
+                <td>
+                  {new Date(user.createdAt).toLocaleDateString("en-GB")}
+                </td>
+
+                <td>
+                  <button
+                    onClick={() => deleteUser(user._id)}
+                    className="text-red-600 hover:text-red-800"
+                  >
+                    <Trash2 size={20} />
+                  </button>
+                </td>
+
+              </tr>
+
+            ))}
+
+          </tbody>
+
+        </table>
+
+      </div>
 
     </div>
   );

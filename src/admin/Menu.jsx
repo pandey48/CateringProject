@@ -2,15 +2,7 @@ import { useEffect, useState } from "react";
 import { Trash2, Search } from "lucide-react";
 import API_URL from "../config";
 
-
 export default function Menu() {
-    const [ingredients, setIngredients] = useState([
-  {
-    name: "",
-    quantity: "",
-    unit: "Kg",
-  },
-]);
   const [menus, setMenus] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -19,32 +11,32 @@ export default function Menu() {
     category: "",
     price: "",
   });
-  const addIngredient = () => {
-  setIngredients([
-    ...ingredients,
+
+  const [ingredients, setIngredients] = useState([
     {
+      category: "",
       name: "",
       quantity: "",
       unit: "Kg",
     },
   ]);
-};
-const handleIngredientChange = (index, e) => {
-  const values = [...ingredients];
-  values[index][e.target.name] = e.target.value;
-  setIngredients(values);
-};
 
+  // Fetch Menu
   const fetchMenus = async () => {
-    const res = await fetch(`${API_URL}/api/menu`);
-    const data = await res.json();
-    setMenus(data);
+    try {
+      const res = await fetch(`${API_URL}/api/menu`);
+      const data = await res.json();
+      setMenus(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
     fetchMenus();
   }, []);
 
+  // Dish Form Change
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -52,6 +44,27 @@ const handleIngredientChange = (index, e) => {
     });
   };
 
+  // Ingredient Change
+  const handleIngredientChange = (index, e) => {
+    const values = [...ingredients];
+    values[index][e.target.name] = e.target.value;
+    setIngredients(values);
+  };
+
+  // Add Ingredient Row
+  const addIngredient = () => {
+    setIngredients([
+      ...ingredients,
+      {
+        category: "",
+        name: "",
+        quantity: "",
+        unit: "Kg",
+      },
+    ]);
+  };
+
+  // Save Menu
   const addMenu = async (e) => {
     e.preventDefault();
 
@@ -60,10 +73,10 @@ const handleIngredientChange = (index, e) => {
       headers: {
         "Content-Type": "application/json",
       },
-     body: JSON.stringify({
-  ...form,
-  ingredients,
-}),
+      body: JSON.stringify({
+        ...form,
+        ingredients,
+      }),
     });
 
     if (res.ok) {
@@ -74,21 +87,23 @@ const handleIngredientChange = (index, e) => {
         category: "",
         price: "",
       });
-       setIngredients([
-  {
-    name: "",
-    quantity: "",
-    unit: "Kg",
-  },
-]);
+
+      setIngredients([
+        {
+          category: "",
+          name: "",
+          quantity: "",
+          unit: "Kg",
+        },
+      ]);
+
       fetchMenus();
     }
   };
 
+  // Delete Menu
   const deleteMenu = async (id) => {
-    const confirmDelete = window.confirm("Delete this menu?");
-
-    if (!confirmDelete) return;
+    if (!window.confirm("Delete this menu?")) return;
 
     await fetch(`${API_URL}/api/menu/${id}`, {
       method: "DELETE",
@@ -102,13 +117,11 @@ const handleIngredientChange = (index, e) => {
   );
 
   return (
-    <div className="p-8 bg-cyan-200">
+    <div className="p-8 bg-cyan-200 min-h-screen">
 
       <h1 className="text-3xl font-bold mb-6">
         Menu Management
       </h1>
-
-      {/* Add Menu */}
 
       <form
         onSubmit={addMenu}
@@ -130,7 +143,7 @@ const handleIngredientChange = (index, e) => {
           <input
             type="text"
             name="category"
-            placeholder="Category"
+            placeholder="Dish Category"
             value={form.category}
             onChange={handleChange}
             className="border p-3 rounded-lg"
@@ -146,74 +159,97 @@ const handleIngredientChange = (index, e) => {
             className="border p-3 rounded-lg"
             required
           />
-          <div className="md:col-span-3 mt-5">
 
-  <h2 className="text-xl font-bold mb-4">
-    Ingredients
-  </h2>
+        </div>
 
-  {ingredients.map((ingredient, index) => (
+        <div className="mt-8">
 
-    <div
-      key={index}
-      className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4"
-    >
+          <h2 className="text-xl font-bold mb-4">
+            Ingredients
+          </h2>
 
-      <input
-        type="text"
-        name="name"
-        placeholder="Ingredient Name"
-        value={ingredient.name}
-        onChange={(e) => handleIngredientChange(index, e)}
-        className="border rounded-lg p-3"
-      />
+          {ingredients.map((ingredient, index) => (
 
-      <input
-        type="number"
-        name="quantity"
-        placeholder="Quantity"
-        value={ingredient.quantity}
-        onChange={(e) => handleIngredientChange(index, e)}
-        className="border rounded-lg p-3"
-      />
+            <div
+              key={index}
+              className="grid md:grid-cols-4 gap-4 mb-4"
+            >
 
-      <select
-        name="unit"
-        value={ingredient.unit}
-        onChange={(e) => handleIngredientChange(index, e)}
-        className="border rounded-lg p-3"
-      >
-        <option>Kg</option>
-        <option>Gram</option>
-        <option>Liter</option>
-        <option>Piece</option>
-      </select>
+              <select
+                name="category"
+                value={ingredient.category}
+                onChange={(e) =>
+                  handleIngredientChange(index, e)
+                }
+                className="border rounded-lg p-3"
+              >
+                <option value="">Select Category</option>
+                <option value="Vegetable">🥬 सब्जी</option>
+                <option value="Grocery">🛒 किराना</option>
+                <option value="Dairy">🥛 डेयरी</option>
+                <option value="Spices">🌶️ मसाले</option>
+                <option value="Dry Fruits">🥜 ड्राई फ्रूट</option>
+                <option value="Other">📦 अन्य</option>
+              </select>
 
-    </div>
+              <input
+                type="text"
+                name="name"
+                placeholder="Ingredient Name"
+                value={ingredient.name}
+                onChange={(e) =>
+                  handleIngredientChange(index, e)
+                }
+                className="border rounded-lg p-3"
+              />
 
-  ))}
+              <input
+                type="number"
+                name="quantity"
+                placeholder="Quantity"
+                value={ingredient.quantity}
+                onChange={(e) =>
+                  handleIngredientChange(index, e)
+                }
+                className="border rounded-lg p-3"
+              />
 
-  <button
-    type="button"
-    onClick={addIngredient}
-    className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg"
-  >
-    + Add Ingredient
-  </button>
+              <select
+                name="unit"
+                value={ingredient.unit}
+                onChange={(e) =>
+                  handleIngredientChange(index, e)
+                }
+                className="border rounded-lg p-3"
+              >
+                <option>Kg</option>
+                <option>Gram</option>
+                <option>Liter</option>
+                <option>Piece</option>
+              </select>
 
-</div>
+            </div>
+
+          ))}
+
+          <button
+            type="button"
+            onClick={addIngredient}
+            className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg"
+          >
+            + Add Ingredient
+          </button>
 
         </div>
 
         <button
-          className="bg-blue-600 text-white px-6 py-3 rounded-lg mt-5 hover:bg-blue-700"
+          type="submit"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg mt-8"
         >
           Add Menu
         </button>
 
       </form>
-
-      {/* Search */}
 
       <div className="flex items-center gap-3 mb-6">
 
@@ -223,27 +259,25 @@ const handleIngredientChange = (index, e) => {
           type="text"
           placeholder="Search Dish..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) =>
+            setSearch(e.target.value)
+          }
           className="border p-3 rounded-lg w-80"
         />
 
       </div>
 
-      {/* Table */}
-
-      <div className="overflow-x-auto bg-white rounded-xl shadow">
+      <div className="bg-white rounded-xl shadow overflow-hidden">
 
         <table className="w-full">
 
           <thead className="bg-gray-900 text-white">
 
             <tr>
-
               <th className="p-4">Dish</th>
               <th>Category</th>
               <th>Price</th>
               <th>Action</th>
-
             </tr>
 
           </thead>
@@ -257,7 +291,9 @@ const handleIngredientChange = (index, e) => {
                 className="border-b hover:bg-gray-100"
               >
 
-                <td className="p-4">{item.dishName}</td>
+                <td className="p-4">
+                  {item.dishName}
+                </td>
 
                 <td>{item.category}</td>
 
@@ -266,7 +302,9 @@ const handleIngredientChange = (index, e) => {
                 <td>
 
                   <button
-                    onClick={() => deleteMenu(item._id)}
+                    onClick={() =>
+                      deleteMenu(item._id)
+                    }
                     className="text-red-600"
                   >
                     <Trash2 size={20} />
@@ -286,5 +324,4 @@ const handleIngredientChange = (index, e) => {
 
     </div>
   );
-  
 }

@@ -16,7 +16,7 @@ export default function Booking() {
 const [menus, setMenus] = useState([]);
 const [selectedMenus, setSelectedMenus] = useState([]);
 useEffect(() => {
-  fetch("https://pandey-catering-api.onrender.com/api/menu")
+  fetch(`${API_URL}/api/menu`)
     .then((res) => res.json())
     .then((data) => setMenus(data))
     .catch((err) => console.error(err));
