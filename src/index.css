@@ -91,6 +91,40 @@ a:hover {
   }
 }
 
+/* Prevent horizontal scroll and ensure fixed nav spans full width on mobile */
+/* Global reset to avoid unexpected spacing/overflow */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Ensure React root spans full width */
+#root {
+  width: 100%;
+}
+
+/* Ensure nav elements that are fixed take full width and align to left */
+nav[class*="fixed"], .fixed-nav {
+  left: 0;
+  right: 0;
+}
+
+/* Make common max-width wrappers responsive and centered */
+.max-w-7xl, .max-w-6xl, .max-w-5xl {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
+}
+
+
 
 
 
