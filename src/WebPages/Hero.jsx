@@ -36,7 +36,7 @@ export default function Hero() {
               ⭐ Since 2010 • Premium Catering
             </span>
 
-            <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white leading-tight">
               Making Every
               <span className="text-orange-400">
                 {" "}Celebration

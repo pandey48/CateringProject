@@ -17,7 +17,7 @@ export default function Navbar({ setOpen }) {
       </h1>
       <img
           src="https://i.pravatar.cc/40"
-          className="rounded-full"
+          className="w-10 h-10 rounded-full object-cover"
         />
 
     </div>

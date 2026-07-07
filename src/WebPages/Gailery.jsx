@@ -81,7 +81,7 @@ export default function Gallery() {
               <img
                 src={item.image}
                 alt={item.title}
-                className="w-full h-72 object-cover duration-700 group-hover:scale-110"
+                className="w-full h-48 md:h-72 object-cover duration-700 group-hover:scale-110"
               />
 
               {/* Overlay */}

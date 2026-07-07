@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 export default function Sidebar({ closeSidebar }) {
   return (
-    <div className="w-64 bg-gray-900 text-white min-h-screen">
+    <div className="w-full md:w-64 bg-gray-900 text-white min-h-screen">
 
       <div className="flex justify-between items-center p-6 border-b border-gray-700">
 
