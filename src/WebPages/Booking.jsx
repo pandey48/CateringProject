@@ -157,39 +157,40 @@ text-white">
     Select Menu
   </h3>
 
-  <div className="grid grid-cols-2 gap-3">
+  <div className="grid grid-cols-3 gap-3">
 
     {menus.map((menu) => (
 
-      <label
-        key={menu._id}
-        className="flex items-center gap-2 border p-3 rounded-lg cursor-pointer hover:bg-gray-100"
-      >
+    <label
+      key={menu._id}
+      className="flex flex-col items-center justify-center text-center gap-2 border p-3 rounded-lg cursor-pointer hover:bg-gray-100"
+    >
 
-        <input
-          type="checkbox"
-          value={menu._id}
-          onChange={(e) => {
+      <input
+        type="checkbox"
+        value={menu._id}
+        onChange={(e) => {
 
-            if (e.target.checked) {
-              setSelectedMenus([
-                ...selectedMenus,
-                menu._id,
-              ]);
-            } else {
-              setSelectedMenus(
-                selectedMenus.filter(
-                  (id) => id !== menu._id
-                )
-              );
-            }
+          if (e.target.checked) {
+            setSelectedMenus([
+              ...selectedMenus,
+              menu._id,
+            ]);
+          } else {
+            setSelectedMenus(
+              selectedMenus.filter(
+                (id) => id !== menu._id
+              )
+            );
+          }
 
-          }}
-        />
+        }}
+        className="w-4 h-4"
+      />
 
-        {menu.dishName}
+      <span className="text-sm font-medium">{menu.dishName}</span>
 
-      </label>
+    </label>
 
     ))}
 
