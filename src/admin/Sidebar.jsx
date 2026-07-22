@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 export default function Sidebar({ closeSidebar }) {
   return (
-    <div className="w-full md:w-64 bg-gray-900 text-white min-h-screen">
+    <div className="w-full md:w-64 bg-gray-900 text-white min-h-screen flex-shrink-0">
 
       <div className="flex justify-between items-center p-6 border-b border-gray-700">
 
@@ -20,14 +20,15 @@ export default function Sidebar({ closeSidebar }) {
 
         <button
           onClick={closeSidebar}
-          className="md:hidden"
+          className="md:hidden p-2 rounded hover:bg-gray-800"
+          aria-label="Close menu"
         >
           <X />
         </button>
 
       </div>
 
-      <nav>
+      <nav className="space-y-1">
 
         <Link
           to="/admin"
@@ -53,7 +54,7 @@ export default function Sidebar({ closeSidebar }) {
           className="flex items-center gap-3 px-6 py-4 hover:bg-gray-800"
         >
           <Calendar />
-          invoice
+          Invoices
         </Link>
 
         <Link
@@ -78,7 +79,7 @@ export default function Sidebar({ closeSidebar }) {
           className="flex items-center gap-3 px-6 py-4 hover:bg-gray-800"
         >
           <UtensilsCrossed />
-          Employ
+          Employee
         </Link>
 
       </nav>
