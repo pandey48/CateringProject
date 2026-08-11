@@ -11,6 +11,7 @@ export default function Booking() {
     persons: "",
     address: "",
   });
+  const [showMenus, setShowMenus] = useState(false);
   
 
 const [menus, setMenus] = useState([]);
@@ -152,49 +153,56 @@ text-white">
             className="border rounded-lg p-3 md:col-span-2 h-28 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
-          <div className="md:col-span-2">
-  <h3 className="text-lg font-semibold mb-3">
-    Select Menu
-  </h3>
+<div className="md:col-span-2">
+  <button
+    type="button"
+    onClick={() => setShowMenus(!showMenus)}
+    className="w-full border rounded-lg p-3 text-left bg-amber-700 hover:bg-gray-50 flex justify-between items-center"
+  >
+    <span>
+      {selectedMenus.length > 0
+        ? `${selectedMenus.length} Menu Selected`
+        : "Select Menu"}
+    </span>
 
-  <div className="grid grid-cols-3 gap-3">
+    <span>{showMenus ? "▲" : "▼"}</span>
+  </button>
 
-    {menus.map((menu) => (
+  {showMenus && (
+    <div className="mt-2 border rounded-lg p-4 bg-cyan-300 shadow-md grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-2">
+      {menus.map((menu) => (
+        <label
+          key={menu._id}
+          className="flex items-center gap-3 border p-3 rounded-lg cursor-pointer hover:bg-gray-100"
+        >
+          <input
+            type="checkbox"
+            value={menu._id}
+            checked={selectedMenus.includes(menu._id)}
+            onChange={(e) => {
+              if (e.target.checked) {
+                setSelectedMenus([
+                  ...selectedMenus,
+                  menu._id,
+                ]);
+              } else {
+                setSelectedMenus(
+                  selectedMenus.filter(
+                    (id) => id !== menu._id
+                  )
+                );
+              }
+            }}
+            className="w-4 h-4"
+          />
 
-    <label
-      key={menu._id}
-      className="flex flex-col items-center justify-center text-center gap-2 border p-3 rounded-lg cursor-pointer hover:bg-gray-100"
-    >
-
-      <input
-        type="checkbox"
-        value={menu._id}
-        onChange={(e) => {
-
-          if (e.target.checked) {
-            setSelectedMenus([
-              ...selectedMenus,
-              menu._id,
-            ]);
-          } else {
-            setSelectedMenus(
-              selectedMenus.filter(
-                (id) => id !== menu._id
-              )
-            );
-          }
-
-        }}
-        className="w-4 h-4"
-      />
-
-      <span className="text-sm font-medium">{menu.dishName}</span>
-
-    </label>
-
-    ))}
-
-  </div>
+          <span className="text-sm font-medium">
+            {menu.dishName}
+          </span>
+        </label>
+      ))}
+    </div>
+  )}
 </div>
 
           <button

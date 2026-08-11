@@ -96,7 +96,7 @@ export default function Contact() {
                 </h3>
 
                 <p className="text-gray-600">
-                  Rewa, Madhya Pradesh
+                 Madha Raghuvar Hanumna Mauganj
                 </p>
 
               </div>
@@ -114,7 +114,7 @@ export default function Contact() {
                 </h3>
 
                 <p className="text-gray-600">
-                  Mon - Sun : 8:00 AM - 10:00 PM
+                  any time avalble
                 </p>
 
               </div>

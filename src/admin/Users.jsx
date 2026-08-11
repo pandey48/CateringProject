@@ -7,14 +7,35 @@ export default function Users() {
   const [search, setSearch] = useState("");
 
   const fetchUsers = async () => {
-    const res = await fetch(`${API_URL}/api/users`);
+  try {
+    console.log("API URL:", `${API_URL}/api/bookings`);
+
+    const res = await fetch(`${API_URL}/api/bookings`);
+
+    console.log("Status:", res.status);
+
+    if (!res.ok) {
+      throw new Error(`API Error: ${res.status}`);
+    }
+
     const data = await res.json();
 
-    // Latest first
-    data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    console.log("Users API Data:", data);
+
+    if (!Array.isArray(data)) {
+      console.error("Expected array but received:", data);
+      return;
+    }
+
+    data.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
 
     setUsers(data);
-  };
+  } catch (error) {
+    console.error("Failed to fetch users:", error);
+  }
+};
 
   useEffect(() => {
     fetchUsers();
@@ -59,7 +80,7 @@ export default function Users() {
 
       </div>
 
-      <div className="overflow-x-auto bg-white rounded-xl shadow">
+      <div className="overflow-x-auto bg-amber-500 rounded-xl shadow">
 
         <table className="w-full">
 
@@ -82,18 +103,18 @@ export default function Users() {
 
               <tr
                 key={user._id}
-                className="border-b hover:bg-gray-100"
+                className="border-b hover:bg-gray-700"
               >
 
-                <td className="p-4 font-semibold">{user.name}</td>
+                <td className="p-4 font-semibold">{user.customerName}</td>
 
-                <td>{user.Vilage || "-"}</td>
+                <td>{user.address || "-"}</td>
 
                 <td>{user.phone || "-"}</td>
 
                 <td>
-                  {user.EventDate
-                    ? new Date(user.EventDate).toLocaleDateString()
+                  {user.eventDate
+                    ? new Date(user.eventDate).toLocaleDateString()
                     : "-"}
                 </td>
 

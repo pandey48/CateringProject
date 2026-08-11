@@ -11,6 +11,8 @@ import Home from "./WebPages/Home";
 import Enqury from "./WebPages/Enqury";
 import Booking from "./WebPages/Booking";
 import LoginModal from "./WebPages/LoginModal";
+import Bookings from "./admin/Bookings";
+import Employees from "./admin/Employees";
 
 export default function App() {
   return (
@@ -29,8 +31,10 @@ export default function App() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="users" element={<Users />} />
         <Route path="menu" element={<Menu />} />
+        <Route path="bookings" element={<Bookings />} />
         <Route path="material" element={<MaterialCalculator />} />
         <Route path="invoices" element={<Invoices />} />
+        <Route path="employees"element={<Employees />}/>
       </Route>
 
     </Routes>
