@@ -5,6 +5,7 @@ import {
   UtensilsCrossed,
   Package,
   UserRound,
+   ClipboardCheck,
   X,
 } from "lucide-react";
 
@@ -102,6 +103,14 @@ export default function Sidebar({ closeSidebar }) {
 >
   <UserRound size={20} />
   Employees
+</Link>
+<Link
+  to="/admin/attendance"
+  onClick={closeSidebar}
+  className="flex items-center gap-3 px-6 py-4 hover:bg-gray-800"
+>
+  <ClipboardCheck />
+  Attendance
 </Link>
 
       </nav>

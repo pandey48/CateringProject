@@ -6,6 +6,7 @@ import Users from "./admin/Users";
 import Menu from "./admin/Menu";
 import MaterialCalculator from "./admin/MaterialCalculator";
 import Invoices from "./admin/Invoices";
+import Attendance from "./admin/Attendance";
 
 import Home from "./WebPages/Home";
 import Enqury from "./WebPages/Enqury";
@@ -35,6 +36,8 @@ export default function App() {
         <Route path="material" element={<MaterialCalculator />} />
         <Route path="invoices" element={<Invoices />} />
         <Route path="employees"element={<Employees />}/>
+        <Route path="/admin/attendance"element={<Attendance />}
+/>
       </Route>
 
     </Routes>
