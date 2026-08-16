@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import CountUp from "react-countup";
 import {
   CalendarCheck,
   Users,
@@ -9,88 +8,104 @@ import {
 
 const stats = [
   {
-    icon: <CalendarCheck size={40} />,
-    number: 500,
-    suffix: "+",
+    Icon: CalendarCheck,
+    number: "500+",
     title: "Events Completed",
   },
   {
-    icon: <Users size={40} />,
-    number: 10000,
-    suffix: "+",
+    Icon: Users,
+    number: "10,000+",
     title: "Happy Guests",
   },
   {
-    icon: <Award size={40} />,
-    number: 15,
-    suffix: "+",
+    Icon: Award,
+    number: "15+",
     title: "Years Experience",
   },
   {
-    icon: <UtensilsCrossed size={40} />,
-    number: 120,
-    suffix: "+",
+    Icon: UtensilsCrossed,
+    number: "120+",
     title: "Menu Items",
   },
 ];
 
 export default function Statss() {
   return (
-    <section className="py-20 bg-linear-to-r from-orange-500 to-amber-500">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="bg-gradient-to-r from-orange-500 via-orange-400 to-amber-500 py-16 sm:py-20">
 
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: .6 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-12 text-center"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white">
+          <h2 className="text-3xl font-bold text-white sm:text-4xl md:text-5xl">
             Our Achievements
           </h2>
 
-          <p className="text-orange-100 mt-4 text-lg">
+          <p className="mt-3 text-orange-100">
             Trusted by hundreds of families for unforgettable celebrations.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Cards */}
+        <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
 
-          {stats.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: .8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{
-                delay: index * .15,
-                duration: .5,
-              }}
-              viewport={{ once: true }}
-              whileHover={{
-                y: -8,
-                scale: 1.05,
-              }}
-              className="bg-white rounded-3xl p-8 text-center shadow-xl"
-            >
-              <div className="text-orange-500 flex justify-center mb-5">
-                {item.icon}
-              </div>
+          {stats.map((item, index) => {
+            const Icon = item.Icon;
 
-              <h3 className="text-5xl font-bold text-gray-900">
-  {item.number}
-  {item.suffix}
-</h3>
+            return (
+              <motion.div
+                key={item.title}
+                initial={{
+                  opacity: 0,
+                  y: 30,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.15,
+                }}
+                viewport={{ once: true }}
+                whileHover={{
+                  y: -8,
+                }}
+                className="rounded-3xl bg-white p-6 text-center shadow-xl"
+              >
 
-              <p className="mt-4 text-gray-600 font-semibold">
-                {item.title}
-              </p>
-            </motion.div>
-          ))}
+                {/* Icon */}
+                <div className="mb-4 flex justify-center">
+                  <Icon
+                    size={42}
+                    className="text-orange-500"
+                  />
+                </div>
+
+                {/* Number */}
+                <h3 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+                  {item.number}
+                </h3>
+
+                {/* Title */}
+                <p className="mt-3 text-sm font-semibold text-gray-600 sm:text-base">
+                  {item.title}
+                </p>
+
+              </motion.div>
+            );
+          })}
 
         </div>
 
       </div>
+
     </section>
   );
 }

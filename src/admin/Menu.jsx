@@ -117,26 +117,21 @@ export default function Menu() {
   );
 
   return (
-    <div className="p-8 bg-cyan-200 min-h-screen">
+    <div className="space-y-6 p-4 sm:p-6 lg:p-8">
+      <div>
+        <h1 className="text-2xl font-bold text-slate-800 sm:text-3xl">Menu Management</h1>
+        <p className="mt-1 text-sm text-slate-500">Create, update, and manage your catering menu</p>
+      </div>
 
-      <h1 className="text-3xl font-bold mb-6">
-        Menu Management
-      </h1>
-
-      <form
-        onSubmit={addMenu}
-        className="bg-amber-200 rounded-xl shadow p-6 mb-8"
-      >
-
-        <div className="grid md:grid-cols-3 gap-5">
-
+      <form onSubmit={addMenu} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+        <div className="grid gap-4 md:grid-cols-3">
           <input
             type="text"
             name="dishName"
             placeholder="Dish Name"
             value={form.dishName}
             onChange={handleChange}
-            className="border p-3 rounded-lg"
+            className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 outline-none transition focus:border-blue-500 focus:bg-white"
             required
           />
 
@@ -146,7 +141,7 @@ export default function Menu() {
             placeholder="Dish Category"
             value={form.category}
             onChange={handleChange}
-            className="border p-3 rounded-lg"
+            className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 outline-none transition focus:border-blue-500 focus:bg-white"
             required
           />
 
@@ -156,32 +151,21 @@ export default function Menu() {
             placeholder="Price"
             value={form.price}
             onChange={handleChange}
-            className="border p-3 rounded-lg"
+            className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 outline-none transition focus:border-blue-500 focus:bg-white"
             required
           />
-
         </div>
 
         <div className="mt-8">
-
-          <h2 className="text-xl font-bold mb-4">
-            Ingredients
-          </h2>
+          <h2 className="mb-4 text-xl font-bold text-slate-800">Ingredients</h2>
 
           {ingredients.map((ingredient, index) => (
-
-            <div
-              key={index}
-              className="grid md:grid-cols-4 gap-4 mb-4"
-            >
-
+            <div key={index} className="mb-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
               <select
                 name="category"
                 value={ingredient.category}
-                onChange={(e) =>
-                  handleIngredientChange(index, e)
-                }
-                className="border rounded-lg p-3"
+                onChange={(e) => handleIngredientChange(index, e)}
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 outline-none transition focus:border-blue-500 focus:bg-white"
               >
                 <option value="">Select Category</option>
                 <option value="Vegetable">🥬 सब्जी</option>
@@ -197,10 +181,8 @@ export default function Menu() {
                 name="name"
                 placeholder="Ingredient Name"
                 value={ingredient.name}
-                onChange={(e) =>
-                  handleIngredientChange(index, e)
-                }
-                className="border rounded-lg p-3"
+                onChange={(e) => handleIngredientChange(index, e)}
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 outline-none transition focus:border-blue-500 focus:bg-white"
               />
 
               <input
@@ -208,120 +190,85 @@ export default function Menu() {
                 name="quantity"
                 placeholder="Quantity"
                 value={ingredient.quantity}
-                onChange={(e) =>
-                  handleIngredientChange(index, e)
-                }
-                className="border rounded-lg p-3"
+                onChange={(e) => handleIngredientChange(index, e)}
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 outline-none transition focus:border-blue-500 focus:bg-white"
               />
 
               <select
                 name="unit"
                 value={ingredient.unit}
-                onChange={(e) =>
-                  handleIngredientChange(index, e)
-                }
-                className="border rounded-lg p-3"
+                onChange={(e) => handleIngredientChange(index, e)}
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 outline-none transition focus:border-blue-500 focus:bg-white"
               >
                 <option>Kg</option>
                 <option>Gram</option>
                 <option>Liter</option>
                 <option>Piece</option>
               </select>
-
             </div>
-
           ))}
 
           <button
             type="button"
             onClick={addIngredient}
-            className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg"
+            className="rounded-xl bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-green-700"
           >
             + Add Ingredient
           </button>
-
         </div>
 
         <button
           type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg mt-8"
+          className="mt-8 w-full rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700 sm:w-auto"
         >
           Add Menu
         </button>
-
       </form>
 
-      <div className="flex items-center gap-3 mb-6">
-
-        <Search />
-
-        <input
-          type="text"
-          placeholder="Search Dish..."
-          value={search}
-          onChange={(e) =>
-            setSearch(e.target.value)
-          }
-          className="border p-3 rounded-lg w-80"
-        />
-
+      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+        <div className="relative w-full sm:w-80">
+          <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <input
+            type="text"
+            placeholder="Search Dish..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-3 text-sm outline-none transition focus:border-blue-500 focus:bg-white"
+          />
+        </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow overflow-hidden">
-
-        <table className="w-full">
-
-          <thead className="bg-gray-900 text-white">
-
+      <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <table className="min-w-[640px] w-full text-left">
+          <thead className="bg-slate-900 text-white">
             <tr>
-              <th className="p-4">Dish</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Action</th>
+              <th className="p-4 font-semibold">Dish</th>
+              <th className="p-4 font-semibold">Category</th>
+              <th className="p-4 font-semibold">Price</th>
+              <th className="p-4 font-semibold">Action</th>
             </tr>
-
           </thead>
 
           <tbody>
-
             {filteredMenu.map((item) => (
-
-              <tr
-                key={item._id}
-                className="border-b hover:bg-gray-100"
-              >
-
+              <tr key={item._id} className="border-b border-slate-200 hover:bg-slate-50">
+                <td className="p-4 font-medium text-slate-800">{item.dishName}</td>
+                <td className="p-4 text-slate-600">{item.category}</td>
+                <td className="p-4 text-slate-600">₹ {item.price}</td>
                 <td className="p-4">
-                  {item.dishName}
-                </td>
-
-                <td>{item.category}</td>
-
-                <td>₹ {item.price}</td>
-
-                <td>
-
                   <button
-                    onClick={() =>
-                      deleteMenu(item._id)
-                    }
-                    className="text-red-600"
+                    onClick={() => deleteMenu(item._id)}
+                    className="inline-flex items-center justify-center rounded-lg bg-red-50 p-2 text-red-600 transition hover:bg-red-100"
+                    aria-label="Delete menu"
                   >
-                    <Trash2 size={20} />
+                    <Trash2 size={18} />
                   </button>
-
                 </td>
-
               </tr>
-
             ))}
-
           </tbody>
-
         </table>
-
       </div>
-
     </div>
   );
 }

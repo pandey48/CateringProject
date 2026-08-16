@@ -32,10 +32,10 @@ const features = [
 export default function WhyChooseUs() {
   return (
     <section
-      id="about"
-      className="py-20 bg-linear-to-r from-orange-50 to-white"
+      id="why-us"
+      className="py-16 bg-gradient-to-r from-orange-50 via-white to-orange-50 sm:py-20"
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         {/* Heading */}
 
@@ -63,7 +63,7 @@ export default function WhyChooseUs() {
 
         {/* Cards */}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-8">
 
           {features.map((item, index) => (
             <motion.div
@@ -79,7 +79,7 @@ export default function WhyChooseUs() {
                 y: -12,
                 scale: 1.04,
               }}
-              className="bg-white rounded-3xl shadow-lg p-8 text-center border border-orange-100 hover:shadow-2xl transition-all duration-300"
+              className="bg-white rounded-3xl border border-orange-100 p-6 text-center shadow-lg shadow-orange-100/60 transition-all duration-300 hover:shadow-2xl sm:p-8"
             >
 
               <div className="w-20 h-20 mx-auto rounded-full bg-orange-100 text-orange-500 flex items-center justify-center mb-6">

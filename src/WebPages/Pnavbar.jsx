@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import logo from "../assets/logopc.png";
 import { useNavigate } from "react-router-dom";
 import {
@@ -20,128 +21,155 @@ export default function Pnavbar() {
     };
 
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleLinkClick = () => setOpen(false);
 
   return (
-    <nav
-      className={`fixed w-full z-50 transition-all duration-500 ${
-        scroll
-          ? "bg-white/95 backdrop-blur-lg shadow-xl py-2"
-          : "bg-transparent "
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6 }}
+      className={`fixed left-0 top-0 z-50 w-full transition-all duration-500 ${
+        scroll ? "bg-white/95 shadow-lg backdrop-blur-md" : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4  flex justify-between items-center mt-0">
-        {/* Logo */}
-
-        <div className="flex items-center gap-3">
-
-          <img
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <motion.div
+          className="flex items-center gap-3"
+          whileHover={{ scale: 1.05 }}
+        >
+          <motion.img
             src={logo}
-            alt=""
-            className="w-12 h-12 md:w-20 md:h-20 object-contain"
+            alt="Pandey Catering Logo"
+            className="h-12 w-12 object-contain md:h-16 md:w-16"
+            animate={{ rotate: [0, 5, 0] }}
+            transition={{ repeat: Infinity, duration: 3 }}
           />
 
           <div>
-
-            <h2 className="font-bold text-xl md:text-2xl text-orange-600">
+            <h2 className="text-lg font-extrabold tracking-tight text-orange-600 sm:text-xl md:text-2xl">
               Pandey Catering
             </h2>
-
-            <p className="text-xs text-gray-600 hidden md:block">
+            <p className="hidden text-xs text-slate-600 md:block">
               Catering & Event Management
             </p>
-
           </div>
+        </motion.div>
 
-        </div>
-
-        {/* Desktop Menu */}
-
-        <div className="hidden sticky top-0 z-50 md:flex items-center gap-8 font-medium">
-
-          {["About","Menu","Services","Gallery","Contact"].map((item)=>(
-            <a
+        <div className="hidden items-center gap-7 text-sm font-medium text-slate-700 md:flex">
+          {[
+            "About",
+            "Menu",
+            "Services",
+            "Gallery",
+            "Contact",
+          ].map((item, idx) => (
+            <motion.a
               key={item}
               href={`#${item.toLowerCase()}`}
-              className="relative group hover:text-orange-500 transition"
+              className="group relative transition hover:text-orange-500"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              whileHover={{ scale: 1.1 }}
             >
               {item}
-
-              <span className="absolute left-0 -bottom-1 h-[2px] bg-orange-500 w-0 group-hover:w-full transition-all duration-300"></span>
-
-            </a>
+              <motion.span
+                className="absolute -bottom-1 left-0 h-[2px] bg-orange-500"
+                initial={{ width: 0 }}
+                whileHover={{ width: "100%" }}
+                transition={{ duration: 0.3 }}
+              />
+            </motion.a>
           ))}
-
         </div>
 
-        {/* Right Side */}
-
-        <div className="hidden md:flex items-center gap-4">
-
-          <a href="https://www.instagram.com/pandey_caterrs">
-            <Instagram className="text-pink-600 hover:scale-125 duration-300" />
-          </a>
-
-          <a href="tel:+917389368597">
-            <Phone className="text-green-600 hover:scale-125 duration-300" />
-          </a>
-
-          <button
-            className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full flex items-center gap-2 shadow-lg hover:scale-105 duration-300"
+        <div className="hidden items-center gap-3 md:flex">
+          <motion.a
+            href="https://www.instagram.com/pandey_caterrs"
+            target="_blank"
+            rel="noreferrer"
+            whileHover={{ scale: 1.2, rotate: 10 }}
+            whileTap={{ scale: 0.9 }}
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-pink-100 text-pink-600 transition"
           >
-            <Calendar size={18} />
-            Book Now
-          </button>
+            <Instagram size={18} />
+          </motion.a>
 
+          <motion.a
+            href="tel:+917389368597"
+            whileHover={{ scale: 1.2, rotate: 10 }}
+            whileTap={{ scale: 0.9 }}
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 text-green-600 transition"
+          >
+            <Phone size={18} />
+          </motion.a>
+
+          <motion.button
+            onClick={() => navigate("/booking")}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center gap-2 rounded-full bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-600"
+          >
+            <Calendar size={16} />
+            Book Now
+          </motion.button>
         </div>
 
-        {/* Mobile */}
-
-        <button
+        <motion.button
           onClick={() => setOpen(!open)}
-          className="md:hidden"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          className="inline-flex items-center justify-center rounded-lg p-2 text-slate-700 transition hover:bg-white/40 md:hidden"
+          aria-label="Toggle menu"
         >
-          {open ? <X size={30} /> : <Menu size={30} />}
-        </button>
-
-      </div>
-
-      {/* Mobile Menu */}
-
-      <div
-        className={`md:hidden overflow-hidden  transition-all duration-500 ${
-          open ? "max-h-96" : "max-h-0"
-        }`}
-      >
-
-        <div className="bg-white shadow-lg flex flex-col p-5">
-
-          {["About","Menu","Services","Gallery","Contact"].map((item)=>(
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              onClick={handleLinkClick}
-              className="py-3 border-b hover:text-orange-500"
-            >
-              {item}
-            </a>
-          ))}
-
-          <button onClick={() => navigate("/booking")}
-            className="mt-5 bg-orange-500 text-white py-3 rounded-full"
+          <motion.div
+            animate={{ rotate: open ? 90 : 0 }}
+            transition={{ duration: 0.3 }}
           >
-            Book Now
-          </button>
-          
-
-        </div>
-
+            {open ? <X size={28} /> : <Menu size={28} />}
+          </motion.div>
+        </motion.button>
       </div>
 
-    </nav>
+      <motion.div
+        initial={false}
+        animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+        className="overflow-hidden md:hidden"
+      >
+        <div className="border-t border-slate-200 bg-white/95 px-5 py-4 shadow-lg backdrop-blur-md">
+          <div className="flex flex-col gap-2">
+            {[
+              "About",
+              "Menu",
+              "Services",
+              "Gallery",
+              "Contact",
+            ].map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                onClick={handleLinkClick}
+                className="rounded-lg px-3 py-3 text-sm font-medium text-slate-700 transition hover:bg-orange-50 hover:text-orange-600"
+              >
+                {item}
+              </a>
+            ))}
+
+            <motion.button
+              onClick={() => navigate("/booking")}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="mt-2 rounded-full bg-orange-500 px-5 py-3 text-sm font-semibold text-white"
+            >
+              Book Now
+            </motion.button>
+          </div>
+        </div>
+      </motion.div>
+    </motion.nav>
   );
 }

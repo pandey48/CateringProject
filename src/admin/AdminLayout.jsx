@@ -7,20 +7,16 @@ export default function AdminLayout() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-amber-50 flex-col md:flex-row">
-
-      {/* Desktop Sidebar */}
+    <div className="flex min-h-screen bg-slate-100 text-slate-800">
       <div className="hidden md:block">
         <Sidebar />
       </div>
 
-      {/* Mobile Sidebar (overlay) */}
       {open && (
-        <div className="fixed inset-0 z-50 flex" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z-50 flex md:hidden" role="dialog" aria-modal="true">
           <Sidebar closeSidebar={() => setOpen(false)} />
-
           <div
-            className="flex-1 bg-black/50"
+            className="flex-1 bg-slate-900/60"
             onClick={() => setOpen(false)}
             aria-hidden="true"
           />
@@ -28,15 +24,14 @@ export default function AdminLayout() {
       )}
 
       <div className="flex-1 min-h-screen">
-
         <Navbar setOpen={setOpen} />
 
-        <main className="p-4 md:p-6 bg-white text-gray-800">
-          <Outlet />
+        <main className="bg-slate-50 p-4 sm:p-6 lg:p-8">
+          <div className="mx-auto max-w-7xl">
+            <Outlet />
+          </div>
         </main>
-
       </div>
-
     </div>
   );
 }

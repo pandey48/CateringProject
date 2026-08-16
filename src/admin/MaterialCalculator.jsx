@@ -106,234 +106,140 @@ ${materialText}
 };
 
   return (
-    <div className="p-8 min-h-screen bg-blue-300">
+    <div className="space-y-6 p-4 sm:p-6 lg:p-8">
+      <div>
+        <h1 className="text-2xl font-bold text-slate-800 sm:text-3xl">Material Calculator</h1>
+        <p className="mt-1 text-sm text-slate-500">Select a booking and calculate material for the event</p>
+      </div>
 
-      <h1 className="text-3xl font-bold mb-8">
-        Material Calculator
-      </h1>
+      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+          <select
+            value={selectedBooking}
+            onChange={(e) => setSelectedBooking(e.target.value)}
+            className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm outline-none transition focus:border-blue-500 focus:bg-white"
+          >
+            <option value="">Select Booking</option>
+            {bookings.map((item) => (
+              <option key={item._id} value={item._id}>
+                {item.customerName} ({item.persons} Persons)
+              </option>
+            ))}
+          </select>
 
-      <div className="bg-lime-300 p-6 rounded-xl shadow">
-
-        <select
-          value={selectedBooking}
-          onChange={(e) => setSelectedBooking(e.target.value)}
-          className="border p-3 rounded-lg w-full"
-        >
-          <option value="">Select Booking</option>
-
-          {bookings.map((item) => (
-            <option key={item._id} value={item._id}>
-              {item.customerName} ({item.persons} Persons)
-            </option>
-          ))}
-
-        </select>
-
-        <button
-          onClick={calculateMaterial}
-          className="mt-5 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
-        >
-          Calculate Material
-        </button>
-
+          <button
+            onClick={calculateMaterial}
+            className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700 sm:w-auto"
+          >
+            Calculate Material
+          </button>
+        </div>
       </div>
 
       {booking && (
-        <div className="bg-cyan-300 mt-8 rounded-xl shadow p-6">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+          <h2 className="mb-4 text-xl font-bold text-slate-800">Customer Details</h2>
 
-          <h2 className="text-2xl font-bold mb-4">
-            Customer Details
-          </h2>
-
-          <div className="grid md:grid-cols-2 gap-4">
-
-            <p>
-              <b>Name :</b> {booking.customerName}
-            </p>
-
-            <p>
-              <b>Phone :</b> {booking.phone}
-            </p>
-
-            <p>
-              <b>Persons :</b> {booking.persons}
-            </p>
-
-            <p>
-              <b>Event :</b> {booking.eventType}
-            </p>
-
+          <div className="grid gap-3 sm:grid-cols-2">
+            <p className="rounded-xl bg-slate-50 p-3 text-slate-700"><span className="font-semibold">Name:</span> {booking.customerName}</p>
+            <p className="rounded-xl bg-slate-50 p-3 text-slate-700"><span className="font-semibold">Phone:</span> {booking.phone}</p>
+            <p className="rounded-xl bg-slate-50 p-3 text-slate-700"><span className="font-semibold">Persons:</span> {booking.persons}</p>
+            <p className="rounded-xl bg-slate-50 p-3 text-slate-700"><span className="font-semibold">Event:</span> {booking.eventType}</p>
           </div>
-
         </div>
       )}
 
       {material.length > 0 && (
-
-        <div className="bg-amber-500 mt-8 rounded-xl shadow overflow-hidden">
-
-          <table className="w-full">
-
-            <thead className="bg-blue-600 text-white">
-
-              <tr>
-
-                <th className="p-4">Dish</th>
-                <th>Ingredient</th>
-                <th>Quantity</th>
-                <th>Unit</th>
-
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              {material.map((item, index) => (
-
-                <tr
-                  key={index}
-                  className="border-b hover:bg-gray-100"
-                >
-
-                  <td className="p-4">
-                    {item.dish}
-                  </td>
-
-                  <td>{item.ingredient}</td>
-
-                  <td>{item.quantity}</td>
-
-                  <td>{item.unit}</td>
-
+        <div className="space-y-6">
+          <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <table className="min-w-[640px] w-full text-left">
+              <thead className="bg-slate-900 text-white">
+                <tr>
+                  <th className="p-4 font-semibold">Dish</th>
+                  <th className="p-4 font-semibold">Ingredient</th>
+                  <th className="p-4 font-semibold">Quantity</th>
+                  <th className="p-4 font-semibold">Unit</th>
                 </tr>
+              </thead>
 
-              ))}
+              <tbody>
+                {material.map((item, index) => (
+                  <tr key={index} className="border-b border-slate-200 hover:bg-slate-50">
+                    <td className="p-4 text-slate-800">{item.dish}</td>
+                    <td className="p-4 text-slate-600">{item.ingredient}</td>
+                    <td className="p-4 text-slate-600">{item.quantity}</td>
+                    <td className="p-4 text-slate-600">{item.unit}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-            </tbody>
-
-          </table>
-          <div className="flex gap-4 mt-6">
-
-  <button
-    onClick={() => generatePurchasePDF(booking, summary)}
-    className="bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-lg"
-  >
-    📄 Download PDF
-  </button>
-  <div className="flex gap-4 mt-5">
-
-  <button
-    onClick={() => generatePurchasePDF(booking, summary)}
-    className="bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-lg"
-  >
-    📄 Download PDF
-  </button>
-
-  <button
-    onClick={sendWhatsApp}
-    className="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-lg"
-  >
-    📱 Share on WhatsApp
-  </button>
-
-</div>
-
-  <button
-    onClick={() => window.print()}
-    className="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-lg"
-  >
-    🖨 Print
-  </button>
-
-</div>
-<div className="bg-white mt-8 rounded-xl shadow p-6">
-
-  <h2 className="text-2xl font-bold mb-6">
-    Total Purchase Material
-  </h2>
-
-  {Object.keys(groupedSummary).map((category) => (
-
-    <div key={category} className="mb-8">
-
-      <h3 className="text-xl font-bold bg-green-600 text-white p-3 rounded">
-
-        {category === "Vegetable" && "🥬 सब्जी"}
-
-        {category === "Grocery" && "🛒 किराना"}
-
-        {category === "Dairy" && "🥛 डेयरी"}
-
-        {category === "Spices" && "🌶️ मसाले"}
-
-        {category === "Dry Fruits" && "🥜 ड्राई फ्रूट"}
-
-        {category === "Other" && "📦 अन्य"}
-
-      </h3>
-
-      <table className="w-full mt-3">
-
-        <thead className="bg-gray-100">
-
-          <tr>
-
-            <th className="p-3 text-left">
-              Ingredient
-            </th>
-
-            <th>
-              Quantity
-            </th>
-
-            <th>
-              Unit
-            </th>
-
-          </tr>
-
-        </thead>
-
-        <tbody>
-
-          {groupedSummary[category].map((item, index) => (
-
-            <tr
-              key={index}
-              className="border-b"
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <button
+              onClick={() => generatePurchasePDF(booking, summary)}
+              className="rounded-xl bg-red-600 px-5 py-3 font-semibold text-white transition hover:bg-red-700"
             >
+              📄 Download PDF
+            </button>
 
-              <td className="p-3">
-                {item.ingredient}
-              </td>
+            <button
+              onClick={sendWhatsApp}
+              className="rounded-xl bg-green-600 px-5 py-3 font-semibold text-white transition hover:bg-green-700"
+            >
+              📱 Share on WhatsApp
+            </button>
 
-              <td>
-                {item.quantity.toFixed(2)}
-              </td>
+            <button
+              onClick={() => window.print()}
+              className="rounded-xl bg-slate-800 px-5 py-3 font-semibold text-white transition hover:bg-slate-900"
+            >
+              🖨 Print
+            </button>
+          </div>
 
-              <td>
-                {item.unit}
-              </td>
+          <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+            <h2 className="mb-6 text-xl font-bold text-slate-800">Total Purchase Material</h2>
 
-            </tr>
+            <div className="space-y-6">
+              {Object.keys(groupedSummary).map((category) => (
+                <div key={category} className="overflow-hidden rounded-xl border border-slate-200">
+                  <h3 className="bg-emerald-600 p-3 text-base font-bold text-white">
+                    {category === "Vegetable" && "🥬 सब्जी"}
+                    {category === "Grocery" && "🛒 किराना"}
+                    {category === "Dairy" && "🥛 डेयरी"}
+                    {category === "Spices" && "🌶️ मसाले"}
+                    {category === "Dry Fruits" && "🥜 ड्राई फ्रूट"}
+                    {category === "Other" && "📦 अन्य"}
+                  </h3>
 
-          ))}
+                  <div className="overflow-x-auto">
+                    <table className="min-w-[420px] w-full text-left">
+                      <thead className="bg-slate-100">
+                        <tr>
+                          <th className="p-3 font-semibold text-slate-700">Ingredient</th>
+                          <th className="p-3 font-semibold text-slate-700">Quantity</th>
+                          <th className="p-3 font-semibold text-slate-700">Unit</th>
+                        </tr>
+                      </thead>
 
-        </tbody>
-
-      </table>
-
-    </div>
-
-  ))}
-
-</div>
-
+                      <tbody>
+                        {groupedSummary[category].map((item, index) => (
+                          <tr key={index} className="border-b border-slate-200">
+                            <td className="p-3 text-slate-700">{item.ingredient}</td>
+                            <td className="p-3 text-slate-700">{item.quantity.toFixed(2)}</td>
+                            <td className="p-3 text-slate-700">{item.unit}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-
       )}
-
     </div>
   );
 }

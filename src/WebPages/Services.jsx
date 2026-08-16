@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import cateringImg from "../assets/images/servicebg.jpg";
 import {
   FaUtensils,
@@ -60,37 +61,55 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="w-full py-5"
+      className="w-full bg-cover bg-center py-14 sm:py-20"
       style={{ backgroundImage: `url(${cateringImg})` }}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="absolute inset-0 bg-black/55" />
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Heading */}
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-center text-white mb-14 sm:mb-20">
-          Our Services
-        </h2>
+        <motion.div
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="mb-12 text-center sm:mb-16"
+        >
+          <h2 className="text-3xl font-bold text-white sm:text-4xl md:text-5xl">
+            Our Services
+          </h2>
+          <p className="mt-3 text-gray-200 text-sm sm:text-base">Everything you need for your perfect event</p>
+        </motion.div>
 
         {/* Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-10">
-          {services.map((service) => {
+        <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4 lg:gap-8">
+          {services.map((service, idx) => {
             const Icon = service.icon;
             return (
-              <button
+              <motion.button
                 key={service.title}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1, duration: 0.5 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -8, scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setActiveService(service)}
-                className="group h-36 sm:h-40 rounded-2xl
+                className="group relative h-36 flex flex-col items-center justify-center rounded-2xl
                            bg-white/10 backdrop-blur-md
                            border border-white/20
-                           flex flex-col items-center justify-center
                            transition-all duration-300
                            hover:border-yellow-400/60
                            hover:shadow-[0_0_25px_rgba(255,215,0,0.35)]
-                           focus:outline-none"
+                           focus:outline-none sm:h-40"
               >
-                <Icon
+                <motion.div
                   className="text-3xl sm:text-4xl mb-3
                              text-white transition-colors duration-300
                              group-hover:text-yellow-300"
-                />
+                  whileHover={{ rotate: 10, scale: 1.2 }}
+                >
+                  <Icon />
+                </motion.div>
 
                 <span
                   className="text-sm sm:text-base font-medium tracking-wide
@@ -99,37 +118,58 @@ export default function Services() {
                 >
                   {service.title}
                 </span>
-              </button>
+              </motion.button>
             );
           })}
         </div>
       </div>
 
       {/* MODAL */}
-      {activeService && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4">
-          <div className="relative max-w-md w-full rounded-2xl
+      <AnimatePresence>
+        {activeService && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4"
+            onClick={() => setActiveService(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              className="relative max-w-md w-full rounded-3xl
                           bg-zinc-900 border border-white/20
-                          p-6 sm:p-8 text-center">
-            <button
-              onClick={() => setActiveService(null)}
-              className="absolute top-3 right-4 text-white/70 hover:text-white text-2xl"
+                          p-6 sm:p-8 text-center shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
             >
-              ×
-            </button>
+              <motion.button
+                onClick={() => setActiveService(null)}
+                whileHover={{ rotate: 90 }}
+                className="absolute top-3 right-4 text-white/70 hover:text-white text-2xl transition"
+              >
+                ×
+              </motion.button>
 
-            <activeService.icon className="text-5xl text-yellow-400 mx-auto mb-4" />
+              <motion.div
+                className="text-5xl text-yellow-400 mx-auto mb-4"
+                animate={{ rotate: [0, 10, -10, 0] }}
+                transition={{ repeat: Infinity, duration: 3 }}
+              >
+                <activeService.icon />
+              </motion.div>
 
-            <h3 className="text-xl sm:text-2xl font-semibold text-white mb-3">
-              {activeService.title}
-            </h3>
+              <motion.h3 initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xl sm:text-2xl font-semibold text-white mb-3">
+                {activeService.title}
+              </motion.h3>
 
-            <p className="text-white/80 text-sm sm:text-base">
-              {activeService.desc}
-            </p>
-          </div>
-        </div>
-      )}
+              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-white/80 text-sm sm:text-base">
+                {activeService.desc}
+              </motion.p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

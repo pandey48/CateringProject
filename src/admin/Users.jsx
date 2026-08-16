@@ -56,91 +56,72 @@ export default function Users() {
   );
 
   return (
-    <div className="p-8 bg-cyan-100 min-h-screen">
-
-      <h1 className="text-3xl font-bold mb-6">Users</h1>
-
-      <div className="flex justify-between items-center mb-5">
-
-        <div className="flex items-center gap-2">
-          <Search size={20} />
-
-          <input
-            type="text"
-            placeholder="Search users..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="border p-3 rounded-lg w-80"
-          />
+    <div className="space-y-6 p-4 sm:p-6 lg:p-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-800 sm:text-3xl">Users</h1>
+          <p className="mt-1 text-sm text-slate-500">Manage all user records and bookings</p>
         </div>
 
-        <div className="bg-blue-600 text-white px-5 py-3 rounded-lg">
-          Total Users : {filteredUsers.length}
+        <div className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm">
+          Total Users: {filteredUsers.length}
         </div>
-
       </div>
 
-      <div className="overflow-x-auto bg-amber-500 rounded-xl shadow">
+      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="relative w-full sm:w-80">
+            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Search users..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-3 text-sm outline-none transition focus:border-blue-500 focus:bg-white"
+            />
+          </div>
+        </div>
+      </div>
 
-        <table className="w-full">
-
-          <thead className="bg-gray-900 text-white">
-
+      <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <table className="min-w-[720px] w-full text-left">
+          <thead className="bg-slate-900 text-white">
             <tr>
-              <th className="p-4">Name</th>
-              <th>Village</th>
-              <th>Phone</th>
-              <th>Event Date</th>
-              <th>Registered</th>
-              <th>Action</th>
+              <th className="p-4 font-semibold">Name</th>
+              <th className="p-4 font-semibold">Village</th>
+              <th className="p-4 font-semibold">Phone</th>
+              <th className="p-4 font-semibold">Event Date</th>
+              <th className="p-4 font-semibold">Registered</th>
+              <th className="p-4 font-semibold">Action</th>
             </tr>
-
           </thead>
 
           <tbody>
-
             {filteredUsers.map((user) => (
-
-              <tr
-                key={user._id}
-                className="border-b hover:bg-gray-700"
-              >
-
-                <td className="p-4 font-semibold">{user.customerName}</td>
-
-                <td>{user.address || "-"}</td>
-
-                <td>{user.phone || "-"}</td>
-
-                <td>
-                  {user.eventDate
-                    ? new Date(user.eventDate).toLocaleDateString()
-                    : "-"}
+              <tr key={user._id} className="border-b border-slate-200 hover:bg-slate-50">
+                <td className="p-4 font-semibold text-slate-800">{user.customerName}</td>
+                <td className="p-4 text-slate-600">{user.address || "-"}</td>
+                <td className="p-4 text-slate-600">{user.phone || "-"}</td>
+                <td className="p-4 text-slate-600">
+                  {user.eventDate ? new Date(user.eventDate).toLocaleDateString() : "-"}
                 </td>
-
-                <td>
+                <td className="p-4 text-slate-600">
                   {new Date(user.createdAt).toLocaleDateString("en-GB")}
                 </td>
-
-                <td>
+                <td className="p-4">
                   <button
                     onClick={() => deleteUser(user._id)}
-                    className="text-red-600 hover:text-red-800"
+                    className="inline-flex items-center justify-center rounded-lg bg-red-50 p-2 text-red-600 transition hover:bg-red-100"
+                    aria-label="Delete user"
                   >
-                    <Trash2 size={20} />
+                    <Trash2 size={18} />
                   </button>
                 </td>
-
               </tr>
-
             ))}
-
           </tbody>
-
         </table>
-
       </div>
-
     </div>
   );
 }

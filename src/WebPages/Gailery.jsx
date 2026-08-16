@@ -39,72 +39,82 @@ export default function Gallery() {
   return (
     <section
       id="gallery"
-      className="py-20 bg-slate-900"
+      className="bg-slate-900 py-16 sm:py-20"
     >
-      <div className="max-w-7xl mx-auto px-6">
-
-        <div className="text-center mb-14">
-
-          <span className="text-orange-400 font-semibold uppercase tracking-widest">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="mb-12 text-center sm:mb-16"
+        >
+          <motion.span
+            className="text-orange-400 text-sm font-semibold uppercase tracking-widest"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
             Gallery
-          </span>
+          </motion.span>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-white mt-3">
+          <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl md:text-5xl">
             Our Beautiful Events
           </h2>
 
-          <p className="text-gray-300 mt-4 max-w-2xl mx-auto">
+          <p className="mx-auto mt-4 max-w-2xl text-gray-400 text-sm sm:text-base">
             Every event tells a story. Explore some memorable moments
-            from weddings, birthdays, corporate events and catering
-            services.
+            from weddings, birthdays, corporate events and catering services.
           </p>
+        </motion.div>
 
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {images.map((item, index) => (
-
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{
-                duration: .5,
-                delay: index * .1,
+                duration: 0.5,
+                delay: index * 0.1,
               }}
               viewport={{ once: true }}
-              whileHover={{ y: -10 }}
-              className="group relative overflow-hidden rounded-3xl shadow-xl cursor-pointer"
+              whileHover={{ y: -12 }}
+              className="group relative cursor-pointer overflow-hidden rounded-3xl shadow-xl"
             >
-
-              <img
+              <motion.img
                 src={item.image}
                 alt={item.title}
-                className="w-full h-48 md:h-72 object-cover duration-700 group-hover:scale-110"
+                className="h-48 w-full object-cover md:h-72"
+                whileHover={{ scale: 1.12 }}
+                transition={{ duration: 0.4 }}
               />
 
               {/* Overlay */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                className="absolute inset-0 flex flex-col items-center justify-center bg-black/60"
+              >
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileHover={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 200 }}
+                >
+                  <Eye
+                    className="mb-4 text-white"
+                    size={45}
+                  />
+                </motion.div>
 
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 duration-500 flex flex-col justify-center items-center">
-
-                <Eye
-                  className="text-white mb-4"
-                  size={45}
-                />
-
-                <h3 className="text-white text-2xl font-bold">
+                <h3 className="text-xl font-bold text-white sm:text-2xl">
                   {item.title}
                 </h3>
-
-              </div>
-
+              </motion.div>
             </motion.div>
-
           ))}
-
         </div>
-
       </div>
     </section>
   );

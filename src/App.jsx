@@ -1,4 +1,7 @@
+
 import { Routes, Route } from "react-router-dom";
+
+import ProtectedRoute from "./ProtectedRoute";
 
 import AdminLayout from "./admin/AdminLayout";
 import Dashboard from "./admin/Dashboard";
@@ -7,37 +10,40 @@ import Menu from "./admin/Menu";
 import MaterialCalculator from "./admin/MaterialCalculator";
 import Invoices from "./admin/Invoices";
 import Attendance from "./admin/Attendance";
+import Bookings from "./admin/Bookings";
+import Employees from "./admin/Employees";
 
 import Home from "./WebPages/Home";
 import Enqury from "./WebPages/Enqury";
 import Booking from "./WebPages/Booking";
 import LoginModal from "./WebPages/LoginModal";
-import Bookings from "./admin/Bookings";
-import Employees from "./admin/Employees";
 
 export default function App() {
   return (
     <Routes>
 
-      {/* Website Routes */}
+      {/* Public Routes */}
       <Route path="/" element={<Home />} />
       <Route path="/enqury" element={<Enqury />} />
       <Route path="/booking" element={<Booking />} />
-      <Route path="/login"   element={<LoginModal/>}/>
+      <Route path="/login" element={<LoginModal />} />
 
+      {/* Protected Admin Routes */}
+      <Route element={<ProtectedRoute />}>
+        <Route path="/admin" element={<AdminLayout />}>
 
-      {/* Admin Layout */}
-      <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="users" element={<Users />} />
-        <Route path="menu" element={<Menu />} />
-        <Route path="bookings" element={<Bookings />} />
-        <Route path="material" element={<MaterialCalculator />} />
-        <Route path="invoices" element={<Invoices />} />
-        <Route path="employees"element={<Employees />}/>
-        <Route path="/admin/attendance"element={<Attendance />}
-/>
+          <Route index element={<Dashboard />} />
+
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="users" element={<Users />} />
+          <Route path="menu" element={<Menu />} />
+          <Route path="bookings" element={<Bookings />} />
+          <Route path="material" element={<MaterialCalculator />} />
+          <Route path="invoices" element={<Invoices />} />
+          <Route path="employees" element={<Employees />} />
+          <Route path="attendance" element={<Attendance />} />
+
+        </Route>
       </Route>
 
     </Routes>

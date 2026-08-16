@@ -7,166 +7,96 @@ import {
 } from "lucide-react";
 
 export default function Contact() {
+  const contactItems = [
+    { icon: Phone, title: "Phone", value: "+91 73893 68597" },
+    { icon: Mail, title: "Email", value: "pandeycatering@gmail.com" },
+    { icon: MapPin, title: "Address", value: "Madha Raghuvar Hanumna Mauganj" },
+    { icon: Clock, title: "Working Hours", value: "Any time available" },
+  ];
+
   return (
-    <section
-      id="contact"
-      className="py-20 bg-slate-100"
-    >
-      <div className="max-w-7xl mx-auto px-6">
-
-        {/* Heading */}
-
+    <section id="contact" className="bg-slate-100 py-16 sm:py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: .6 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-14"
+          className="mb-12 text-center"
         >
-
-          <span className="text-orange-500 uppercase tracking-widest font-semibold">
-            Contact Us
+          <span className="text-sm font-semibold uppercase tracking-[0.25em] text-orange-500">
+            Contact us
           </span>
-
-          <h2 className="text-4xl md:text-5xl font-bold mt-3 text-gray-900">
-            Let's Plan Your Next Event
+          <h2 className="mt-3 text-3xl font-bold text-gray-900 sm:text-4xl md:text-5xl">
+            Let&apos;s plan your next event
           </h2>
-
-          <p className="mt-4 text-gray-600">
-            Get in touch with us for weddings, birthdays,
-            corporate events and catering bookings.
+          <p className="mx-auto mt-4 max-w-2xl text-base text-gray-600 sm:text-lg">
+            Get in touch with us for weddings, birthdays, corporate events and catering bookings.
           </p>
-
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-
-          {/* Left */}
-
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: .6 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="space-y-6"
+            className="space-y-5"
           >
+            {contactItems.map(({ icon: Icon, title, value }) => (
+              <div key={title} className="flex gap-4 rounded-2xl bg-white p-5 shadow-md shadow-slate-200/70 sm:p-6">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-orange-100 text-orange-500">
+                  <Icon size={22} />
+                </div>
 
-            <div className="flex gap-5 bg-white rounded-2xl p-6 shadow">
-
-              <Phone className="text-orange-500" size={35} />
-
-              <div>
-                <h3 className="font-bold text-xl">
-                  Phone
-                </h3>
-
-                <p className="text-gray-600">
-                  +91 73893 68597
-                </p>
-
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900">{title}</h3>
+                  <p className="mt-1 text-sm text-gray-600 sm:text-base">{value}</p>
+                </div>
               </div>
-
-            </div>
-
-            <div className="flex gap-5 bg-white rounded-2xl p-6 shadow">
-
-              <Mail className="text-orange-500" size={35} />
-
-              <div>
-                <h3 className="font-bold text-xl">
-                  Email
-                </h3>
-
-                <p className="text-gray-600">
-                  pandeycatering@gmail.com
-                </p>
-
-              </div>
-
-            </div>
-
-            <div className="flex gap-5 bg-white rounded-2xl p-6 shadow">
-
-              <MapPin className="text-orange-500" size={35} />
-
-              <div>
-
-                <h3 className="font-bold text-xl">
-                  Address
-                </h3>
-
-                <p className="text-gray-600">
-                 Madha Raghuvar Hanumna Mauganj
-                </p>
-
-              </div>
-
-            </div>
-
-            <div className="flex gap-5 bg-white rounded-2xl p-6 shadow">
-
-              <Clock className="text-orange-500" size={35} />
-
-              <div>
-
-                <h3 className="font-bold text-xl">
-                  Working Hours
-                </h3>
-
-                <p className="text-gray-600">
-                  any time avalble
-                </p>
-
-              </div>
-
-            </div>
-
+            ))}
           </motion.div>
-
-          {/* Right */}
 
           <motion.form
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: .6 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="bg-white rounded-3xl shadow-xl p-8 space-y-5"
+            className="rounded-3xl bg-white p-5 shadow-xl shadow-slate-200/80 sm:p-8"
           >
+            <div className="space-y-4">
+              <input
+                type="text"
+                placeholder="Your Name"
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 p-4 text-base text-slate-800 outline-none transition focus:border-orange-400 focus:bg-white"
+              />
 
-            <input
-              type="text"
-              placeholder="Your Name"
-              className="w-full border rounded-xl p-4 outline-orange-500"
-            />
+              <input
+                type="email"
+                placeholder="Email"
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 p-4 text-base text-slate-800 outline-none transition focus:border-orange-400 focus:bg-white"
+              />
 
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full border rounded-xl p-4 outline-orange-500"
-            />
+              <input
+                type="tel"
+                placeholder="Phone Number"
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 p-4 text-base text-slate-800 outline-none transition focus:border-orange-400 focus:bg-white"
+              />
 
-            <input
-              type="tel"
-              placeholder="Phone Number"
-              className="w-full border rounded-xl p-4 outline-orange-500"
-            />
+              <textarea
+                rows="5"
+                placeholder="Message"
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 p-4 text-base text-slate-800 outline-none transition focus:border-orange-400 focus:bg-white"
+              />
 
-            <textarea
-              rows="5"
-              placeholder="Message"
-              className="w-full border rounded-xl p-4 outline-orange-500"
-            />
-
-            <button
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white py-4 rounded-xl font-semibold transition"
-            >
-              Send Message
-            </button>
-
+              <button
+                className="w-full rounded-xl bg-orange-500 px-4 py-4 text-base font-semibold text-white transition hover:bg-orange-600"
+              >
+                Send Message
+              </button>
+            </div>
           </motion.form>
-
         </div>
-
       </div>
     </section>
   );

@@ -1,5 +1,5 @@
 
-import React, { Suspense, lazy, useEffect } from "react";
+import React, { Suspense, lazy } from "react";
 import Pnavbar from "./Pnavbar";
 
 const Hero = lazy(() => import("./Hero"));
@@ -11,22 +11,17 @@ const About = lazy(() => import("./About"));
 const Contact = lazy(() => import("./Conatact"));
 const Footer = lazy(() => import("./Footer"));
 
-function Home() {
-  useEffect(() => {
-    // Warm-up important chunks shortly after mount to improve navigation speed
-    const t = setTimeout(() => {
-      import("./Hero");
-      import("./Services");
-      import("./About");
-      import("./Footer");
-    }, 1500);
-    return () => clearTimeout(t);
-  }, []);
+const LoadingScreen = () => (
+  <div className="flex min-h-screen items-center justify-center bg-[#fffaf5] text-sm font-medium text-slate-500" aria-busy="true">
+    Loading experience...
+  </div>
+);
 
+function Home() {
   return (
-    <div className="bg-gray-50 max-w-full text-gray-800">
+    <div className="max-w-full bg-[#fffaf5] text-slate-800">
       <Pnavbar />
-      <Suspense fallback={<div aria-busy="true">Loading...</div>}>
+      <Suspense fallback={<LoadingScreen />}>
         <Hero />
         <WhyChooseUs />
         <Services />
