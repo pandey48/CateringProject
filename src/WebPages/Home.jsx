@@ -1,37 +1,43 @@
-import React from "react";
-import Hero from "./Hero";
-import About from "./About";
-import Footer from "./Footer";
+
+import React, { Suspense, lazy, useEffect } from "react";
 import Pnavbar from "./Pnavbar";
-import ServicesSection from "./ServicesSection";
-import  Enqury from "./Enqury";
-import WhyChooseUs from "./WhyChooseUs";
-import Statss from "./Statss";
-import Contact from "./Conatact";
-import Services from "./Services";
 
+const Hero = lazy(() => import("./Hero"));
+const WhyChooseUs = lazy(() => import("./WhyChooseUs"));
+const Services = lazy(() => import("./Services"));
+const ServicesSection = lazy(() => import("./ServicesSection"));
+const Statss = lazy(() => import("./Statss"));
+const About = lazy(() => import("./About"));
+const Contact = lazy(() => import("./Conatact"));
+const Footer = lazy(() => import("./Footer"));
 
+function Home() {
+  useEffect(() => {
+    // Warm-up important chunks shortly after mount to improve navigation speed
+    const t = setTimeout(() => {
+      import("./Hero");
+      import("./Services");
+      import("./About");
+      import("./Footer");
+    }, 1500);
+    return () => clearTimeout(t);
+  }, []);
 
-
-export default function Home(){
-    return(
-        <div className="bg-gray-50 max-w-full text-gray-800">
-            <Pnavbar/>
-            <Hero/>
-            <WhyChooseUs/>
-            <Services/>
-            <ServicesSection/>
-             <Statss/>
-             
-            <About/>
-            
-            <Contact/>
-
-            
-            
-            <Footer/>
-
-        </div>
-
-    )
+  return (
+    <div className="bg-gray-50 max-w-full text-gray-800">
+      <Pnavbar />
+      <Suspense fallback={<div aria-busy="true">Loading...</div>}>
+        <Hero />
+        <WhyChooseUs />
+        <Services />
+        <ServicesSection />
+        <Statss />
+        <About />
+        <Contact />
+        <Footer />
+      </Suspense>
+    </div>
+  );
 }
+
+export default React.memo(Home);
