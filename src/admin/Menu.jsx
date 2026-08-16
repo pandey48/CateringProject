@@ -117,14 +117,14 @@ export default function Menu() {
   );
 
   return (
-    <div className="space-y-6 p-4 sm:p-6 lg:p-8">
+    <div className="w-full min-w-0 space-y-6 p-4 sm:p-6 lg:p-8">
       <div>
         <h1 className="text-2xl font-bold text-slate-800 sm:text-3xl">Menu Management</h1>
         <p className="mt-1 text-sm text-slate-500">Create, update, and manage your catering menu</p>
       </div>
 
       <form onSubmit={addMenu} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           <input
             type="text"
             name="dishName"
@@ -160,7 +160,7 @@ export default function Menu() {
           <h2 className="mb-4 text-xl font-bold text-slate-800">Ingredients</h2>
 
           {ingredients.map((ingredient, index) => (
-            <div key={index} className="mb-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            <div key={index} className="mb-4 grid gap-3 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
               <select
                 name="category"
                 value={ingredient.category}
@@ -238,36 +238,65 @@ export default function Menu() {
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <table className="min-w-[640px] w-full text-left">
-          <thead className="bg-slate-900 text-white">
-            <tr>
-              <th className="p-4 font-semibold">Dish</th>
-              <th className="p-4 font-semibold">Category</th>
-              <th className="p-4 font-semibold">Price</th>
-              <th className="p-4 font-semibold">Action</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {filteredMenu.map((item) => (
-              <tr key={item._id} className="border-b border-slate-200 hover:bg-slate-50">
-                <td className="p-4 font-medium text-slate-800">{item.dishName}</td>
-                <td className="p-4 text-slate-600">{item.category}</td>
-                <td className="p-4 text-slate-600">₹ {item.price}</td>
-                <td className="p-4">
-                  <button
-                    onClick={() => deleteMenu(item._id)}
-                    className="inline-flex items-center justify-center rounded-lg bg-red-50 p-2 text-red-600 transition hover:bg-red-100"
-                    aria-label="Delete menu"
-                  >
-                    <Trash2 size={18} />
-                  </button>
-                </td>
+      {/* Menu List - Mobile Cards / Desktop Table */}
+      <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+        
+        {/* Desktop Table */}
+        <div className="hidden md:block overflow-x-auto">
+          <table className="w-full text-left">
+            <thead className="bg-slate-900 text-white">
+              <tr>
+                <th className="p-4 font-semibold">Dish</th>
+                <th className="p-4 font-semibold">Category</th>
+                <th className="p-4 font-semibold">Price</th>
+                <th className="p-4 font-semibold">Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {filteredMenu.map((item) => (
+                <tr key={item._id} className="border-b border-slate-200 hover:bg-slate-50">
+                  <td className="p-4 font-medium text-slate-800">{item.dishName}</td>
+                  <td className="p-4 text-slate-600">{item.category}</td>
+                  <td className="p-4 text-slate-600">₹ {item.price}</td>
+                  <td className="p-4">
+                    <button
+                      onClick={() => deleteMenu(item._id)}
+                      className="inline-flex items-center justify-center rounded-lg bg-red-50 p-2 text-red-600 transition hover:bg-red-100"
+                      aria-label="Delete menu"
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Mobile Cards */}
+        <div className="md:hidden space-y-3 p-4">
+          {filteredMenu.map((item) => (
+            <div key={item._id} className="border border-slate-200 rounded-lg p-4">
+              <div className="flex justify-between items-start mb-2">
+                <div className="flex-1">
+                  <h3 className="font-bold text-slate-800">{item.dishName}</h3>
+                  <p className="text-xs text-slate-500">{item.category}</p>
+                </div>
+                <span className="ml-2 font-bold text-slate-800 whitespace-nowrap">₹ {item.price}</span>
+              </div>
+              <div className="flex justify-end">
+                <button
+                  onClick={() => deleteMenu(item._id)}
+                  className="inline-flex items-center justify-center rounded-lg bg-red-50 p-2 text-red-600 transition hover:bg-red-100"
+                  aria-label="Delete menu"
+                >
+                  <Trash2 size={18} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

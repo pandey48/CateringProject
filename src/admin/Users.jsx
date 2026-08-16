@@ -56,7 +56,7 @@ export default function Users() {
   );
 
   return (
-    <div className="space-y-6 p-4 sm:p-6 lg:p-8">
+    <div className="w-full min-w-0 space-y-6 p-4 sm:p-6 lg:p-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-800 sm:text-3xl">Users</h1>
@@ -83,44 +83,90 @@ export default function Users() {
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <table className="min-w-[720px] w-full text-left">
-          <thead className="bg-slate-900 text-white">
-            <tr>
-              <th className="p-4 font-semibold">Name</th>
-              <th className="p-4 font-semibold">Village</th>
-              <th className="p-4 font-semibold">Phone</th>
-              <th className="p-4 font-semibold">Event Date</th>
-              <th className="p-4 font-semibold">Registered</th>
-              <th className="p-4 font-semibold">Action</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {filteredUsers.map((user) => (
-              <tr key={user._id} className="border-b border-slate-200 hover:bg-slate-50">
-                <td className="p-4 font-semibold text-slate-800">{user.customerName}</td>
-                <td className="p-4 text-slate-600">{user.address || "-"}</td>
-                <td className="p-4 text-slate-600">{user.phone || "-"}</td>
-                <td className="p-4 text-slate-600">
-                  {user.eventDate ? new Date(user.eventDate).toLocaleDateString() : "-"}
-                </td>
-                <td className="p-4 text-slate-600">
-                  {new Date(user.createdAt).toLocaleDateString("en-GB")}
-                </td>
-                <td className="p-4">
-                  <button
-                    onClick={() => deleteUser(user._id)}
-                    className="inline-flex items-center justify-center rounded-lg bg-red-50 p-2 text-red-600 transition hover:bg-red-100"
-                    aria-label="Delete user"
-                  >
-                    <Trash2 size={18} />
-                  </button>
-                </td>
+      {/* Users List - Mobile Cards / Desktop Table */}
+      <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+        
+        {/* Desktop Table */}
+        <div className="hidden md:block overflow-x-auto">
+          <table className="w-full text-left">
+            <thead className="bg-slate-900 text-white">
+              <tr>
+                <th className="p-4 font-semibold">Name</th>
+                <th className="p-4 font-semibold">Village</th>
+                <th className="p-4 font-semibold">Phone</th>
+                <th className="p-4 font-semibold">Event Date</th>
+                <th className="p-4 font-semibold">Registered</th>
+                <th className="p-4 font-semibold">Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {filteredUsers.map((user) => (
+                <tr key={user._id} className="border-b border-slate-200 hover:bg-slate-50">
+                  <td className="p-4 font-semibold text-slate-800">{user.customerName}</td>
+                  <td className="p-4 text-slate-600">{user.address || "-"}</td>
+                  <td className="p-4 text-slate-600">{user.phone || "-"}</td>
+                  <td className="p-4 text-slate-600">
+                    {user.eventDate ? new Date(user.eventDate).toLocaleDateString() : "-"}
+                  </td>
+                  <td className="p-4 text-slate-600">
+                    {new Date(user.createdAt).toLocaleDateString("en-GB")}
+                  </td>
+                  <td className="p-4">
+                    <button
+                      onClick={() => deleteUser(user._id)}
+                      className="inline-flex items-center justify-center rounded-lg bg-red-50 p-2 text-red-600 transition hover:bg-red-100"
+                      aria-label="Delete user"
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Mobile Cards */}
+        <div className="md:hidden space-y-3 p-4">
+          {filteredUsers.map((user) => (
+            <div key={user._id} className="border border-slate-200 rounded-lg p-4">
+              <div className="mb-3">
+                <h3 className="font-bold text-slate-800">{user.customerName}</h3>
+                <p className="text-xs text-slate-500">{user.address || "Address not provided"}</p>
+              </div>
+
+              <div className="space-y-2 mb-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-slate-600">Phone:</span>
+                  <span className="font-medium text-slate-800">{user.phone || "-"}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-600">Event Date:</span>
+                  <span className="font-medium text-slate-800">
+                    {user.eventDate ? new Date(user.eventDate).toLocaleDateString() : "-"}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-600">Registered:</span>
+                  <span className="font-medium text-slate-800">
+                    {new Date(user.createdAt).toLocaleDateString("en-GB")}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  onClick={() => deleteUser(user._id)}
+                  className="inline-flex items-center justify-center rounded-lg bg-red-50 p-2 text-red-600 transition hover:bg-red-100"
+                  aria-label="Delete user"
+                >
+                  <Trash2 size={18} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

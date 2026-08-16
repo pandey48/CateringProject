@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import cateringImg from "../assets/images/catering.jpg";
 import {
   Phone,
@@ -11,6 +12,14 @@ import {
 
 export default function Hero() {
   const navigate = useNavigate();
+  const [bgLoaded, setBgLoaded] = useState(false);
+
+  useEffect(() => {
+    // Preload image without blocking render
+    const img = new Image();
+    img.src = cateringImg;
+    img.onload = () => setBgLoaded(true);
+  }, []);
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -42,9 +51,15 @@ export default function Hero() {
         overflow-hidden
         bg-cover
         bg-center
+        bg-gradient-to-r
+        from-orange-900
+        via-orange-800
+        to-orange-900
       "
       style={{
-        backgroundImage: `url(${cateringImg})`,
+        backgroundImage: bgLoaded ? `url(${cateringImg})` : undefined,
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
       }}
     >
       {/* Overlay */}
@@ -92,7 +107,7 @@ export default function Hero() {
               animate="visible"
               className="
                 inline-flex
-                items-center
+                
                 gap-2
                 rounded-full
                 bg-orange-500
@@ -178,9 +193,10 @@ export default function Hero() {
               className="
                 mt-6
                 flex
-                flex-col
+                flex-row
                 justify-center
-                gap-3
+                gap-1
+                sm:gap-7
                 sm:flex-row
                 lg:justify-start
               "
@@ -202,11 +218,12 @@ export default function Hero() {
                   shadow-xl
                 "
               >
-                Get Free Quote
+                Book Now
               </motion.button>
 
               <motion.a
-                href="#menu"
+              
+                href="#services"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.96 }}
                 className="
@@ -223,7 +240,7 @@ export default function Hero() {
                   hover:bg-white/10
                 "
               >
-                View Menu
+               All services
               </motion.a>
             </motion.div>
 
@@ -235,9 +252,9 @@ export default function Hero() {
               className="
                 mt-6
                 flex
-                flex-col
+                flex-row
                 items-center
-                gap-2
+                gap-4
                 sm:flex-row
                 lg:justify-start
               "
@@ -255,7 +272,7 @@ export default function Hero() {
               <span className="text-sm font-semibold text-white">
                 Trusted by 500+ Families
               </span>
-            </motion.div>
+            
 
             {/* Contact */}
             <motion.div
@@ -305,6 +322,7 @@ export default function Hero() {
               >
                 <Instagram size={19} className="text-white" />
               </motion.a>
+            </motion.div>
             </motion.div>
           </motion.div>
 

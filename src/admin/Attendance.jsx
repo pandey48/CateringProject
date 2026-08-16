@@ -128,19 +128,19 @@ export default function Attendance() {
   const pending = total - paid;
 
   return (
-    <div className="p-4 md:p-8 bg-amber-50 min-h-screen">
+    <div className="min-h-screen w-full min-w-0 bg-amber-50 p-4 md:p-8">
 
-      <h1 className="text-3xl font-bold mb-2">
+      <h1 className="mb-2 text-2xl font-bold sm:text-3xl">
         Today's Attendance
       </h1>
 
-      <p className="text-gray-600 mb-6">
+      <p className="mb-6 text-sm text-gray-600 sm:text-base">
         Date: {today}
       </p>
 
       {/* Summary */}
 
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
 
         <div className="bg-blue-500 text-white p-5 rounded-xl">
           <p>Employees</p>
@@ -216,169 +216,168 @@ export default function Attendance() {
 
       </div>
 
-      {/* Employee Table */}
+      {/* Employee List - Mobile Cards / Desktop Table */}
 
-      <div className="bg-white rounded-xl shadow overflow-x-auto">
+      <div className="space-y-4 md:space-y-0 rounded-xl bg-white shadow md:overflow-x-auto">
 
-        <table className="w-full">
+        {/* Desktop Table */}
+        <div className="hidden md:block">
+          <table className="w-full">
 
-          <thead className="bg-gray-900 text-white">
+            <thead className="bg-gray-900 text-white">
+              <tr>
+                <th className="p-4 text-left">Employee</th>
+                <th className="p-4">Role</th>
+                <th className="p-4">Daily Rate</th>
+                <th className="p-4">Attendance</th>
+                <th className="p-4">Amount</th>
+                <th className="p-4">Payment</th>
+              </tr>
+            </thead>
 
-            <tr>
+            <tbody>
+              {employees.map((item) => {
+                const employee = item.employee;
+                const work = item.work;
 
-              <th className="p-4 text-left">
-                Employee
-              </th>
+                return (
+                  <tr key={employee._id} className="border-b">
+                    <td className="p-4 font-semibold">{employee.name}</td>
+                    <td className="p-4 text-center">{employee.role}</td>
+                    <td className="p-4 text-center">₹{employee.dailyRate}</td>
 
-              <th className="p-4">
-                Role
-              </th>
-
-              <th className="p-4">
-                Daily Rate
-              </th>
-
-              <th className="p-4">
-                Attendance
-              </th>
-
-              <th className="p-4">
-                Amount
-              </th>
-
-              <th className="p-4">
-                Payment
-              </th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {employees.map((item) => {
-
-              const employee = item.employee;
-              const work = item.work;
-
-              return (
-                <tr
-                  key={employee._id}
-                  className="border-b"
-                >
-
-                  <td className="p-4 font-semibold">
-                    {employee.name}
-                  </td>
-
-                  <td className="text-center">
-                    {employee.role}
-                  </td>
-
-                  <td className="text-center">
-                    ₹{employee.dailyRate}
-                  </td>
-
-                  <td className="text-center">
-
-                    <div className="flex gap-2 justify-center">
-
-                      <button
-                        onClick={() =>
-                          markAttendance(
-                            employee,
-                            "Present"
-                          )
-                        }
-                        className={`px-3 py-2 rounded-lg ${
-                          work?.attendance === "Present"
-                            ? "bg-green-600 text-white"
-                            : "bg-gray-200"
-                        }`}
-                      >
-                        Present
-                      </button>
-
-                      <button
-                        onClick={() =>
-                          markAttendance(
-                            employee,
-                            "Half Day"
-                          )
-                        }
-                        className={`px-3 py-2 rounded-lg ${
-                          work?.attendance === "Half Day"
-                            ? "bg-yellow-500 text-white"
-                            : "bg-gray-200"
-                        }`}
-                      >
-                        Half
-                      </button>
-
-                      <button
-                        onClick={() =>
-                          markAttendance(
-                            employee,
-                            "Absent"
-                          )
-                        }
-                        className={`px-3 py-2 rounded-lg ${
-                          work?.attendance === "Absent"
-                            ? "bg-red-600 text-white"
-                            : "bg-gray-200"
-                        }`}
-                      >
-                        Absent
-                      </button>
-
-                    </div>
-
-                  </td>
-
-                  <td className="text-center font-bold">
-                    ₹{work?.amount || 0}
-                  </td>
-
-                  <td className="text-center">
-
-                    {work ? (
-
-                      work.paymentStatus === "Paid" ? (
-
-                        <span className="text-green-600 font-semibold">
-                          Paid
-                        </span>
-
-                      ) : (
-
+                    <td className="p-4 text-center">
+                      <div className="flex gap-2 justify-center">
                         <button
-                          onClick={() =>
-                            markPaid(work._id)
-                          }
-                          className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+                          onClick={() => markAttendance(employee, "Present")}
+                          className={`px-3 py-2 rounded-lg text-xs sm:text-sm ${
+                            work?.attendance === "Present"
+                              ? "bg-green-600 text-white"
+                              : "bg-gray-200"
+                          }`}
                         >
-                          Mark Paid
+                          Present
                         </button>
+                        <button
+                          onClick={() => markAttendance(employee, "Half Day")}
+                          className={`px-3 py-2 rounded-lg text-xs sm:text-sm ${
+                            work?.attendance === "Half Day"
+                              ? "bg-yellow-500 text-white"
+                              : "bg-gray-200"
+                          }`}
+                        >
+                          Half
+                        </button>
+                        <button
+                          onClick={() => markAttendance(employee, "Absent")}
+                          className={`px-3 py-2 rounded-lg text-xs sm:text-sm ${
+                            work?.attendance === "Absent"
+                              ? "bg-red-600 text-white"
+                              : "bg-gray-200"
+                          }`}
+                        >
+                          Absent
+                        </button>
+                      </div>
+                    </td>
 
-                      )
+                    <td className="p-4 text-center font-bold">₹{work?.amount || 0}</td>
 
+                    <td className="p-4 text-center">
+                      {work ? (
+                        work.paymentStatus === "Paid" ? (
+                          <span className="text-green-600 font-semibold">Paid</span>
+                        ) : (
+                          <button
+                            onClick={() => markPaid(work._id)}
+                            className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm"
+                          >
+                            Mark Paid
+                          </button>
+                        )
+                      ) : (
+                        <span className="text-gray-400">Not Marked</span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Mobile Cards */}
+        <div className="md:hidden space-y-3 p-4">
+          {employees.map((item) => {
+            const employee = item.employee;
+            const work = item.work;
+
+            return (
+              <div key={employee._id} className="border border-slate-200 rounded-lg p-4">
+                <div className="mb-3 flex justify-between items-start">
+                  <div>
+                    <h3 className="font-bold text-slate-800">{employee.name}</h3>
+                    <p className="text-xs text-slate-500">{employee.role}</p>
+                  </div>
+                  <span className="text-xs bg-slate-100 px-2 py-1 rounded">
+                    ₹{employee.dailyRate}/day
+                  </span>
+                </div>
+
+                <div className="mb-3 grid grid-cols-3 gap-2 text-center text-xs">
+                  <button
+                    onClick={() => markAttendance(employee, "Present")}
+                    className={`py-2 rounded-lg font-medium ${
+                      work?.attendance === "Present"
+                        ? "bg-green-600 text-white"
+                        : "bg-gray-200 text-gray-700"
+                    }`}
+                  >
+                    Present
+                  </button>
+                  <button
+                    onClick={() => markAttendance(employee, "Half Day")}
+                    className={`py-2 rounded-lg font-medium ${
+                      work?.attendance === "Half Day"
+                        ? "bg-yellow-500 text-white"
+                        : "bg-gray-200 text-gray-700"
+                    }`}
+                  >
+                    Half
+                  </button>
+                  <button
+                    onClick={() => markAttendance(employee, "Absent")}
+                    className={`py-2 rounded-lg font-medium ${
+                      work?.attendance === "Absent"
+                        ? "bg-red-600 text-white"
+                        : "bg-gray-200 text-gray-700"
+                    }`}
+                  >
+                    Absent
+                  </button>
+                </div>
+
+                <div className="flex justify-between items-center text-sm">
+                  <span className="font-bold">Amount: ₹{work?.amount || 0}</span>
+                  {work ? (
+                    work.paymentStatus === "Paid" ? (
+                      <span className="text-green-600 font-semibold">✓ Paid</span>
                     ) : (
-
-                      <span className="text-gray-400">
-                        Not Marked
-                      </span>
-
-                    )}
-
-                  </td>
-
-                </tr>
-              );
-            })}
-
-          </tbody>
-
-        </table>
+                      <button
+                        onClick={() => markPaid(work._id)}
+                        className="bg-blue-600 text-white px-3 py-1 rounded text-xs font-medium"
+                      >
+                        Mark Paid
+                      </button>
+                    )
+                  ) : (
+                    <span className="text-gray-400 text-xs">Not Marked</span>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
 
       </div>
 

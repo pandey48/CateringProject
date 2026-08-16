@@ -355,7 +355,7 @@ We look forward to serving you.
           <select
             value={selectedBooking}
             onChange={(e) => setSelectedBooking(e.target.value)}
-            className="flex-1 rounded-xl border border-slate-300 bg-white p-3 outline-none focus:border-blue-500"
+            className="w-full flex-1 rounded-xl border border-slate-300 bg-white p-3 outline-none focus:border-blue-500"
           >
 
             <option value="">
@@ -572,7 +572,7 @@ We look forward to serving you.
 
                   <td className="p-4">
 
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap gap-2">
 
                       {/* PAYMENT */}
 

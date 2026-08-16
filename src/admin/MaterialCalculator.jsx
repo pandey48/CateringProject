@@ -106,7 +106,7 @@ ${materialText}
 };
 
   return (
-    <div className="space-y-6 p-4 sm:p-6 lg:p-8">
+    <div className="w-full min-w-0 space-y-6 p-4 sm:p-6 lg:p-8">
       <div>
         <h1 className="text-2xl font-bold text-slate-800 sm:text-3xl">Material Calculator</h1>
         <p className="mt-1 text-sm text-slate-500">Select a booking and calculate material for the event</p>
@@ -129,7 +129,7 @@ ${materialText}
 
           <button
             onClick={calculateMaterial}
-            className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700 sm:w-auto"
+            className="w-full rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700 sm:w-auto"
           >
             Calculate Material
           </button>
@@ -151,48 +151,67 @@ ${materialText}
 
       {material.length > 0 && (
         <div className="space-y-6">
-          <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <table className="min-w-[640px] w-full text-left">
-              <thead className="bg-slate-900 text-white">
-                <tr>
-                  <th className="p-4 font-semibold">Dish</th>
-                  <th className="p-4 font-semibold">Ingredient</th>
-                  <th className="p-4 font-semibold">Quantity</th>
-                  <th className="p-4 font-semibold">Unit</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {material.map((item, index) => (
-                  <tr key={index} className="border-b border-slate-200 hover:bg-slate-50">
-                    <td className="p-4 text-slate-800">{item.dish}</td>
-                    <td className="p-4 text-slate-600">{item.ingredient}</td>
-                    <td className="p-4 text-slate-600">{item.quantity}</td>
-                    <td className="p-4 text-slate-600">{item.unit}</td>
+          {/* Material List - Mobile Cards / Desktop Table */}
+          <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+            
+            {/* Desktop Table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left">
+                <thead className="bg-slate-900 text-white">
+                  <tr>
+                    <th className="p-4 font-semibold">Dish</th>
+                    <th className="p-4 font-semibold">Ingredient</th>
+                    <th className="p-4 font-semibold">Quantity</th>
+                    <th className="p-4 font-semibold">Unit</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+
+                <tbody>
+                  {material.map((item, index) => (
+                    <tr key={index} className="border-b border-slate-200 hover:bg-slate-50">
+                      <td className="p-4 text-slate-800">{item.dish}</td>
+                      <td className="p-4 text-slate-600">{item.ingredient}</td>
+                      <td className="p-4 text-slate-600">{item.quantity}</td>
+                      <td className="p-4 text-slate-600">{item.unit}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="md:hidden space-y-2 p-4">
+              {material.map((item, index) => (
+                <div key={index} className="border border-slate-200 rounded-lg p-3">
+                  <div className="text-xs text-slate-500 mb-1">Dish: {item.dish}</div>
+                  <div className="font-semibold text-slate-800 mb-2">{item.ingredient}</div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-slate-600">Qty: <strong>{item.quantity}</strong></span>
+                    <span className="text-slate-600">Unit: <strong>{item.unit}</strong></span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <button
               onClick={() => generatePurchasePDF(booking, summary)}
-              className="rounded-xl bg-red-600 px-5 py-3 font-semibold text-white transition hover:bg-red-700"
+              className="w-full rounded-xl bg-red-600 px-5 py-3 font-semibold text-white transition hover:bg-red-700 sm:w-auto"
             >
               📄 Download PDF
             </button>
 
             <button
               onClick={sendWhatsApp}
-              className="rounded-xl bg-green-600 px-5 py-3 font-semibold text-white transition hover:bg-green-700"
+              className="w-full rounded-xl bg-green-600 px-5 py-3 font-semibold text-white transition hover:bg-green-700 sm:w-auto"
             >
               📱 Share on WhatsApp
             </button>
 
             <button
               onClick={() => window.print()}
-              className="rounded-xl bg-slate-800 px-5 py-3 font-semibold text-white transition hover:bg-slate-900"
+              className="w-full rounded-xl bg-slate-800 px-5 py-3 font-semibold text-white transition hover:bg-slate-900 sm:w-auto"
             >
               🖨 Print
             </button>
@@ -213,8 +232,9 @@ ${materialText}
                     {category === "Other" && "📦 अन्य"}
                   </h3>
 
-                  <div className="overflow-x-auto">
-                    <table className="min-w-[420px] w-full text-left">
+                  {/* Desktop Table */}
+                  <div className="hidden md:block overflow-x-auto">
+                    <table className="w-full text-left">
                       <thead className="bg-slate-100">
                         <tr>
                           <th className="p-3 font-semibold text-slate-700">Ingredient</th>
@@ -233,6 +253,18 @@ ${materialText}
                         ))}
                       </tbody>
                     </table>
+                  </div>
+
+                  {/* Mobile Cards */}
+                  <div className="md:hidden space-y-2 p-4">
+                    {groupedSummary[category].map((item, index) => (
+                      <div key={index} className="flex justify-between items-center text-sm border-b border-slate-100 pb-2">
+                        <span className="text-slate-700 font-medium">{item.ingredient}</span>
+                        <span className="text-slate-700 ml-2">
+                          <strong>{item.quantity.toFixed(2)}</strong> {item.unit}
+                        </span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}

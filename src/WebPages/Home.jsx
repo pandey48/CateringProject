@@ -1,36 +1,27 @@
 
-import React, { Suspense, lazy } from "react";
+import React from "react";
 import Pnavbar from "./Pnavbar";
-
-const Hero = lazy(() => import("./Hero"));
-const WhyChooseUs = lazy(() => import("./WhyChooseUs"));
-const Services = lazy(() => import("./Services"));
-const ServicesSection = lazy(() => import("./ServicesSection"));
-const Statss = lazy(() => import("./Statss"));
-const About = lazy(() => import("./About"));
-const Contact = lazy(() => import("./Conatact"));
-const Footer = lazy(() => import("./Footer"));
-
-const LoadingScreen = () => (
-  <div className="flex min-h-screen items-center justify-center bg-[#fffaf5] text-sm font-medium text-slate-500" aria-busy="true">
-    Loading experience...
-  </div>
-);
+import Hero from "./Hero";
+import WhyChooseUs from "./WhyChooseUs";
+import Services from "./Services";
+import ServicesSection from "./ServicesSection";
+import Statss from "./Statss";
+import About from "./About";
+import Contact from "./Conatact";
+import Footer from "./Footer";
 
 function Home() {
   return (
     <div className="max-w-full bg-[#fffaf5] text-slate-800">
       <Pnavbar />
-      <Suspense fallback={<LoadingScreen />}>
-        <Hero />
-        <WhyChooseUs />
-        <Services />
-        <ServicesSection />
-        <Statss />
-        <About />
-        <Contact />
-        <Footer />
-      </Suspense>
+      <Hero />
+      <WhyChooseUs />
+      <Services />
+      <ServicesSection />
+      <Statss />
+      <About />
+      <Contact />
+      <Footer />
     </div>
   );
 }

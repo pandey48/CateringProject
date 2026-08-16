@@ -7,8 +7,8 @@ export default function AdminLayout() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-slate-100 text-slate-800">
-      <div className="hidden md:block">
+    <div className="flex min-h-screen w-full max-w-full overflow-x-hidden bg-slate-100 text-slate-800">
+      <div className="hidden shrink-0 md:block">
         <Sidebar />
       </div>
 
@@ -23,11 +23,11 @@ export default function AdminLayout() {
         </div>
       )}
 
-      <div className="flex-1 min-h-screen">
+      <div className="min-h-screen min-w-0 flex-1">
         <Navbar setOpen={setOpen} />
 
-        <main className="bg-slate-50 p-4 sm:p-6 lg:p-8">
-          <div className="mx-auto max-w-7xl">
+        <main className="w-full bg-slate-50 p-3 sm:p-6 lg:p-8">
+          <div className="mx-auto w-full max-w-7xl min-w-0">
             <Outlet />
           </div>
         </main>

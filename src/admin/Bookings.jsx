@@ -170,7 +170,7 @@ export default function Bookings() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="w-full min-w-0 space-y-6 p-4 sm:p-6 lg:p-8">
 
       {/* Header */}
       <div>
@@ -339,8 +339,8 @@ export default function Bookings() {
 
       </div>
 
-      {/* Table */}
-      <div className="bg-white rounded-xl shadow overflow-x-auto">
+      {/* Table - Mobile Cards / Desktop Table */}
+      <div className="bg-white rounded-xl shadow">
 
         {loading ? (
           <div className="p-10 text-center">
@@ -351,89 +351,178 @@ export default function Bookings() {
             No bookings found.
           </div>
         ) : (
-          <table className="w-full min-w-[1000px]">
+          <>
+            {/* Desktop Table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full">
 
-            <thead className="bg-gray-900 text-white">
+                <thead className="bg-gray-900 text-white">
 
-              <tr>
-                <th className="p-4 text-left">
-                  Customer
-                </th>
+                  <tr>
+                    <th className="p-4 text-left">
+                      Customer
+                    </th>
 
-                <th className="text-left">
-                  Event
-                </th>
+                    <th className="text-left">
+                      Event
+                    </th>
 
-                <th className="text-left">
-                  Date
-                </th>
+                    <th className="text-left">
+                      Date
+                    </th>
 
-                <th className="text-left">
-                  Persons
-                </th>
+                    <th className="text-left">
+                      Persons
+                    </th>
 
-                <th className="text-left">
-                  Menu
-                </th>
+                    <th className="text-left">
+                      Menu
+                    </th>
 
-                <th className="text-left">
-                  Status
-                </th>
+                    <th className="text-left">
+                      Status
+                    </th>
 
-                <th className="text-left">
-                  Action
-                </th>
-              </tr>
+                    <th className="text-left">
+                      Action
+                    </th>
+                  </tr>
 
-            </thead>
+                </thead>
 
-            <tbody>
+                <tbody>
 
+                  {filteredBookings.map((booking) => (
+
+                    <tr
+                      key={booking._id}
+                      className="border-b hover:bg-gray-50"
+                    >
+
+                      <td className="p-4">
+
+                        <div className="font-semibold">
+                          {booking.customerName}
+                        </div>
+
+                        <div className="text-sm text-gray-500">
+                          {booking.phone}
+                        </div>
+
+                      </td>
+
+                      <td>
+                        {booking.eventType}
+                      </td>
+
+                      <td>
+
+                        {booking.eventDate
+                          ? new Date(
+                              booking.eventDate
+                            ).toLocaleDateString("en-GB")
+                          : "-"}
+
+                      </td>
+
+                      <td>
+                        {booking.persons}
+                      </td>
+
+                      <td>
+                        {booking.menuItems?.length || 0} items
+                      </td>
+
+                      <td>
+
+                        <span
+                          className={`px-3 py-1 rounded-full text-sm ${
+                            booking.status === "Confirmed"
+                              ? "bg-green-100 text-green-700"
+                              : booking.status === "Completed"
+                              ? "bg-blue-100 text-blue-700"
+                              : booking.status === "Cancelled"
+                              ? "bg-red-100 text-red-700"
+                              : "bg-yellow-100 text-yellow-700"
+                          }`}
+                        >
+                          {booking.status}
+                        </span>
+
+                      </td>
+
+                      <td>
+
+                        <div className="flex gap-2">
+
+                          <button
+                            onClick={() =>
+                              setSelectedBooking(booking)
+                            }
+                            className="p-2 bg-blue-100 text-blue-600 rounded-lg"
+                            title="View"
+                          >
+                            <Eye size={18} />
+                          </button>
+
+                          <button
+                            onClick={() =>
+                              deleteBooking(booking._id)
+                            }
+                            className="p-2 bg-red-100 text-red-600 rounded-lg"
+                            title="Delete"
+                          >
+                            <Trash2 size={18} />
+                          </button>
+
+                        </div>
+
+                      </td>
+
+                    </tr>
+
+                  ))}
+
+                </tbody>
+
+              </table>
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="md:hidden space-y-3 p-4">
               {filteredBookings.map((booking) => (
+                <div key={booking._id} className="border border-slate-200 rounded-lg p-4">
+                  <div className="mb-3">
+                    <h3 className="font-bold text-slate-800">{booking.customerName}</h3>
+                    <p className="text-xs text-slate-500">{booking.phone}</p>
+                  </div>
 
-                <tr
-                  key={booking._id}
-                  className="border-b hover:bg-gray-50"
-                >
-
-                  <td className="p-4">
-
-                    <div className="font-semibold">
-                      {booking.customerName}
+                  <div className="space-y-2 mb-3 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Event:</span>
+                      <span className="font-medium text-slate-800">{booking.eventType}</span>
                     </div>
-
-                    <div className="text-sm text-gray-500">
-                      {booking.phone}
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Date:</span>
+                      <span className="font-medium text-slate-800">
+                        {booking.eventDate
+                          ? new Date(booking.eventDate).toLocaleDateString("en-GB")
+                          : "-"}
+                      </span>
                     </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Persons:</span>
+                      <span className="font-medium text-slate-800">{booking.persons}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Menu Items:</span>
+                      <span className="font-medium text-slate-800">{booking.menuItems?.length || 0}</span>
+                    </div>
+                  </div>
 
-                  </td>
-
-                  <td>
-                    {booking.eventType}
-                  </td>
-
-                  <td>
-
-                    {booking.eventDate
-                      ? new Date(
-                          booking.eventDate
-                        ).toLocaleDateString("en-GB")
-                      : "-"}
-
-                  </td>
-
-                  <td>
-                    {booking.persons}
-                  </td>
-
-                  <td>
-                    {booking.menuItems?.length || 0} items
-                  </td>
-
-                  <td>
-
+                  <div className="flex items-center justify-between">
                     <span
-                      className={`px-3 py-1 rounded-full text-sm ${
+                      className={`px-3 py-1 rounded-full text-xs font-medium ${
                         booking.status === "Confirmed"
                           ? "bg-green-100 text-green-700"
                           : booking.status === "Completed"
@@ -446,43 +535,28 @@ export default function Bookings() {
                       {booking.status}
                     </span>
 
-                  </td>
-
-                  <td>
-
                     <div className="flex gap-2">
-
                       <button
-                        onClick={() =>
-                          setSelectedBooking(booking)
-                        }
-                        className="p-2 bg-blue-100 text-blue-600 rounded-lg"
+                        onClick={() => setSelectedBooking(booking)}
+                        className="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200"
                         title="View"
                       >
                         <Eye size={18} />
                       </button>
 
                       <button
-                        onClick={() =>
-                          deleteBooking(booking._id)
-                        }
-                        className="p-2 bg-red-100 text-red-600 rounded-lg"
+                        onClick={() => deleteBooking(booking._id)}
+                        className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200"
                         title="Delete"
                       >
                         <Trash2 size={18} />
                       </button>
-
                     </div>
-
-                  </td>
-
-                </tr>
-
+                  </div>
+                </div>
               ))}
-
-            </tbody>
-
-          </table>
+            </div>
+          </>
         )}
 
       </div>

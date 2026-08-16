@@ -2,8 +2,8 @@ import { Menu } from "lucide-react";
 
 export default function Navbar({ setOpen }) {
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur-sm shadow-sm">
-      <div className="flex h-16 items-center justify-between px-4 md:px-6">
+    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 shadow-sm backdrop-blur-sm">
+      <div className="flex min-h-16 flex-wrap items-center justify-between gap-3 px-4 py-3 md:px-6">
         <div className="flex items-center gap-3">
           <button
             onClick={() => setOpen(true)}

@@ -102,7 +102,7 @@ export default function Dashboard() {
           {cards.map((card) => (
             <div
               key={card.title}
-              className={`${card.color} rounded-2xl p-5 text-white shadow-lg shadow-slate-200/60 ring-1 ring-black/5 transition-transform duration-200 hover:-translate-y-0.5`}
+              className={`${card.color} rounded-2xl p-4 text-white shadow-lg shadow-slate-200/60 ring-1 ring-black/5 transition-transform duration-200 hover:-translate-y-0.5 sm:p-5`}
             >
               <div className="flex items-start justify-between gap-4">
                 <div>

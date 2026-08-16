@@ -24,7 +24,7 @@ const navItems = [
 
 export default function Sidebar({ closeSidebar }) {
   return (
-    <aside className="flex h-screen w-full min-w-[240px] flex-col bg-slate-900 text-slate-100 shadow-2xl md:w-64">
+    <aside className="flex h-screen w-[80vw] max-w-[280px] flex-col bg-slate-900 text-slate-100 shadow-2xl md:w-64">
       <div className="flex items-center justify-between border-b border-slate-700 px-5 py-5">
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-orange-300">
@@ -42,7 +42,7 @@ export default function Sidebar({ closeSidebar }) {
         </button>
       </div>
 
-      <nav className="flex-1 space-y-1 px-3 py-4">
+      <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
         {navItems.map(({ to, label, icon: Icon }) => (
           <Link
             key={to}
@@ -51,7 +51,7 @@ export default function Sidebar({ closeSidebar }) {
             className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white"
           >
             <Icon size={18} />
-            <span>{label}</span>
+            <span className="truncate">{label}</span>
           </Link>
         ))}
       </nav>
