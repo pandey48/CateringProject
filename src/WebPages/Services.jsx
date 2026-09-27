@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import cateringImg from "../assets/images/servicebg.jpg";
@@ -62,7 +64,7 @@ export default function Services() {
     <section
       id="services"
       className="w-full bg-cover bg-center py-14 sm:py-20"
-      style={{ backgroundImage: `url(${cateringImg})` }}
+      style={{ backgroundImage: `url(${cateringImg.src})` }}
     >
       <div className="absolute inset-0 bg-black/55" />
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">

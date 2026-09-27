@@ -1,5 +1,7 @@
+"use client";
+
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import cateringImg from "../assets/images/catering.jpg";
 import {
@@ -10,14 +12,16 @@ import {
   Zap,
 } from "lucide-react";
 
+const heroBackground =
+  "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1600&q=80";
+
 export default function Hero() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [bgLoaded, setBgLoaded] = useState(false);
 
   useEffect(() => {
-    // Preload image without blocking render
     const img = new Image();
-    img.src = cateringImg;
+    img.src = heroBackground;
     img.onload = () => setBgLoaded(true);
   }, []);
 
@@ -44,26 +48,27 @@ export default function Hero() {
         relative
         min-h-[720px]
         h-auto
+        overflow-hidden
+        bg-cover
+        bg-center
+        bg-linear-to-r
+        from-[#1f120b]
+        via-[#331d10]
+        to-[#1b120d]
         lg:pt-30
         lg:h-screen
         lg:min-h-[650px]
         lg:max-h-[900px]
-        overflow-hidden
-        bg-cover
-        bg-center
-        bg-gradient-to-r
-        from-orange-900
-        via-orange-800
-        to-orange-900
       "
       style={{
-        backgroundImage: bgLoaded ? `url(${cateringImg})` : undefined,
+        backgroundImage: bgLoaded ? `url(${heroBackground})` : `url(${cateringImg.src})`,
         backgroundAttachment: "fixed",
         backgroundSize: "cover",
+        backgroundPosition: "center center",
       }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/65 to-black/70" />
+      <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/65 to-black/80" />
 
       {/* Main Content */}
       <div className="relative z-10 flex h-full items-center">
@@ -143,7 +148,7 @@ export default function Hero() {
                 xl:text-6xl
               "
             >
-              Premium
+              Plan Your Perfect Event
 
               <motion.span
                 className="block text-orange-400 drop-shadow-lg"
@@ -155,11 +160,11 @@ export default function Hero() {
                   duration: 4,
                 }}
               >
-                Catering & Food
+                With Us
               </motion.span>
 
               <span className="block">
-                for Every Occasion
+                
               </span>
             </motion.h1>
 
@@ -180,9 +185,7 @@ export default function Hero() {
                 lg:mx-0
               "
             >
-              Authentic dishes, professional service, and unforgettable
-              culinary experiences for weddings, birthdays, corporate events,
-              and celebrations of all sizes.
+              From weddings and birthdays to corporate events, we help you arrange everything in one place.
             </motion.p>
 
             {/* Buttons */}
@@ -202,12 +205,12 @@ export default function Hero() {
               "
             >
               <motion.button
-                onClick={() => navigate("/booking")}
+                onClick={() => router.push("#quote")}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.96 }}
                 className="
                   rounded-full
-                  bg-gradient-to-r
+                  bg-linear-to-r
                   from-orange-500
                   to-orange-600
                   px-7
@@ -218,7 +221,7 @@ export default function Hero() {
                   shadow-xl
                 "
               >
-                Book Now
+                Get Free Quote
               </motion.button>
 
               <motion.a
@@ -240,7 +243,7 @@ export default function Hero() {
                   hover:bg-white/10
                 "
               >
-               All services
+               Explore Services
               </motion.a>
             </motion.div>
 
@@ -375,7 +378,7 @@ export default function Hero() {
 
                 <div>
                   <h3 className="text-lg font-bold text-white">
-                    Why Pandey Catering?
+                    Event Management Services Near You
                   </h3>
 
                   <p className="text-xs text-orange-200">
@@ -437,7 +440,7 @@ export default function Hero() {
                   text-orange-200
                 "
               >
-                ⭐ Premium Catering Experience
+                ⭐ Complete event support, from planning to execution
               </div>
             </motion.div>
           </motion.div>

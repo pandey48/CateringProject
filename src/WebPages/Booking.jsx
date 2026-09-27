@@ -1,5 +1,7 @@
+"use client";
+
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import API_URL from "../config";
 
 export default function Booking() {
@@ -16,7 +18,10 @@ export default function Booking() {
 
 const [menus, setMenus] = useState([]);
 const [selectedMenus, setSelectedMenus] = useState([]);
+const [submitState, setSubmitState] = useState({ type: "", message: "" });
 useEffect(() => {
+  if (!API_URL) return;
+
   fetch(`${API_URL}/api/menu`)
     .then((res) => res.json())
     .then((data) => setMenus(data))
@@ -32,6 +37,12 @@ useEffect(() => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitState({ type: "", message: "" });
+
+    if (!API_URL) {
+      setSubmitState({ type: "error", message: "Booking service is not configured." });
+      return;
+    }
 
     try {
       const res = await fetch(`${API_URL}/api/bookings`, {
@@ -48,7 +59,7 @@ useEffect(() => {
       const data = await res.json();
 
       if (res.ok) {
-        alert("Booking Created Successfully ✅");
+        setSubmitState({ type: "success", message: "Booking created successfully. Our team will contact you soon." });
 
         setBooking({
           customerName: "",
@@ -58,37 +69,39 @@ useEffect(() => {
           persons: "",
           address: "",
         });
+        setSelectedMenus([]);
+        setShowMenus(false);
       } else {
-        alert(data.message || "Something went wrong");
+        setSubmitState({ type: "error", message: data.message || "Booking could not be created." });
       }
     } catch (error) {
       console.error(error);
-      alert("Server Error");
+      setSubmitState({ type: "error", message: "Server connection failed. Please try again." });
     }
   };
 
   return (
-<div
-  className="min-h-screen bg-cover bg-center py-20 px-4"
+<main
+  className="relative min-h-screen overflow-hidden bg-cover bg-center px-4 py-20 sm:px-6"
   style={{
     backgroundImage:
       "url('https://images.unsplash.com/photo-1555244162-803834f70033?w=1600')",
   }}
 >
-      <div className="max-w-5xl mx-auto
-bg-white/10
-backdrop-blur-xl
-border border-white/20
-shadow-2xl
-rounded-3xl
-p-8
-text-white">
+      <div className="animate-rise-in relative mx-auto w-full max-w-5xl rounded-4xl border border-white/20 bg-slate-950/70 p-5 text-white shadow-2xl backdrop-blur-xl sm:p-8 lg:p-10">
 
-        <h2 className="text-3xl font-bold text-center mb-8">
-          Catering Booking Form
-        </h2>
+        <div className="mb-8 flex flex-col gap-3 border-b border-white/10 pb-6 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-orange-300">Reserve your date</p>
+            <h2 className="mt-2 text-3xl font-black sm:text-4xl">
+              Plan Your Perfect Event
+            </h2>
+          </div>
+          <p className="max-w-xs text-sm leading-6 text-slate-300">Tell us the essentials and we&apos;ll help shape the right experience.</p>
+        </div>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-orange-200 md:col-span-2">Event details</h3>
 
           <input
             type="text"
@@ -96,7 +109,7 @@ text-white">
             placeholder="Customer Name"
             value={booking.customerName}
             onChange={handleChange}
-            className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="rounded-xl border border-white/15 bg-white/10 p-3 text-white outline-none placeholder:text-slate-300 focus:border-orange-400 focus:ring-4 focus:ring-orange-500/20"
             required
           />
 
@@ -106,7 +119,7 @@ text-white">
             placeholder="Phone Number"
             value={booking.phone}
             onChange={handleChange}
-            className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="rounded-xl border border-white/15 bg-white/10 p-3 text-white outline-none placeholder:text-slate-300 focus:border-orange-400 focus:ring-4 focus:ring-orange-500/20"
             required
           />
 
@@ -115,7 +128,7 @@ text-white">
             name="eventDate"
             value={booking.eventDate}
             onChange={handleChange}
-            className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="rounded-xl border border-white/15 bg-white/10 p-3 text-white outline-none focus:border-orange-400 focus:ring-4 focus:ring-orange-500/20"
             required
           />
 
@@ -123,16 +136,16 @@ text-white">
             name="eventType"
             value={booking.eventType}
             onChange={handleChange}
-            className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="rounded-xl border border-white/15 bg-white/10 p-3 text-white outline-none focus:border-orange-400 focus:ring-4 focus:ring-orange-500/20"
             required
           >
-            <option value="">Select Event</option>
-            <option>Wedding</option>
-            <option>Birthday</option>
-            <option>Reception</option>
-            <option>Engagement</option>
-            <option>Corporate</option>
-            <option>House Party</option>
+            <option className="text-slate-900" value="">Select Event</option>
+            <option className="text-slate-900">Wedding</option>
+            <option className="text-slate-900">Birthday</option>
+            <option className="text-slate-900">Reception</option>
+            <option className="text-slate-900">Engagement</option>
+            <option className="text-slate-900">Corporate</option>
+            <option className="text-slate-900">House Party</option>
           </select>
 
           <input
@@ -141,7 +154,7 @@ text-white">
             placeholder="Number of Persons"
             value={booking.persons}
             onChange={handleChange}
-            className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="rounded-xl border border-white/15 bg-white/10 p-3 text-white outline-none placeholder:text-slate-300 focus:border-orange-400 focus:ring-4 focus:ring-orange-500/20"
             required
           />
 
@@ -150,14 +163,14 @@ text-white">
             placeholder="Event Address"
             value={booking.address}
             onChange={handleChange}
-            className="border rounded-lg p-3 md:col-span-2 h-28 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="h-28 rounded-xl border border-white/15 bg-white/10 p-3 text-white outline-none placeholder:text-slate-300 focus:border-orange-400 focus:ring-4 focus:ring-orange-500/20 md:col-span-2"
             required
           />
 <div className="md:col-span-2">
   <button
     type="button"
     onClick={() => setShowMenus(!showMenus)}
-    className="w-full border rounded-lg p-3 text-left bg-amber-700 hover:bg-gray-50 flex justify-between items-center"
+    className="flex w-full items-center justify-between rounded-xl border border-orange-300/30 bg-orange-500/20 p-3 text-left transition hover:bg-orange-500/30"
   >
     <span>
       {selectedMenus.length > 0
@@ -169,11 +182,11 @@ text-white">
   </button>
 
   {showMenus && (
-    <div className="mt-2 border rounded-lg p-4 bg-cyan-300 shadow-md grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-2">
+    <div className="mt-2 grid grid-cols-2 gap-2 rounded-xl border border-white/10 bg-white/10 p-4 shadow-md sm:grid-cols-3 md:grid-cols-6">
       {menus.map((menu) => (
         <label
           key={menu._id}
-          className="flex items-center gap-3 border p-3 rounded-lg cursor-pointer hover:bg-gray-100"
+          className="flex cursor-pointer items-center gap-3 rounded-lg border border-white/10 p-3 transition hover:bg-white/10"
         >
           <input
             type="checkbox"
@@ -193,7 +206,7 @@ text-white">
                 );
               }
             }}
-            className="w-4 h-4"
+            className="h-4 w-4 accent-orange-500"
           />
 
           <span className="text-sm font-medium">
@@ -207,12 +220,22 @@ text-white">
 
           <button
             type="submit"
-            className="md:col-span-2 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition"
+            className="animate-soft-pulse rounded-xl bg-orange-500 py-3 font-bold text-white transition hover:bg-orange-600 active:scale-[0.99] md:col-span-2"
           >
             Book Now
           </button>
-          <Link to="/"> back</Link>
-          <Link to="/login"> login admin</Link>
+          {submitState.message && (
+            <p
+              role="status"
+              className={`text-center text-sm font-semibold md:col-span-2 ${submitState.type === "success" ? "text-emerald-300" : "text-red-300"}`}
+            >
+              {submitState.message}
+            </p>
+          )}
+          <div className="flex justify-center gap-5 text-sm font-semibold text-slate-300 md:col-span-2">
+            <Link className="transition hover:text-orange-300" href="/">Back to home</Link>
+            <Link className="transition hover:text-orange-300" href="/login">Admin login</Link>
+          </div>
 
         
 
@@ -220,6 +243,6 @@ text-white">
         </form>
         
       </div>
-    </div>
+    </main>
   );
 }

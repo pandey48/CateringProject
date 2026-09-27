@@ -1,12 +1,14 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { Eye } from "lucide-react";
 
-import img1 from "../assets/gallery/wedding1.jpg";
-import img2 from "../assets/gallery/wedding2.jpg";
-import img3 from "../assets/gallery/buffet.jpg";
-import img4 from "../assets/gallery/birthday.jpg";
-import img5 from "../assets/gallery/corporate.jpg";
-import img6 from "../assets/gallery/sweets.jpg";
+import img1 from "../assets/images/catering.jpg";
+import img2 from "../assets/images/servicebg.jpg";
+import img3 from "../assets/images/catering.jpg";
+import img4 from "../assets/images/servicebg.jpg";
+import img5 from "../assets/images/catering.jpg";
+import img6 from "../assets/images/servicebg.jpg";
 
 const images = [
   {

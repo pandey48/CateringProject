@@ -10,9 +10,9 @@ export default function Footer() {
     <footer className="bg-slate-900 text-white">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
         <div>
-          <h2 className="text-2xl font-bold text-orange-500 sm:text-3xl">Pandey Catering</h2>
+          <h2 className="text-2xl font-bold text-orange-500 sm:text-3xl">Pandey Event Management</h2>
           <p className="mt-4 text-sm leading-7 text-gray-400 sm:text-base">
-            Premium Catering & Event Management for Weddings, Birthdays, Corporate Events and Special Occasions.
+            Event planning, catering, decoration, tent, photography, DJ and more for memorable occasions.
           </p>
         </div>
 
@@ -23,6 +23,7 @@ export default function Footer() {
             <li><a className="transition hover:text-orange-400" href="#menu">Menu</a></li>
             <li><a className="transition hover:text-orange-400" href="#gallery">Gallery</a></li>
             <li><a className="transition hover:text-orange-400" href="#contact">Contact</a></li>
+            <li><a className="transition hover:text-orange-400" href="/enqury">Enquiry</a></li>
           </ul>
         </div>
 
@@ -31,11 +32,11 @@ export default function Footer() {
           <div className="space-y-3 text-sm text-gray-400 sm:text-base">
             <div className="flex items-center gap-3">
               <Phone size={18} className="text-orange-400" />
-              <span>+91 73893 68597</span>
+              <a className="transition hover:text-orange-400" href="tel:+917389368597">+91 73893 68597</a>
             </div>
             <div className="flex items-center gap-3">
               <Mail size={18} className="text-orange-400" />
-              <span>pandeycatering@gmail.com</span>
+              <a className="transition hover:text-orange-400" href="mailto:pandeycatering@gmail.com">pandeycatering@gmail.com</a>
             </div>
           </div>
         </div>
@@ -54,7 +55,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-slate-700 py-5 text-center text-sm text-gray-400">
-        © {new Date().getFullYear()} Pandey Catering. All Rights Reserved.
+        © {new Date().getFullYear()} Pandey Event Management. All Rights Reserved.
       </div>
     </footer>
   );

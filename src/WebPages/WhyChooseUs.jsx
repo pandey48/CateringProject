@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import {
   ChefHat,
@@ -15,12 +17,12 @@ const features = [
   {
     icon: <Truck size={45} />,
     title: "On-Time Service",
-    desc: "We ensure timely delivery and professional catering service for every event.",
+    desc: "We ensure timely delivery and professional event service for every occasion.",
   },
   {
     icon: <HeartHandshake size={45} />,
     title: "Trusted by 500+ Families",
-    desc: "Thousands of happy customers trust Pandey Catering for weddings and parties.",
+    desc: "Families and teams trust our professionals to make every occasion memorable.",
   },
   {
     icon: <UtensilsCrossed size={45} />,
@@ -56,8 +58,7 @@ export default function WhyChooseUs() {
           </h2>
 
           <p className="mt-5 text-gray-600 max-w-2xl mx-auto">
-            We provide premium catering services with delicious food,
-            professional staff, and unforgettable experiences for every occasion.
+            We bring planning, production, hospitality, and creative event services together in one place.
           </p>
         </motion.div>
 

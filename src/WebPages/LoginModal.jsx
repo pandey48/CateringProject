@@ -1,5 +1,7 @@
+"use client";
+
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import {
   Eye,
   EyeOff,
@@ -11,7 +13,7 @@ import {
 import API_URL from "../config";
 
 export default function LoginModal() {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -73,7 +75,7 @@ export default function LoginModal() {
       }
 
       // Redirect to Admin
-      navigate("/admin", { replace: true });
+      router.replace("/admin");
 
     } catch (error) {
       console.error("Login Error:", error);
@@ -84,25 +86,25 @@ export default function LoginModal() {
   };
 
   return (
-    <div className="fixed inset-0 bg-[url('https://images.unsplash.com/photo-1555244162-803834f70033')] bg-cover bg-center">
+    <main className="fixed inset-0 overflow-y-auto bg-[url('https://images.unsplash.com/photo-1555244162-803834f70033')] bg-cover bg-center">
 
       {/* Background Overlay */}
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
 
-      <div className="relative flex justify-center items-center min-h-screen p-4">
+      <div className="relative flex min-h-screen items-center justify-center p-4 py-10">
 
-        <div className="w-full max-w-md rounded-3xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-2xl p-8">
+        <div className="animate-rise-in w-full max-w-md rounded-4xl border border-white/20 bg-slate-950/55 p-6 shadow-2xl backdrop-blur-xl sm:p-8">
 
           {/* Logo */}
           <div className="flex justify-center mb-5">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 flex items-center justify-center shadow-lg">
+            <div className="animate-soft-pulse flex h-24 w-24 items-center justify-center rounded-full bg-linear-to-r from-yellow-500 to-orange-500 shadow-lg">
               <ChefHat className="text-white" size={42} />
             </div>
           </div>
 
           {/* Title */}
           <h2 className="text-4xl font-bold text-center text-white">
-            Pandey Catering
+            Pandey Event Management
           </h2>
 
           <p className="text-center text-gray-200 mt-2">
@@ -203,7 +205,7 @@ export default function LoginModal() {
           <button
             onClick={handleLogin}
             disabled={loading}
-            className="w-full mt-6 py-3 rounded-xl bg-gradient-to-r from-yellow-500 to-orange-500 hover:scale-105 duration-300 text-white font-bold flex justify-center items-center gap-3 disabled:opacity-50 disabled:hover:scale-100"
+            className="mt-6 flex w-full items-center justify-center gap-3 rounded-xl bg-linear-to-r from-yellow-500 to-orange-500 py-3 font-bold text-white duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
           >
 
             <LogIn size={20} />
@@ -214,13 +216,13 @@ export default function LoginModal() {
 
           {/* Footer */}
           <div className="text-center mt-8 text-gray-300 text-sm">
-            © 2026 Pandey Catering
+            © 2026 Pandey Event Management
           </div>
 
         </div>
 
       </div>
 
-    </div>
+    </main>
   );
 }

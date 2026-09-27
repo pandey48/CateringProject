@@ -17,11 +17,11 @@ export default function About() {
               About us
             </span>
             <h2 className="mt-4 text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl">
-              Creating memorable moments with <span className="text-orange-500">flavor and care</span>
+              Creating memorable moments with <span className="text-orange-500">care and creativity</span>
             </h2>
             <p className="mt-5 max-w-2xl text-base leading-8 text-gray-700 sm:text-lg">
-              We provide <span className="font-semibold text-yellow-600">premium catering services</span> with delicious food,
-              professional staff, and complete event management. Along with catering, we also offer end-to-end event solutions crafted for weddings, birthdays, and corporate gatherings.
+              We provide <span className="font-semibold text-yellow-600">complete event services</span> with thoughtful planning,
+              trusted professionals, and flexible solutions for weddings, birthdays, corporate events, and every special occasion.
             </p>
           </div>
 

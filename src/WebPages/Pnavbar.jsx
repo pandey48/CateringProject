@@ -1,10 +1,13 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import logo from "../assets/logopc.png";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import {
   Phone,
   Instagram,
+  MessageCircle,
   Menu,
   X,
   Calendar,
@@ -13,7 +16,7 @@ import {
 export default function Pnavbar() {
   const [open, setOpen] = useState(false);
   const [scroll, setScroll] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,22 +30,23 @@ export default function Pnavbar() {
   const handleLinkClick = () => setOpen(false);
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6 }}
-      className={`fixed left-0 top-0 z-50 w-full transition-all duration-500 ${
-        scroll ? "bg-white/95 shadow-lg backdrop-blur-md" : "bg-transparent"
-      }`}
-    >
+    <>
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6 }}
+        className={`fixed left-0 top-0 z-50 w-full transition-all duration-500 ${
+          scroll ? "bg-white/95 shadow-lg backdrop-blur-md" : "bg-transparent"
+        }`}
+      >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <motion.div
           className="flex items-center gap-3"
           whileHover={{ scale: 1.05 }}
         >
           <motion.img
-            src={logo}
-            alt="Pandey Catering Logo"
+            src={logo.src}
+            alt="Pandey Event Management Logo"
             className="h-12 w-12 object-contain md:h-16 md:w-16"
             animate={{ rotate: [0, 5, 0] }}
             transition={{ repeat: Infinity, duration: 3 }}
@@ -50,15 +54,15 @@ export default function Pnavbar() {
 
           <div>
             <h2 className="text-lg font-extrabold tracking-tight text-orange-600 sm:text-xl md:text-2xl">
-              Pandey Catering
+              Pandey Event Management
             </h2>
             <p className="hidden text-xs text-slate-600 md:block">
-              Catering & Event Management
+              Event Services Near You
             </p>
           </div>
         </motion.div>
 
-        <div className="hidden items-center gap-7 text-sm font-medium text-slate-700 md:flex">
+        <div className={`hidden items-center gap-7 text-sm font-medium md:flex ${scroll ? "text-slate-700" : "text-white"}`}>
           {[
             "About",
             "Menu",
@@ -69,7 +73,7 @@ export default function Pnavbar() {
             <motion.a
               key={item}
               href={`#${item.toLowerCase()}`}
-              className="group relative transition hover:text-orange-500"
+              className={`group relative transition hover:text-orange-400 ${scroll ? "" : "text-white"}`}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
@@ -108,7 +112,7 @@ export default function Pnavbar() {
           </motion.a>
 
           <motion.button
-            onClick={() => navigate("/booking")}
+            onClick={() => router.push("/booking")}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 rounded-full bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-600"
@@ -122,7 +126,7 @@ export default function Pnavbar() {
           onClick={() => setOpen(!open)}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          className="inline-flex items-center justify-center rounded-lg p-2 text-slate-700 transition hover:bg-white/40 md:hidden"
+          className={`inline-flex items-center justify-center rounded-lg p-2 transition hover:bg-white/40 md:hidden ${scroll ? "text-slate-700" : "text-white"}`}
           aria-label="Toggle menu"
         >
           <motion.div
@@ -160,7 +164,7 @@ export default function Pnavbar() {
             ))}
 
             <motion.button
-              onClick={() => navigate("/booking")}
+              onClick={() => router.push("/booking")}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="mt-2 rounded-full bg-orange-500 px-5 py-3 text-sm font-semibold text-white"
@@ -170,6 +174,52 @@ export default function Pnavbar() {
           </div>
         </div>
       </motion.div>
-    </motion.nav>
+
+      <div className="fixed bottom-24 right-3 z-40 flex flex-col gap-2 md:hidden">
+        <a
+          href="https://wa.me/917389368597"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Chat on WhatsApp"
+          className="flex h-11 w-11 items-center justify-center rounded-full bg-green-500 text-white shadow-lg shadow-green-900/20 transition duration-200 hover:scale-110 hover:bg-green-600 active:scale-95"
+        >
+          <MessageCircle size={21} />
+        </a>
+
+        <a
+          href="tel:+917389368597"
+          aria-label="Call Pandey Event Management"
+          className="flex h-11 w-11 items-center justify-center rounded-full bg-blue-500 text-white shadow-lg shadow-blue-900/20 transition duration-200 hover:scale-110 hover:bg-blue-600 active:scale-95"
+        >
+          <Phone size={20} />
+        </a>
+
+        <a
+          href="https://www.instagram.com/pandey_caterrs"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Open Instagram"
+          className="flex h-11 w-11 items-center justify-center rounded-full bg-pink-500 text-white shadow-lg shadow-pink-900/20 transition duration-200 hover:scale-110 hover:bg-pink-600 active:scale-95"
+        >
+          <Instagram size={20} />
+        </a>
+      </div>
+      </motion.nav>
+
+      <div className="fixed inset-x-3 bottom-3 z-50 flex gap-2 md:hidden">
+        <a
+          href="/enqury"
+          className="flex flex-1 items-center justify-center rounded-xl border border-orange-500 bg-white px-4 py-3 text-sm font-semibold text-orange-600 shadow-lg shadow-slate-900/10 transition duration-200 hover:scale-[1.03] hover:bg-orange-50 active:scale-95"
+        >
+          Enquiry
+        </a>
+        <a
+          href="/booking"
+          className="flex flex-1 items-center justify-center rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-900/20 transition duration-200 hover:scale-[1.03] hover:bg-orange-600 active:scale-95"
+        >
+          Book Now
+        </a>
+      </div>
+    </>
   );
 }
