@@ -4,6 +4,19 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import API_URL from "../config";
 
+async function readApiResponse(response) {
+  const contentType = response.headers.get("content-type") || "";
+  const body = await response.text();
+  if (!contentType.includes("application/json")) {
+    throw new Error("Booking server returned a web page instead of JSON. Check the configured API URL and backend route.");
+  }
+  try {
+    return JSON.parse(body);
+  } catch {
+    throw new Error("Booking server returned an invalid response. Please try again shortly.");
+  }
+}
+
 export default function Booking() {
   const [booking, setBooking] = useState({
     customerName: "",
@@ -25,7 +38,7 @@ useEffect(() => {
   if (!API_URL) return;
 
   fetch(`${API_URL}/api/menu`)
-    .then((res) => res.json())
+    .then(readApiResponse)
     .then((data) => setMenus(data))
     .catch((err) => console.error(err));
 }, []);
@@ -59,7 +72,7 @@ useEffect(() => {
 }),
       });
 
-      const data = await res.json();
+      const data = await readApiResponse(res);
 
       if (res.ok) {
         setSubmitState({ type: "success", message: "Booking created successfully. Our team will contact you soon." });
@@ -81,7 +94,7 @@ useEffect(() => {
       }
     } catch (error) {
       console.error(error);
-      setSubmitState({ type: "error", message: "Server connection failed. Please try again." });
+      setSubmitState({ type: "error", message: error.message || "Server connection failed. Please try again." });
     }
   };
 
@@ -193,7 +206,7 @@ useEffect(() => {
             onChange={handleChange}
             className="h-28 rounded-xl border border-white/15 bg-white/10 p-3 text-white outline-none placeholder:text-slate-300 focus:border-orange-400 focus:ring-4 focus:ring-orange-500/20 md:col-span-2"
           />
-<div className="md:col-span-2">
+{/* <div className="md:col-span-2">
   <button
     type="button"
     onClick={() => setShowMenus(!showMenus)}
@@ -243,7 +256,7 @@ useEffect(() => {
       ))}
     </div>
   )}
-</div>
+</div> */}
 
           <button
             type="submit"

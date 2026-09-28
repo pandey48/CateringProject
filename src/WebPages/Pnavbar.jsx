@@ -13,7 +13,7 @@ import {
   Calendar,
 } from "lucide-react";
 
-export default function Pnavbar({ showQuickActions = true }) {
+export default function Pnavbar({ showQuickActions = true, fixed = true }) {
   const [open, setOpen] = useState(false);
   const [scroll, setScroll] = useState(false);
   const router = useRouter();
@@ -44,7 +44,7 @@ export default function Pnavbar({ showQuickActions = true }) {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6 }}
-        className={`home-site-nav fixed left-1/2 top-3 z-50 w-[calc(100%-1.5rem)] max-w-[1420px] -translate-x-1/2 rounded-2xl border border-white/70 transition-all duration-500 sm:top-5 sm:w-[calc(100%-3rem)] ${
+        className={`home-site-nav ${fixed ? "fixed left-1/2 top-3 z-50 -translate-x-1/2 sm:top-5" : "relative mx-auto"} w-[calc(100%-1.5rem)] max-w-[1420px] rounded-2xl border border-white/70 transition-all duration-500 sm:w-[calc(100%-3rem)] ${
           scroll ? "bg-white/95 shadow-xl shadow-slate-900/5 backdrop-blur-md" : "bg-white/85 shadow-lg shadow-slate-900/5 backdrop-blur-md"
         }`}
       >

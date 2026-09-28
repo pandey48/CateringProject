@@ -131,8 +131,8 @@ export default function ServicesPage() {
 
   return (
     <>
-    <Pnavbar showQuickActions={false} />
-    <main className="min-h-screen bg-[#fffaf3] px-3 pb-2 pt-20 text-[#173332] sm:px-5 sm:pb-2 sm:pt-24">
+    <Pnavbar showQuickActions={false} fixed={false} />
+    <main className="bg-[#fffaf3] px-3 py-0 text-[#173332] sm:px-5">
       <section className="mx-auto max-w-7xl" aria-live="polite">
         <div className="mb-2 grid gap-2 sm:grid-cols-[minmax(200px,.8fr)_1.2fr] sm:items-center">
           <h1 className="font-serif text-2xl font-bold text-[#173332] sm:text-3xl">Services</h1>
