@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { Trash2, Search } from "lucide-react";
 import API_URL from "../config";

@@ -10,8 +10,10 @@ export default function Booking() {
     phone: "",
     eventDate: "",
     eventType: "",
+    service: "",
     persons: "",
     address: "",
+    message: "",
   });
   const [showMenus, setShowMenus] = useState(false);
   
@@ -53,6 +55,7 @@ useEffect(() => {
         body: JSON.stringify({
   ...booking,
   menuItems: selectedMenus,
+  source: "website-booking",
 }),
       });
 
@@ -66,8 +69,10 @@ useEffect(() => {
           phone: "",
           eventDate: "",
           eventType: "",
+          service: "",
           persons: "",
           address: "",
+          message: "",
         });
         setSelectedMenus([]);
         setShowMenus(false);
@@ -133,6 +138,21 @@ useEffect(() => {
           />
 
           <select
+            name="service"
+            value={booking.service}
+            onChange={handleChange}
+            className="rounded-xl border border-white/15 bg-white/10 p-3 text-white outline-none focus:border-orange-400 focus:ring-4 focus:ring-orange-500/20"
+            required
+          >
+            <option className="text-slate-900" value="">Select Service</option>
+            <option className="text-slate-900">Cook</option>
+            <option className="text-slate-900">Catering</option>
+            <option className="text-slate-900">Event Management</option>
+            <option className="text-slate-900">Cook + Catering</option>
+            <option className="text-slate-900">Full Event Package</option>
+          </select>
+
+          <select
             name="eventType"
             value={booking.eventType}
             onChange={handleChange}
@@ -165,6 +185,13 @@ useEffect(() => {
             onChange={handleChange}
             className="h-28 rounded-xl border border-white/15 bg-white/10 p-3 text-white outline-none placeholder:text-slate-300 focus:border-orange-400 focus:ring-4 focus:ring-orange-500/20 md:col-span-2"
             required
+          />
+          <textarea
+            name="message"
+            placeholder="Message or special requests (optional)"
+            value={booking.message}
+            onChange={handleChange}
+            className="h-28 rounded-xl border border-white/15 bg-white/10 p-3 text-white outline-none placeholder:text-slate-300 focus:border-orange-400 focus:ring-4 focus:ring-orange-500/20 md:col-span-2"
           />
 <div className="md:col-span-2">
   <button

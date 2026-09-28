@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import {
   Search,
@@ -628,6 +630,11 @@ export default function Bookings() {
                 </div>
 
                 <div className="border rounded-lg p-4">
+                  <p className="text-gray-500 text-sm">Service</p>
+                  <p className="font-semibold">{selectedBooking.service || "Not specified"}</p>
+                </div>
+
+                <div className="border rounded-lg p-4">
                   <p className="text-gray-500 text-sm">
                     Event Date
                   </p>
@@ -660,6 +667,13 @@ export default function Bookings() {
                 </div>
 
               </div>
+
+              {selectedBooking.message && (
+                <div className="border rounded-lg p-4">
+                  <p className="text-gray-500 text-sm">Message / Special Requests</p>
+                  <p className="mt-1 whitespace-pre-wrap font-semibold">{selectedBooking.message}</p>
+                </div>
+              )}
 
               {/* Address */}
               <div className="border rounded-lg p-4">

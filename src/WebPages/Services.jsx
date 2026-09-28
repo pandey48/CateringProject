@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import cateringImg from "../assets/images/servicebg.jpg";
 import {
   FaUtensils,
   FaBirthdayCake,
@@ -62,11 +61,9 @@ export default function Services() {
 
   return (
     <section
-      id="services"
-      className="w-full bg-cover bg-center py-14 sm:py-20"
-      style={{ backgroundImage: `url(${cateringImg.src})` }}
+      id="additional-services"
+      className="w-full bg-[#f7f3eb] py-8 sm:py-12"
     >
-      <div className="absolute inset-0 bg-black/55" />
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
@@ -76,10 +73,10 @@ export default function Services() {
           viewport={{ once: true }}
           className="mb-12 text-center sm:mb-16"
         >
-          <h2 className="text-3xl font-bold text-white sm:text-4xl md:text-5xl">
-            Our Services
+          <h2 className="font-serif text-3xl font-bold text-[#142d2d] sm:text-4xl md:text-5xl">
+            More Event Services
           </h2>
-          <p className="mt-3 text-gray-200 text-sm sm:text-base">Everything you need for your perfect event</p>
+          <p className="mt-3 text-sm text-slate-600 sm:text-base">Extra details that help make your occasion complete.</p>
         </motion.div>
 
         {/* Grid */}
@@ -96,27 +93,21 @@ export default function Services() {
                 whileHover={{ y: -8, scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setActiveService(service)}
-                className="group relative h-36 flex flex-col items-center justify-center rounded-2xl
-                           bg-white/10 backdrop-blur-md
-                           border border-white/20
+                className="group relative flex h-36 flex-col items-center justify-center rounded-2xl
+                           border border-[#e8e1d5] bg-white shadow-sm
                            transition-all duration-300
-                           hover:border-yellow-400/60
-                           hover:shadow-[0_0_25px_rgba(255,215,0,0.35)]
+                           hover:border-[#bd861a]/60 hover:shadow-lg hover:shadow-amber-900/10
                            focus:outline-none sm:h-40"
               >
                 <motion.div
-                  className="text-3xl sm:text-4xl mb-3
-                             text-white transition-colors duration-300
-                             group-hover:text-yellow-300"
+                  className="mb-3 text-3xl text-[#bd861a] transition-colors duration-300 sm:text-4xl"
                   whileHover={{ rotate: 10, scale: 1.2 }}
                 >
                   <Icon />
                 </motion.div>
 
                 <span
-                  className="text-sm sm:text-base font-medium tracking-wide
-                             text-white transition-colors duration-300
-                             group-hover:text-yellow-300 text-center px-2"
+                  className="px-2 text-center text-sm font-medium tracking-wide text-[#142d2d] transition-colors duration-300 sm:text-base"
                 >
                   {service.title}
                 </span>

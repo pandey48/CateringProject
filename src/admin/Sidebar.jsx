@@ -1,3 +1,5 @@
+"use client";
+
 import {
   LayoutDashboard,
   Users,
@@ -6,15 +8,18 @@ import {
   Package,
   UserRound,
   ClipboardCheck,
+  MessageSquareText,
   X,
 } from "lucide-react";
 
-import { Link } from "react-router-dom";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { to: "/admin/users", label: "Users", icon: Users },
   { to: "/admin/bookings", label: "Bookings", icon: Calendar },
+  { to: "/admin/enquiries", label: "Enquiries", icon: MessageSquareText },
   { to: "/admin/invoices", label: "Invoices", icon: Calendar },
   { to: "/admin/menu", label: "Menu", icon: UtensilsCrossed },
   { to: "/admin/material", label: "Material Calculate", icon: Package },
@@ -23,6 +28,8 @@ const navItems = [
 ];
 
 export default function Sidebar({ closeSidebar }) {
+  const pathname = usePathname();
+
   return (
     <aside className="flex h-screen w-[80vw] max-w-[280px] flex-col bg-slate-900 text-slate-100 shadow-2xl md:w-64">
       <div className="flex items-center justify-between border-b border-slate-700 px-5 py-5">
@@ -46,9 +53,10 @@ export default function Sidebar({ closeSidebar }) {
         {navItems.map(({ to, label, icon: Icon }) => (
           <Link
             key={to}
-            to={to}
+            href={to}
             onClick={closeSidebar}
-            className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white"
+            aria-current={pathname === to || (to === "/admin" && pathname === "/admin/dashboard") ? "page" : undefined}
+            className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition hover:bg-slate-800 hover:text-white ${pathname === to || (to === "/admin" && pathname === "/admin/dashboard") ? "bg-slate-800 text-white" : "text-slate-200"}`}
           >
             <Icon size={18} />
             <span className="truncate">{label}</span>
@@ -58,3 +66,4 @@ export default function Sidebar({ closeSidebar }) {
     </aside>
   );
 }
+

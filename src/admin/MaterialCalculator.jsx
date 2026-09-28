@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { generatePurchasePDF } from "../utils/generatePurchasePDF";
 import API_URL from "../config";

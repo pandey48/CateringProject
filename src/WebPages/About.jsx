@@ -8,10 +8,10 @@ export default function About() {
   return (
     <section
       id="about"
-      className="w-full overflow-hidden bg-gradient-to-b from-white via-orange-50 to-white py-16 sm:py-20"
+      className="w-full overflow-hidden bg-gradient-to-b from-white via-orange-50 to-white py-10 sm:py-12"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-10 md:grid-cols-[1.2fr_0.8fr]">
+        <div className="grid items-center gap-7 md:grid-cols-[1.2fr_0.8fr] md:gap-8">
           <div>
             <span className="inline-flex rounded-full bg-orange-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-orange-600">
               About us

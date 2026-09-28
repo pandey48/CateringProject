@@ -1,21 +1,40 @@
-import { Navigate, Outlet } from "react-router-dom";
+"use client";
 
-export default function ProtectedRoute() {
-  const token =
-    localStorage.getItem("token") ||
-    sessionStorage.getItem("token");
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-  const user =
-    JSON.parse(localStorage.getItem("user") || "null") ||
-    JSON.parse(sessionStorage.getItem("user") || "null");
+export default function ProtectedRoute({ children }) {
+  const router = useRouter();
+  const [authorized, setAuthorized] = useState(false);
 
-  if (!token) {
-    return <Navigate to="/login" replace />;
+  useEffect(() => {
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+    let user = null;
+
+    try {
+      user = JSON.parse(localStorage.getItem("user") || "null") ||
+        JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch {
+      localStorage.removeItem("user");
+      sessionStorage.removeItem("user");
+    }
+
+    if (!token) {
+      router.replace("/login");
+      return;
+    }
+
+    if (user?.role !== "admin") {
+      router.replace("/");
+      return;
+    }
+
+    setAuthorized(true);
+  }, [router]);
+
+  if (!authorized) {
+    return <div className="p-6 text-sm text-slate-600">Verifying admin access...</div>;
   }
 
-  if (user?.role !== "admin") {
-    return <Navigate to="/" replace />;
-  }
-
-  return <Outlet />;
+  return children;
 }

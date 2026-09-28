@@ -1,471 +1,87 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { useEffect, useState } from "react";
-import cateringImg from "../assets/images/catering.jpg";
-import {
-  Phone,
-  Instagram,
-  Star,
-  ChevronDown,
-  Zap,
-} from "lucide-react";
+import { ArrowUpRight, CalendarDays, Check, Star, UtensilsCrossed, UsersRound } from "lucide-react";
 
-const heroBackground =
-  "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1600&q=80";
+const heroPhotos = [
+  "/images/event-catering.jpg",
+  "/images/event-celebration.jpg",
+  "/images/event-desserts.jpg",
+];
+
+const promises = ["Professional Cooks", "Fresh Catering", "Complete Event Setup"];
 
 export default function Hero() {
-  const router = useRouter();
-  const [bgLoaded, setBgLoaded] = useState(false);
+  const [activePhoto, setActivePhoto] = useState(0);
 
   useEffect(() => {
-    const img = new Image();
-    img.src = heroBackground;
-    img.onload = () => setBgLoaded(true);
+    const interval = window.setInterval(() => {
+      setActivePhoto((current) => (current + 1) % heroPhotos.length);
+    }, 6500);
+    return () => window.clearInterval(interval);
   }, []);
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.7 },
-    },
-  };
-
-  const features = [
-    { icon: "👨‍🍳", text: "Expert Chefs & Cooks" },
-    { icon: "🥘", text: "120+ Authentic Menu Items" },
-    { icon: "✅", text: "Hygienic Food Handling" },
-    { icon: "🚀", text: "On-Time Professional Service" },
-    { icon: "💚", text: "Affordable Premium Pricing" },
-  ];
-
   return (
-    <section
-      className="
-        relative
-        min-h-[720px]
-        h-auto
-        overflow-hidden
-        bg-cover
-        bg-center
-        bg-linear-to-r
-        from-[#1f120b]
-        via-[#331d10]
-        to-[#1b120d]
-        lg:pt-30
-        lg:h-screen
-        lg:min-h-[650px]
-        lg:max-h-[900px]
-      "
-      style={{
-        backgroundImage: bgLoaded ? `url(${heroBackground})` : `url(${cateringImg.src})`,
-        backgroundAttachment: "fixed",
-        backgroundSize: "cover",
-        backgroundPosition: "center center",
-      }}
-    >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/65 to-black/80" />
-
-      {/* Main Content */}
-      <div className="relative z-10 flex h-full items-center">
-        <div
-          className="
-            mx-auto
-            grid
-            w-full
-            max-w-7xl
-            grid-cols-1
-            items-center
-            gap-10
-            px-4
-            py-20
-            sm:px-6
-            lg:grid-cols-[1.4fr_0.6fr]
-            lg:gap-8
-            lg:px-8
-            lg:py-12
-            xl:gap-12
-          "
+    <section id="home" className="home-hero" aria-labelledby="home-hero-title">
+      <div className="home-hero__layout">
+        <motion.div
+          className="home-hero__copy"
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55 }}
         >
-          {/* ================= LEFT CONTENT ================= */}
-          <motion.div
-            initial={{ opacity: 0, x: -60 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9 }}
-            className="
-              mx-auto
-              w-full
-              max-w-3xl
-              text-center
-              lg:mx-0
-              lg:text-left
-            "
-          >
-            {/* Badge */}
-            <motion.span
-              variants={itemVariants}
-              initial="hidden"
-              animate="visible"
-              className="
-                inline-flex
-                
-                gap-2
-                rounded-full
-                bg-orange-500
-                px-4
-                py-2
-                text-xs
-                font-semibold
-                text-white
-                shadow-lg
-                shadow-orange-500/40
-                sm:text-sm
-              "
-            >
-              <Zap size={15} />
-              15+ Years • Trusted by 10,000+ Guests
-            </motion.span>
+          <span className="home-hero__eyebrow"><Star size={15} fill="currentColor" /> Trusted Event Management Services</span>
+          <h1 id="home-hero-title">Premium Catering for <span>Every Occasion</span></h1>
+          <p className="home-hero__tagline">कुक <i>·</i> कैटरिंग <i>·</i> इवेंट</p>
+          <p className="home-hero__promise">आपका Event, हमारी जिम्मेदारी</p>
+          <p className="home-hero__capacity">
+            <span className="home-hero__capacity-desktop">Serving 10 to 1000+ Guests</span>
+            <span className="home-hero__capacity-mobile">10 से 1000+ लोगों तक के लिए कैटरिंग सेवा</span>
+          </p>
+          <p className="home-hero__description">
+            From professional cooks and delicious catering to tents, decoration, DJ, cars and complete event setup — we manage everything in one place.
+          </p>
+          <div className="home-hero__actions">
+            <a className="home-hero__button" href="/booking"><CalendarDays size={17} /> Book Now</a>
+            <a className="home-hero__button home-hero__button--secondary" href="#services">Explore Services <ArrowUpRight size={17} /></a>
+          </div>
+        </motion.div>
 
-            {/* Heading */}
-            <motion.h1
-              variants={itemVariants}
-              initial="hidden"
-              animate="visible"
-              className="
-                mt-5
-                text-4xl
-                font-black
-                leading-[1.08]
-                text-white
-                sm:text-4xl
-                md:text-4xl
-                lg:mt-6
-                lg:text-4xl
-                xl:text-6xl
-              "
-            >
-              Plan Your Perfect Event
-
-              <motion.span
-                className="block text-orange-400 drop-shadow-lg"
-                animate={{
-                  rotate: [0, 1.5, -1.5, 0],
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 4,
-                }}
-              >
-                With Us
-              </motion.span>
-
-              <span className="block">
-                
-              </span>
-            </motion.h1>
-
-            {/* Description */}
-            <motion.p
-              variants={itemVariants}
-              initial="hidden"
-              animate="visible"
-              className="
-                mx-auto
-                mt-5
-                max-w-2xl
-                text-sm
-                leading-relaxed
-                text-gray-100
-                sm:text-base
-                md:text-lg
-                lg:mx-0
-              "
-            >
-              From weddings and birthdays to corporate events, we help you arrange everything in one place.
-            </motion.p>
-
-            {/* Buttons */}
-            <motion.div
-              variants={itemVariants}
-              initial="hidden"
-              animate="visible"
-              className="
-                mt-6
-                flex
-                flex-row
-                justify-center
-                gap-1
-                sm:gap-7
-                sm:flex-row
-                lg:justify-start
-              "
-            >
-              <motion.button
-                onClick={() => router.push("#quote")}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.96 }}
-                className="
-                  rounded-full
-                  bg-linear-to-r
-                  from-orange-500
-                  to-orange-600
-                  px-7
-                  py-3.5
-                  text-base
-                  font-bold
-                  text-white
-                  shadow-xl
-                "
-              >
-                Get Free Quote
-              </motion.button>
-
-              <motion.a
-              
-                href="#services"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.96 }}
-                className="
-                  rounded-full
-                  border-2
-                  border-white
-                  px-7
-                  py-3.5
-                  text-center
-                  text-base
-                  font-bold
-                  text-white
-                  transition
-                  hover:bg-white/10
-                "
-              >
-               Explore Services
-              </motion.a>
-            </motion.div>
-
-            {/* Rating */}
-            <motion.div
-              variants={itemVariants}
-              initial="hidden"
-              animate="visible"
-              className="
-                mt-6
-                flex
-                flex-row
-                items-center
-                gap-4
-                sm:flex-row
-                lg:justify-start
-              "
-            >
-              <div className="flex gap-1 text-yellow-400">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    size={18}
-                    fill="currentColor"
-                  />
-                ))}
-              </div>
-
-              <span className="text-sm font-semibold text-white">
-                Trusted by 500+ Families
-              </span>
-            
-
-            {/* Contact */}
-            <motion.div
-              variants={itemVariants}
-              initial="hidden"
-              animate="visible"
-              className="
-                mt-5
-                flex
-                justify-center
-                gap-4
-                lg:justify-start
-              "
-            >
-              <motion.a
-                href="tel:+917389368597"
-                whileHover={{ scale: 1.12 }}
-                className="
-                  flex
-                  h-11
-                  w-11
-                  items-center
-                  justify-center
-                  rounded-full
-                  bg-green-500
-                  shadow-lg
-                "
-              >
-                <Phone size={19} className="text-white" />
-              </motion.a>
-
-              <motion.a
-                href="https://www.instagram.com/pandey_caterrs"
-                target="_blank"
-                rel="noreferrer"
-                whileHover={{ scale: 1.12 }}
-                className="
-                  flex
-                  h-11
-                  w-11
-                  items-center
-                  justify-center
-                  rounded-full
-                  bg-pink-600
-                  shadow-lg
-                "
-              >
-                <Instagram size={19} className="text-white" />
-              </motion.a>
-            </motion.div>
-            </motion.div>
-          </motion.div>
-
-          {/* ================= RIGHT CARD ================= */}
-          <motion.div
-            initial={{ opacity: 0, x: 50, scale: 0.95 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="
-              flex
-              w-full
-              justify-center
-              lg:justify-end
-            "
-          >
-            <motion.div
-              whileHover={{ y: -6 }}
-              className="
-                w-full
-                max-w-[320px]
-                rounded-2xl
-                border
-                border-white/25
-                bg-black/25
-                p-5
-                shadow-2xl
-                backdrop-blur-xl
-                lg:max-w-[300px]
-                lg:p-5
-                xl:max-w-[320px]
-              "
-            >
-              {/* Card Header */}
-              <div className="mb-4 flex items-center gap-3">
-                <div
-                  className="
-                    flex
-                    h-11
-                    w-11
-                    shrink-0
-                    items-center
-                    justify-center
-                    rounded-xl
-                    bg-orange-500
-                    text-xl
-                  "
-                >
-                  👨‍🍳
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-bold text-white">
-                    Event Management Services Near You
-                  </h3>
-
-                  <p className="text-xs text-orange-200">
-                    Quality • Taste • Service
-                  </p>
-                </div>
-              </div>
-
-              {/* Features */}
-              <ul className="space-y-3">
-                {features.map((item, idx) => (
-                  <motion.li
-                    key={idx}
-                    initial={{
-                      opacity: 0,
-                      x: 15,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      x: 0,
-                    }}
-                    transition={{
-                      delay: 0.7 + idx * 0.1,
-                    }}
-                    className="
-                      flex
-                      items-center
-                      gap-3
-                      rounded-xl
-                      bg-white/10
-                      px-3
-                      py-2.5
-                      text-sm
-                      text-gray-100
-                    "
-                  >
-                    <span className="text-lg">
-                      {item.icon}
-                    </span>
-
-                    <span className="font-medium">
-                      {item.text}
-                    </span>
-                  </motion.li>
-                ))}
-              </ul>
-
-              {/* Bottom Badge */}
-              <div
-                className="
-                  mt-4
-                  rounded-xl
-                  bg-orange-500/20
-                  px-3
-                  py-2
-                  text-center
-                  text-xs
-                  font-semibold
-                  text-orange-200
-                "
-              >
-                ⭐ Complete event support, from planning to execution
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
+        <motion.div
+          className="home-hero__visual"
+          initial={{ opacity: 0, scale: 0.99 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.65, delay: 0.08 }}
+        >
+          <Image
+            src={heroPhotos[activePhoto]}
+            alt="Buffet catering and event setup for a celebration"
+            className="home-hero__photo"
+            fill
+            priority
+            loading="eager"
+            sizes="(max-width: 680px) 100vw, 55vw"
+          />
+          <div className="home-hero__photo-label">
+            <div className="home-hero__photo-label-title">All in 1 · Complete Food &amp; Event Service</div>
+            <div className="home-hero__photo-label-points">
+              {promises.map((label) => (
+                <span key={label}><Check size={14} />{label}</span>
+              ))}
+            </div>
+            <p><UsersRound size={15} /> 10 से 1000+ मेहमानों तक</p>
+          </div>
+          <div className="home-hero__photo-label-mobile">
+            <UtensilsCrossed size={27} aria-hidden="true" />
+            <div>
+              <strong>Delicious Catering</strong>
+              <span>Fresh Food <i>·</i> Great Taste <i>·</i> Happy Guests</span>
+            </div>
+          </div>
+        </motion.div>
       </div>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{
-          repeat: Infinity,
-          duration: 2,
-        }}
-        className="
-          absolute
-          bottom-4
-          left-1/2
-          hidden
-          -translate-x-1/2
-          text-white
-          lg:block
-        "
-      >
-        <ChevronDown size={28} />
-      </motion.div>
     </section>
   );
 }

@@ -1,9 +1,10 @@
+"use client";
+
 import { useState } from "react";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
-import { Outlet } from "react-router-dom";
 
-export default function AdminLayout() {
+export default function AdminLayout({ children }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -28,7 +29,7 @@ export default function AdminLayout() {
 
         <main className="w-full bg-slate-50 p-3 sm:p-6 lg:p-8">
           <div className="mx-auto w-full max-w-7xl min-w-0">
-            <Outlet />
+          {children}
           </div>
         </main>
       </div>

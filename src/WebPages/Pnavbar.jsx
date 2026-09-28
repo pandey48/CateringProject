@@ -13,10 +13,19 @@ import {
   Calendar,
 } from "lucide-react";
 
-export default function Pnavbar() {
+export default function Pnavbar({ showQuickActions = true }) {
   const [open, setOpen] = useState(false);
   const [scroll, setScroll] = useState(false);
   const router = useRouter();
+  const links = [
+    { label: "Home", href: "/" },
+    { label: "About", href: "/#about" },
+    { label: "Services", href: "/services" },
+    { label: "Catering", href: "/#catering-service" },
+    { label: "Events", href: "/#event-service" },
+    { label: "Gallery", href: "/#gallery" },
+    { label: "Contact", href: "/#contact" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,8 +44,8 @@ export default function Pnavbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6 }}
-        className={`fixed left-0 top-0 z-50 w-full transition-all duration-500 ${
-          scroll ? "bg-white/95 shadow-lg backdrop-blur-md" : "bg-transparent"
+        className={`home-site-nav fixed left-1/2 top-3 z-50 w-[calc(100%-1.5rem)] max-w-[1420px] -translate-x-1/2 rounded-2xl border border-white/70 transition-all duration-500 sm:top-5 sm:w-[calc(100%-3rem)] ${
+          scroll ? "bg-white/95 shadow-xl shadow-slate-900/5 backdrop-blur-md" : "bg-white/85 shadow-lg shadow-slate-900/5 backdrop-blur-md"
         }`}
       >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
@@ -53,33 +62,27 @@ export default function Pnavbar() {
           />
 
           <div>
-            <h2 className="text-lg font-extrabold tracking-tight text-orange-600 sm:text-xl md:text-2xl">
-              Pandey Event Management
+            <h2 className="font-serif text-lg font-bold tracking-tight text-[#142d2d] sm:text-xl md:text-2xl">
+              Pandey  
             </h2>
-            <p className="hidden text-xs text-slate-600 md:block">
-              Event Services Near You
+            <p className="text-[10px] leading-tight text-slate-600 sm:text-xs">
+              Catering and Event Services
             </p>
           </div>
         </motion.div>
 
-        <div className={`hidden items-center gap-7 text-sm font-medium md:flex ${scroll ? "text-slate-700" : "text-white"}`}>
-          {[
-            "About",
-            "Menu",
-            "Services",
-            "Gallery",
-            "Contact",
-          ].map((item, idx) => (
+        <div className="hidden items-center gap-5 text-[13px] font-medium text-slate-800 lg:flex xl:gap-7">
+          {links.map((item, idx) => (
             <motion.a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              className={`group relative transition hover:text-orange-400 ${scroll ? "" : "text-white"}`}
+              key={item.label}
+              href={item.href}
+              className="group relative transition hover:text-amber-700"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
               whileHover={{ scale: 1.1 }}
             >
-              {item}
+              {item.label}
               <motion.span
                 className="absolute -bottom-1 left-0 h-[2px] bg-orange-500"
                 initial={{ width: 0 }}
@@ -90,32 +93,12 @@ export default function Pnavbar() {
           ))}
         </div>
 
-        <div className="hidden items-center gap-3 md:flex">
-          <motion.a
-            href="https://www.instagram.com/pandey_caterrs"
-            target="_blank"
-            rel="noreferrer"
-            whileHover={{ scale: 1.2, rotate: 10 }}
-            whileTap={{ scale: 0.9 }}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-pink-100 text-pink-600 transition"
-          >
-            <Instagram size={18} />
-          </motion.a>
-
-          <motion.a
-            href="tel:+917389368597"
-            whileHover={{ scale: 1.2, rotate: 10 }}
-            whileTap={{ scale: 0.9 }}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 text-green-600 transition"
-          >
-            <Phone size={18} />
-          </motion.a>
-
+        <div className="hidden items-center gap-3 lg:flex">
           <motion.button
             onClick={() => router.push("/booking")}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 rounded-full bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-600"
+            className="flex items-center gap-2 rounded-full bg-[#bd861a] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-900/15 transition hover:bg-[#a87512]"
           >
             <Calendar size={16} />
             Book Now
@@ -126,7 +109,7 @@ export default function Pnavbar() {
           onClick={() => setOpen(!open)}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          className={`inline-flex items-center justify-center rounded-lg p-2 transition hover:bg-white/40 md:hidden ${scroll ? "text-slate-700" : "text-white"}`}
+          className="inline-flex items-center justify-center rounded-lg p-2 text-slate-800 transition hover:bg-amber-50 lg:hidden"
           aria-label="Toggle menu"
         >
           <motion.div
@@ -142,24 +125,18 @@ export default function Pnavbar() {
         initial={false}
         animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
         transition={{ duration: 0.3 }}
-        className="overflow-hidden md:hidden"
+        className="overflow-hidden lg:hidden"
       >
         <div className="border-t border-slate-200 bg-white/95 px-5 py-4 shadow-lg backdrop-blur-md">
           <div className="flex flex-col gap-2">
-            {[
-              "About",
-              "Menu",
-              "Services",
-              "Gallery",
-              "Contact",
-            ].map((item) => (
+            {links.map((item) => (
               <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
+                key={item.label}
+                href={item.href}
                 onClick={handleLinkClick}
                 className="rounded-lg px-3 py-3 text-sm font-medium text-slate-700 transition hover:bg-orange-50 hover:text-orange-600"
               >
-                {item}
+                {item.label}
               </a>
             ))}
 
@@ -167,7 +144,7 @@ export default function Pnavbar() {
               onClick={() => router.push("/booking")}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="mt-2 rounded-full bg-orange-500 px-5 py-3 text-sm font-semibold text-white"
+              className="mt-2 rounded-full bg-[#bd861a] px-5 py-3 text-sm font-semibold text-white"
             >
               Book Now
             </motion.button>
@@ -175,7 +152,9 @@ export default function Pnavbar() {
         </div>
       </motion.div>
 
-      <div className="fixed bottom-24 right-3 z-40 flex flex-col gap-2 md:hidden">
+      </motion.nav>
+
+      {showQuickActions && <div className="fixed bottom-24 right-3 z-[60] flex flex-col gap-2">
         <a
           href="https://wa.me/917389368597"
           target="_blank"
@@ -185,7 +164,6 @@ export default function Pnavbar() {
         >
           <MessageCircle size={21} />
         </a>
-
         <a
           href="tel:+917389368597"
           aria-label="Call Pandey Event Management"
@@ -193,7 +171,6 @@ export default function Pnavbar() {
         >
           <Phone size={20} />
         </a>
-
         <a
           href="https://www.instagram.com/pandey_caterrs"
           target="_blank"
@@ -203,10 +180,9 @@ export default function Pnavbar() {
         >
           <Instagram size={20} />
         </a>
-      </div>
-      </motion.nav>
+      </div>}
 
-      <div className="fixed inset-x-3 bottom-3 z-50 flex gap-2 md:hidden">
+      {showQuickActions && <div className="fixed inset-x-3 bottom-3 z-50 flex gap-2 md:hidden">
         <a
           href="/enqury"
           className="flex flex-1 items-center justify-center rounded-xl border border-orange-500 bg-white px-4 py-3 text-sm font-semibold text-orange-600 shadow-lg shadow-slate-900/10 transition duration-200 hover:scale-[1.03] hover:bg-orange-50 active:scale-95"
@@ -219,7 +195,7 @@ export default function Pnavbar() {
         >
           Book Now
         </a>
-      </div>
+      </div>}
     </>
   );
 }

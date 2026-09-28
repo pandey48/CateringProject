@@ -37,7 +37,7 @@ export default function ServicesSection() {
   ];
 
   return (
-    <section className="w-full bg-[#f5efe9] py-16 sm:py-20">
+    <section className="w-full bg-[#f5efe9] py-10 sm:py-12">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10 text-center">
           <span className="text-sm font-semibold uppercase tracking-[0.3em] text-orange-500">Complete solutions</span>

@@ -1,105 +1,53 @@
-"use client";
-
-import { motion } from "framer-motion";
-import {
-  ChefHat,
-  Truck,
-  HeartHandshake,
-  UtensilsCrossed,
-} from "lucide-react";
+import { ArrowRight, ChefHat, Settings, ShieldCheck, Star, UsersRound } from "lucide-react";
 
 const features = [
   {
-    icon: <ChefHat size={45} />,
-    title: "Expert Chefs",
-    desc: "Our experienced chefs prepare delicious and hygienic food with authentic taste.",
+    Icon: ShieldCheck,
+    title: "Hygienic & Safe Food",
+    desc: "100% fresh and quality ingredients",
   },
   {
-    icon: <Truck size={45} />,
-    title: "On-Time Service",
-    desc: "We ensure timely delivery and professional event service for every occasion.",
+    Icon: UsersRound,
+    title: "Experienced Team",
+    desc: "Professional & skilled staff",
   },
   {
-    icon: <HeartHandshake size={45} />,
-    title: "Trusted by 500+ Families",
-    desc: "Families and teams trust our professionals to make every occasion memorable.",
+    Icon: Settings,
+    title: "Customized Planning",
+    desc: "Planned around your needs",
   },
   {
-    icon: <UtensilsCrossed size={45} />,
-    title: "Premium Quality",
-    desc: "Fresh ingredients, modern equipment and high-quality service at affordable prices.",
+    Icon: Star,
+    title: "On-Time Delivery",
+    desc: "Every detail managed with care",
   },
 ];
 
 export default function WhyChooseUs() {
   return (
-    <section
-      id="why-us"
-      className="py-16 bg-gradient-to-r from-orange-50 via-white to-orange-50 sm:py-20"
-    >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="why-us" className="why-choose-section">
+      <div className="why-choose-inner mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+        <header className="why-choose-heading">
+          <span><i aria-hidden="true" />Why Choose Us?</span>
+          <h2>Making Every Event Special</h2>
+          <p>We bring creativity, taste and professionalism to make your event truly memorable.</p>
+        </header>
 
-        {/* Heading */}
-
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: .6 }}
-          viewport={{ once: true }}
-          className="text-center mb-14"
-        >
-          <span className="text-orange-500 font-semibold uppercase tracking-widest">
-            Why Choose Us
-          </span>
-
-          <h2 className="text-4xl md:text-5xl font-bold mt-3 text-gray-900">
-            We Make Every Event
-            <span className="text-orange-500"> Special</span>
-          </h2>
-
-          <p className="mt-5 text-gray-600 max-w-2xl mx-auto">
-            We bring planning, production, hospitality, and creative event services together in one place.
-          </p>
-        </motion.div>
-
-        {/* Cards */}
-
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-8">
-
-          {features.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: index * 0.15,
-                duration: 0.5,
-              }}
-              viewport={{ once: true }}
-              whileHover={{
-                y: -12,
-                scale: 1.04,
-              }}
-              className="bg-white rounded-3xl border border-orange-100 p-6 text-center shadow-lg shadow-orange-100/60 transition-all duration-300 hover:shadow-2xl sm:p-8"
-            >
-
-              <div className="w-20 h-20 mx-auto rounded-full bg-orange-100 text-orange-500 flex items-center justify-center mb-6">
-                {item.icon}
+        <div className="why-choose-list">
+          {features.map(({ Icon, title, desc }) => (
+            <article className="why-choose-card" key={title}>
+              <span className="why-choose-icon"><Icon size={29} strokeWidth={1.9} /></span>
+              <div>
+                <h3>{title}</h3>
+                <p>{desc}</p>
               </div>
-
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">
-                {item.title}
-              </h3>
-
-              <p className="text-gray-600 leading-7">
-                {item.desc}
-              </p>
-
-            </motion.div>
+            </article>
           ))}
-
         </div>
 
+        <a className="why-choose-booking" href="/booking">
+          <ChefHat size={19} />Book Now<ArrowRight size={18} />
+        </a>
       </div>
     </section>
   );

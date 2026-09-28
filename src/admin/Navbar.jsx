@@ -1,10 +1,22 @@
-import { Menu } from "lucide-react";
+"use client";
+
+import { LogOut, Menu } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Navbar({ setOpen }) {
+  const router = useRouter();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+    router.replace("/login");
+  };
+
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 shadow-sm backdrop-blur-sm">
       <div className="flex min-h-16 flex-wrap items-center justify-between gap-3 px-4 py-3 md:px-6">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={() => setOpen(true)}
             className="inline-flex items-center justify-center rounded-lg border border-slate-200 p-2 text-slate-700 transition hover:bg-slate-100 md:hidden"
@@ -31,6 +43,15 @@ export default function Navbar({ setOpen }) {
             className="h-10 w-10 rounded-full border-2 border-slate-200 object-cover shadow-sm"
             alt="User avatar"
           />
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+            aria-label="Log out"
+          >
+            <LogOut size={16} />
+            <span className="hidden sm:inline">Logout</span>
+          </button>
         </div>
       </div>
     </header>

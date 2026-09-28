@@ -2,46 +2,46 @@
 
 import { motion } from "framer-motion";
 import { Eye } from "lucide-react";
-
-import img1 from "../assets/images/catering.jpg";
-import img2 from "../assets/images/servicebg.jpg";
-import img3 from "../assets/images/catering.jpg";
-import img4 from "../assets/images/servicebg.jpg";
-import img5 from "../assets/images/catering.jpg";
-import img6 from "../assets/images/servicebg.jpg";
+import { useState } from "react";
+import Image from "next/image";
 
 const images = [
   {
-    image: img1,
-    title: "Wedding Catering",
+    image: "/images/event-catering.jpg",
+    title: "Event Catering",
+    categories: ["Food", "Catering"],
   },
   {
-    image: img2,
-    title: "Royal Decoration",
+    image: "/images/event-celebration.jpg",
+    title: "Event Celebration",
+    categories: ["Wedding", "Events"],
   },
   {
-    image: img3,
-    title: "Buffet Service",
+    image: "/images/event-desserts.jpg",
+    title: "Sweet Moments",
+    categories: ["Food", "Catering"],
   },
   {
-    image: img4,
-    title: "Birthday Party",
+    image: "/services/lidya-nada-MD_ha01Bk7c-unsplash.jpg",
+    title: "Professional Cooking",
+    categories: ["Food", "Cook"],
   },
   {
-    image: img5,
-    title: "Corporate Event",
-  },
-  {
-    image: img6,
-    title: "Delicious Sweets",
+    image: "/services/saile-ilyas-SiwrpBnxDww-unsplash.jpg",
+    title: "Cook Service",
+    categories: ["Cook", "Events"],
   },
 ];
 
 export default function Gallery() {
+  const [activeCategory, setActiveCategory] = useState("All");
+  const categories = ["All", "Food", "Cook", "Catering", "Wedding", "Events"];
+  const visibleImages = images.filter((item) => activeCategory === "All" || item.categories.includes(activeCategory));
+
   return (
     <section
       id="gallery"
-      className="bg-slate-900 py-16 sm:py-20"
+      className="bg-[#102b2b] py-10 sm:py-12"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -52,7 +52,7 @@ export default function Gallery() {
           className="mb-12 text-center sm:mb-16"
         >
           <motion.span
-            className="text-orange-400 text-sm font-semibold uppercase tracking-widest"
+            className="text-amber-300 text-sm font-semibold uppercase tracking-widest"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
@@ -60,7 +60,7 @@ export default function Gallery() {
             Gallery
           </motion.span>
 
-          <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl md:text-5xl">
+          <h2 className="mt-3 font-serif text-3xl font-bold text-white sm:text-4xl md:text-5xl">
             Our Beautiful Events
           </h2>
 
@@ -70,8 +70,22 @@ export default function Gallery() {
           </p>
         </motion.div>
 
+        <div className="mb-8 flex flex-wrap justify-center gap-2" aria-label="Filter gallery by category">
+          {categories.map((category) => (
+            <button
+              key={category}
+              type="button"
+              aria-pressed={activeCategory === category}
+              onClick={() => setActiveCategory(category)}
+              className={`min-h-10 rounded-full border px-4 text-sm font-semibold transition ${activeCategory === category ? "border-amber-400 bg-amber-400 text-[#142d2d]" : "border-white/20 bg-white/5 text-white/80 hover:border-amber-300 hover:text-amber-200"}`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-          {images.map((item, index) => (
+          {visibleImages.map((item, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 40 }}
@@ -84,12 +98,12 @@ export default function Gallery() {
               whileHover={{ y: -12 }}
               className="group relative cursor-pointer overflow-hidden rounded-3xl shadow-xl"
             >
-              <motion.img
+              <Image
                 src={item.image}
                 alt={item.title}
-                className="h-48 w-full object-cover md:h-72"
-                whileHover={{ scale: 1.12 }}
-                transition={{ duration: 0.4 }}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-cover transition duration-500 group-hover:scale-110"
               />
 
               {/* Overlay */}
