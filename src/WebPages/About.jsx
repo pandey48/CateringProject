@@ -1,39 +1,35 @@
+import Image from "next/image";
+import { ArrowUpRight, Check } from "lucide-react";
+
 export default function About() {
-  const stats = [
-    { value: "15+", label: "Years of service" },
-    { value: "500+", label: "Events delivered" },
-    { value: "4.9/5", label: "Client rating" },
-  ];
+  const points = ["Catering and professional cooks", "Weddings, parties and family functions", "Event planning from setup to service"];
 
   return (
     <section
       id="about"
-      className="w-full overflow-hidden bg-gradient-to-b from-white via-orange-50 to-white py-10 sm:py-12"
+      className="w-full overflow-hidden bg-[#fffaf5] py-10 sm:py-12"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-7 md:grid-cols-[1.2fr_0.8fr] md:gap-8">
+        <div className="grid items-center gap-7 lg:grid-cols-2 lg:gap-12">
           <div>
             <span className="inline-flex rounded-full bg-orange-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-orange-600">
               About us
             </span>
             <h2 className="mt-4 text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl">
-              Creating memorable moments with <span className="text-orange-500">care and creativity</span>
+              Creating Memorable Events with <span className="text-[#bd861a]">Care &amp; Creativity</span>
             </h2>
             <p className="mt-5 max-w-2xl text-base leading-8 text-gray-700 sm:text-lg">
-              We provide <span className="font-semibold text-yellow-600">complete event services</span> with thoughtful planning,
-              trusted professionals, and flexible solutions for weddings, birthdays, corporate events, and every special occasion.
+              Pandey Catering &amp; Event Services brings food, skilled cooks and event planning together for weddings, birthdays, corporate events and family occasions. Tell us what you need and we will help plan the details.
             </p>
+            <ul className="mt-5 grid gap-3 text-sm text-[#31504c]">
+              {points.map((point) => <li key={point} className="flex items-center gap-2"><Check size={17} className="shrink-0 text-[#bd861a]" />{point}</li>)}
+            </ul>
+            <a href="/booking" className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-full bg-[#173332] px-6 text-sm font-bold text-white transition hover:bg-[#bd861a]">Plan Your Event <ArrowUpRight size={17} /></a>
           </div>
-
-          <div className="rounded-[28px] border border-orange-100 bg-white p-5 shadow-lg shadow-orange-100/60 sm:p-7">
-            <div className="grid gap-4 sm:grid-cols-3 md:grid-cols-1 lg:grid-cols-3">
-              {stats.map((stat) => (
-                <div key={stat.label} className="rounded-2xl bg-orange-50 px-4 py-5 text-center">
-                  <div className="text-2xl font-black text-orange-500 sm:text-3xl">{stat.value}</div>
-                  <div className="mt-2 text-sm font-medium text-gray-700">{stat.label}</div>
-                </div>
-              ))}
-            </div>
+          <div className="relative min-h-[280px] overflow-hidden rounded-3xl bg-[#e8dfd2] sm:min-h-[390px]">
+            <Image src="/images/event-celebration.jpg" alt="A celebration venue prepared for guests" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#102b2b]/55 via-transparent to-transparent" />
+            <p className="absolute bottom-5 left-5 rounded-full bg-white/95 px-4 py-2 text-sm font-semibold text-[#173332]">Thoughtful service for every occasion</p>
           </div>
         </div>
       </div>

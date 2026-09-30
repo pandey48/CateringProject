@@ -614,7 +614,7 @@ section {
     margin-top: .9rem;
   }
 
-  .home-hero__actions > a:first-child { display: none; }
+  .home-hero__actions > a:nth-child(2) { display: none; }
 
   .home-hero__button {
     min-height: 2.85rem;
@@ -622,7 +622,7 @@ section {
     font-size: .85rem;
   }
 
-  .home-hero__button--secondary {
+  .home-hero__button {
     min-width: 12rem;
     justify-content: center;
     border-color: transparent;
@@ -631,7 +631,7 @@ section {
     box-shadow: 0 8px 20px rgb(47 29 3 / 22%);
   }
 
-  .home-hero__button--secondary:hover { background: #bd861a; }
+  .home-hero__button:hover { background: #bd861a; }
 
   .home-hero__photo-label {
     display: none;

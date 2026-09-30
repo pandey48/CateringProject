@@ -33,7 +33,7 @@ const stats = [
 
 export default function Statss() {
   return (
-    <section className="bg-gradient-to-r from-orange-500 via-orange-400 to-amber-500 py-10 sm:py-12">
+    <section className="bg-[#173332] py-10 sm:py-12">
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
@@ -49,7 +49,7 @@ export default function Statss() {
             Our Achievements
           </h2>
 
-          <p className="mt-3 text-orange-100">
+          <p className="mt-3 text-[#d8e2dd]">
             Trusted by hundreds of families for unforgettable celebrations.
           </p>
         </motion.div>
@@ -79,7 +79,7 @@ export default function Statss() {
                 whileHover={{
                   y: -8,
                 }}
-                className="rounded-3xl bg-white p-6 text-center shadow-xl"
+                className="rounded-2xl border border-white/10 bg-white p-5 text-center shadow-sm sm:p-6"
               >
 
                 {/* Icon */}

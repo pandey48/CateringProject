@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { ArrowRight, CalendarDays, Camera, CarFront, ChefHat, Check, ChevronDown, CircleCheck, Flower2, Lightbulb, Music2, Search, Send, Sparkles, Speaker, Star, TentTree, Utensils, UsersRound, X } from "lucide-react";
-import API_URL from "../config";
 import Pnavbar from "./Pnavbar";
 
 const unsplash = (photoId) => `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=1000&q=82`;
@@ -34,7 +33,7 @@ const services = [
 const categories = ["All", "Food & Catering", "Wedding", "Decoration", "Entertainment", "Equipment", "Transport", "Complete Event"];
 const guestPackages = ["Small Gathering · 50–100 Guests", "Medium Event · 100–300 Guests", "Large Event · 300–500 Guests", "Big Event · 500–1000+ Guests"];
 const perks = ["10–1000+ Guests", "Custom Menu", "Experienced Staff", "Fresh Ingredients", "Hygienic Preparation"];
-const initialForm = { name: "", phone: "", email: "", eventDate: "", eventTime: "", guestCount: "", location: "", budget: "", message: "" };
+const initialForm = { name: "", eventDate: "", guestCount: "" };
 
 export default function ServicesPage() {
   const [query, setQuery] = useState("");
@@ -43,7 +42,6 @@ export default function ServicesPage() {
   const [selected, setSelected] = useState(null);
   const [mode, setMode] = useState("details");
   const [form, setForm] = useState(initialForm);
-  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(null);
 
@@ -84,31 +82,19 @@ export default function ServicesPage() {
     setError("");
   }
 
-  async function submitEnquiry(event) {
+  function submitEnquiry(event) {
     event.preventDefault();
     if (!selected) return;
-    const phoneDigits = form.phone.replace(/\D/g, "");
-    if (phoneDigits.length < 10 || phoneDigits.length > 15) {
-      setError("Enter a valid mobile number with 10 to 15 digits.");
-      return;
-    }
-    setSubmitting(true);
     setError("");
-    try {
-      const response = await fetch(`${API_URL}/api/enquiries`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, phone: form.phone.trim(), serviceId: selected.id, serviceName: selected.name, source: "services-page" }),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || "Could not submit the enquiry.");
-      setSuccess(data);
-      setForm(initialForm);
-    } catch (submitError) {
-      setError(submitError.message || "Could not connect to the enquiry service. Please try again.");
-    } finally {
-      setSubmitting(false);
-    }
+    const message = [
+      "Hello Pandey Catering & Event Services, I would like to enquire about:",
+      `Service: ${selected.name}`,
+      `Name: ${form.name.trim()}`,
+      `Event date: ${form.eventDate}`,
+      `Number of guests: ${form.guestCount}`,
+    ].join("\n");
+    window.open(`https://wa.me/917389368597?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+    setSuccess(true);
   }
 
   const renderServiceSet = () => (
@@ -152,7 +138,7 @@ export default function ServicesPage() {
         <section role="dialog" aria-modal="true" aria-labelledby="service-dialog-title" className="max-h-[94dvh] w-full max-w-3xl overflow-y-auto rounded-t-[1.6rem] border border-white/50 bg-[#fffdf9] shadow-2xl sm:rounded-[1.6rem]">
           <div className="relative h-40 sm:h-52"><Image src={selected.image} alt="" fill unoptimized sizes="(max-width: 768px) 100vw, 768px" className="object-cover" /><div className="absolute inset-0 bg-gradient-to-t from-[#102b2b]/85 via-[#102b2b]/20 to-transparent" /><button type="button" onClick={() => setSelected(null)} aria-label="Close dialog" className="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-white/95 text-[#173332] shadow"><X size={19} /></button><div className="absolute bottom-4 left-5 right-5"><span className="rounded-full bg-[#f5d58d] px-3 py-1 text-xs font-bold text-[#63450c]">{selected.category}</span><h2 id="service-dialog-title" className="mt-2 font-serif text-2xl font-bold text-white sm:text-3xl">{selected.name}</h2></div></div>
           <div className="p-5 sm:p-7">
-            {success ? <div className="py-7 text-center"><span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-emerald-50 text-emerald-700"><CircleCheck size={34} /></span><h3 className="mt-5 font-serif text-2xl font-bold text-[#173332]">Enquiry submitted successfully!</h3><p className="mt-2 text-sm text-slate-600">Thank you. Our team will contact you shortly.</p><p className="mx-auto mt-5 inline-flex rounded-xl bg-[#f7f0e3] px-4 py-3 font-mono text-sm font-bold text-[#865d11]">{success.enquiryNumber}</p><button type="button" onClick={() => setSelected(null)} className="mt-6 block w-full rounded-xl bg-[#173332] px-5 py-3 font-semibold text-white">Done</button></div> : <>
+            {success ? <div className="py-7 text-center"><span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-emerald-50 text-emerald-700"><CircleCheck size={34} /></span><h3 className="mt-5 font-serif text-2xl font-bold text-[#173332]">Thanks for your enquiry!</h3><p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600">Your details are ready in WhatsApp. Tap Send there and our team will connect with you shortly.</p><button type="button" onClick={() => setSelected(null)} className="mt-6 block w-full rounded-xl bg-[#173332] px-5 py-3 font-semibold text-white">Done</button></div> : <>
               <div className="flex flex-wrap items-center justify-between gap-3"><p className="max-w-xl text-sm leading-6 text-slate-600">{selected.details}</p><button type="button" onClick={() => setMode(mode === "details" ? "enquiry" : "details")} className="inline-flex shrink-0 items-center gap-2 rounded-full bg-[#c58a19] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#a9700b]">{mode === "details" ? "Enquire Now" : "Service Details"}<ArrowRight size={16} /></button></div>
               {mode === "details" ? <>
                 <div className="mt-5 grid gap-2 sm:grid-cols-2">{perks.map((perk) => <p key={perk} className="flex items-center gap-2 text-sm text-[#31504c]"><Check size={16} className="shrink-0 text-[#b77c11]" />{perk}</p>)}</div>
@@ -162,18 +148,12 @@ export default function ServicesPage() {
                 <div className="mb-4 flex items-center gap-2 rounded-xl border border-[#ead9b8] bg-[#fbf5e9] px-3 py-2.5 text-sm font-semibold text-[#785610]"><CalendarDays size={17} /> Enquiry for {selected.name}</div>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <Field label="Full Name *" name="name" value={form.name} onChange={setForm} required autoComplete="name" />
-                  <Field label="Mobile Number *" name="phone" value={form.phone} onChange={setForm} required type="tel" autoComplete="tel" />
-                  <Field label="Email" name="email" value={form.email} onChange={setForm} type="email" autoComplete="email" />
                   <Field label="Event Date *" name="eventDate" value={form.eventDate} onChange={setForm} required type="date" min={new Date().toISOString().slice(0, 10)} />
-                  <Field label="Preferred Time" name="eventTime" value={form.eventTime} onChange={setForm} type="time" />
-                  <Field label="Number of Guests" name="guestCount" value={form.guestCount} onChange={setForm} type="number" min="1" max="100000" placeholder="e.g. 300" />
-                  <Field label="Event Location *" name="location" value={form.location} onChange={setForm} required placeholder="City or venue address" />
-                  <label className="grid gap-1.5 text-xs font-bold text-[#405550]">Budget Range<select value={form.budget} onChange={(event) => setForm((current) => ({ ...current, budget: event.target.value }))} className="h-11 rounded-xl border border-[#e5ddcf] bg-white px-3 text-sm font-normal text-slate-700 outline-none focus:border-[#bd861a]"><option value="">Select a range</option><option>Under ₹50,000</option><option>₹50,000–₹1,00,000</option><option>₹1,00,000–₹3,00,000</option><option>₹3,00,000–₹5,00,000</option><option>₹5,00,000+</option><option>Need guidance</option></select></label>
-                  <label className="grid gap-1.5 text-xs font-bold text-[#405550] sm:col-span-2">Additional Requirements<textarea value={form.message} onChange={(event) => setForm((current) => ({ ...current, message: event.target.value }))} rows={3} maxLength={5000} placeholder="Menu preferences, event type or other details" className="resize-y rounded-xl border border-[#e5ddcf] bg-white px-3 py-2.5 text-sm font-normal text-slate-700 outline-none focus:border-[#bd861a]" /></label>
+                  <Field label="Number of Guests *" name="guestCount" value={form.guestCount} onChange={setForm} required type="number" min="1" max="100000" placeholder="e.g. 300" />
                 </div>
                 {error && <p role="alert" className="mt-3 rounded-xl bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
-                <button disabled={submitting} type="submit" className="mt-4 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#c58a19] px-5 font-bold text-white transition hover:bg-[#a9700b] disabled:cursor-wait disabled:opacity-60">{submitting ? "Submitting…" : "Submit Enquiry"}<Send size={16} /></button>
-                <p className="mt-2 text-center text-xs text-slate-500">Your details are sent securely to our enquiry team.</p>
+                <button type="submit" className="mt-4 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#c58a19] px-5 font-bold text-white transition hover:bg-[#a9700b]">Continue to WhatsApp <Send size={16} /></button>
+                <p className="mt-2 text-center text-xs text-slate-500">WhatsApp will open with your enquiry ready to send to 73893 68597.</p>
               </form>}
             </>}
           </div>

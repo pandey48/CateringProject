@@ -44,7 +44,7 @@ export default function Hero() {
             From professional cooks and delicious catering to tents, decoration, DJ, cars and complete event setup — we manage everything in one place.
           </p>
           <div className="home-hero__actions">
-            <a className="home-hero__button" href="/booking"><CalendarDays size={17} /> Book Now</a>
+            <a className="home-hero__button" href="#quote"><CalendarDays size={17} /> Get a Free Quote</a>
             <a className="home-hero__button home-hero__button--secondary" href="#services">Explore Services <ArrowUpRight size={17} /></a>
           </div>
         </motion.div>

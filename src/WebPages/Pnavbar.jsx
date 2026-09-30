@@ -6,7 +6,6 @@ import logo from "../assets/logopc.png";
 import { useRouter } from "next/navigation";
 import {
   Phone,
-  Instagram,
   MessageCircle,
   Menu,
   X,
@@ -57,8 +56,6 @@ export default function Pnavbar({ showQuickActions = true, fixed = true }) {
             src={logo.src}
             alt="Pandey Event Management Logo"
             className="h-12 w-12 object-contain md:h-16 md:w-16"
-            animate={{ rotate: [0, 5, 0] }}
-            transition={{ repeat: Infinity, duration: 3 }}
           />
 
           <div>
@@ -94,6 +91,8 @@ export default function Pnavbar({ showQuickActions = true, fixed = true }) {
         </div>
 
         <div className="hidden items-center gap-3 lg:flex">
+          <a href="tel:+917389368597" className="rounded-full border border-[#ded6c8] px-4 py-2.5 text-sm font-semibold text-[#173332] transition hover:border-[#bd861a] hover:text-[#94640f]">Call Us</a>
+          <a href="https://wa.me/917389368597" target="_blank" rel="noreferrer" className="rounded-full border border-[#ded6c8] px-4 py-2.5 text-sm font-semibold text-[#173332] transition hover:border-[#bd861a] hover:text-[#94640f]">WhatsApp</a>
           <motion.button
             onClick={() => router.push("/booking")}
             whileHover={{ scale: 1.05 }}
@@ -154,7 +153,7 @@ export default function Pnavbar({ showQuickActions = true, fixed = true }) {
 
       </motion.nav>
 
-      {showQuickActions && <div className="fixed bottom-24 right-3 z-[60] flex flex-col gap-2">
+      {showQuickActions && <div className="fixed bottom-20 right-4 z-[60] flex flex-col gap-2 md:bottom-5">
         <a
           href="https://wa.me/917389368597"
           target="_blank"
@@ -170,15 +169,6 @@ export default function Pnavbar({ showQuickActions = true, fixed = true }) {
           className="flex h-11 w-11 items-center justify-center rounded-full bg-blue-500 text-white shadow-lg shadow-blue-900/20 transition duration-200 hover:scale-110 hover:bg-blue-600 active:scale-95"
         >
           <Phone size={20} />
-        </a>
-        <a
-          href="https://www.instagram.com/pandey_caterrs"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Open Instagram"
-          className="flex h-11 w-11 items-center justify-center rounded-full bg-pink-500 text-white shadow-lg shadow-pink-900/20 transition duration-200 hover:scale-110 hover:bg-pink-600 active:scale-95"
-        >
-          <Instagram size={20} />
         </a>
       </div>}
 

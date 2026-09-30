@@ -37,8 +37,8 @@ export default function Contact() {
   const contactItems = [
     { icon: Phone, title: "Phone", value: "+91 73893 68597" },
     { icon: Mail, title: "Email", value: "pandeycatering@gmail.com" },
-    { icon: MapPin, title: "Address", value: "Sample: 24 Garden Lane, Mauganj, Madhya Pradesh" },
-    { icon: Clock, title: "Working Hours", value: "Any time available" },
+    { icon: MapPin, title: "Address", value: "Address available on request" },
+    { icon: Clock, title: "Working Hours", value: "Available for event enquiries" },
   ];
 
   return (
@@ -82,6 +82,10 @@ export default function Contact() {
                 </div>
               </div>
             ))}
+            <div className="flex flex-col gap-3 pt-1 sm:flex-row">
+              <a href="tel:+917389368597" className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#173332] px-4 text-sm font-bold text-white transition hover:bg-[#bd861a]"><Phone size={17} />Call Now</a>
+              <a href="https://wa.me/917389368597" target="_blank" rel="noreferrer" className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#f2eee5] px-4 text-sm font-bold text-[#173332] transition hover:bg-[#e9dfca]">WhatsApp Us</a>
+            </div>
           </motion.div>
 
           <motion.form
