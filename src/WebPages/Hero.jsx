@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 import { ArrowUpRight, CalendarDays, Check, Star, UtensilsCrossed, UsersRound } from "lucide-react";
 
 const heroPhotos = [
-  "/images/event-catering.jpg",
-  "/images/event-celebration.jpg",
-  "/images/event-desserts.jpg",
+  "/images/pandey-catering-event-buffet.webp",
+  "/images/pandey-catering-wedding-celebration.webp",
+  "/images/pandey-catering-dessert-counter.webp",
 ];
 
 const promises = ["Professional Cooks", "Fresh Catering", "Complete Event Setup"];
@@ -33,7 +33,7 @@ export default function Hero() {
           transition={{ duration: 0.55 }}
         >
           <span className="home-hero__eyebrow"><Star size={15} fill="currentColor" /> Trusted Event Management Services</span>
-          <h1 id="home-hero-title">Premium Catering for <span>Every Occasion</span></h1>
+          <h1 id="home-hero-title">Pandey Catering – <span>Wedding &amp; Event Catering Services</span></h1>
           <p className="home-hero__tagline">कुक <i>·</i> कैटरिंग <i>·</i> इवेंट</p>
           <p className="home-hero__promise">आपका Event, हमारी जिम्मेदारी</p>
           <p className="home-hero__capacity">
@@ -41,7 +41,7 @@ export default function Hero() {
             <span className="home-hero__capacity-mobile">10 से 1000+ लोगों तक के लिए कैटरिंग सेवा</span>
           </p>
           <p className="home-hero__description">
-            From professional cooks and delicious catering to tents, decoration, DJ, cars and complete event setup — we manage everything in one place.
+            Wedding, party and event catering with vegetarian menus, professional cooks and complete food service for family celebrations in Hanumana and nearby areas.
           </p>
           <div className="home-hero__actions">
             <a className="home-hero__button" href="#quote"><CalendarDays size={17} /> Get a Free Quote</a>

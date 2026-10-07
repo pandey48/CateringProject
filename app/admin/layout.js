@@ -2,7 +2,8 @@ import ProtectedRoute from "../../src/ProtectedRoute";
 import AdminLayout from "../../src/admin/AdminLayout";
 
 export const metadata = {
-  title: "Admin Dashboard | Pandey Event Management",
+  robots: { index: false, follow: false },
+  title: "Admin Dashboard | Pandey Catering",
 };
 
 export default function AdminRootLayout({ children }) {

@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import logo from "../assets/logopc.png";
 import { useRouter } from "next/navigation";
 import {
   Phone,
@@ -53,8 +52,8 @@ export default function Pnavbar({ showQuickActions = true, fixed = true }) {
           whileHover={{ scale: 1.05 }}
         >
           <motion.img
-            src={logo.src}
-            alt="Pandey Event Management Logo"
+            src="/pandey-catering-logo.webp"
+            alt="Pandey Catering logo"
             className="h-12 w-12 object-contain md:h-16 md:w-16"
           />
 
@@ -165,7 +164,7 @@ export default function Pnavbar({ showQuickActions = true, fixed = true }) {
         </a>
         <a
           href="tel:+917389368597"
-          aria-label="Call Pandey Event Management"
+          aria-label="Call Pandey Catering"
           className="flex h-11 w-11 items-center justify-center rounded-full bg-blue-500 text-white shadow-lg shadow-blue-900/20 transition duration-200 hover:scale-110 hover:bg-blue-600 active:scale-95"
         >
           <Phone size={20} />

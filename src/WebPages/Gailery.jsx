@@ -7,27 +7,27 @@ import Image from "next/image";
 
 const images = [
   {
-    image: "/images/event-catering.jpg",
+    image: "/images/pandey-catering-event-buffet.webp",
     title: "Event Catering",
     categories: ["Food", "Catering"],
   },
   {
-    image: "/images/event-celebration.jpg",
+    image: "/images/pandey-catering-wedding-celebration.webp",
     title: "Event Celebration",
     categories: ["Wedding", "Events"],
   },
   {
-    image: "/images/event-desserts.jpg",
+    image: "/images/pandey-catering-dessert-counter.webp",
     title: "Sweet Moments",
     categories: ["Food", "Catering"],
   },
   {
-    image: "/services/lidya-nada-MD_ha01Bk7c-unsplash.jpg",
+    image: "/services/pandey-catering-food-preparation.webp",
     title: "Professional Cooking",
     categories: ["Food", "Cook"],
   },
   {
-    image: "/services/saile-ilyas-SiwrpBnxDww-unsplash.jpg",
+    image: "/services/pandey-catering-cooks-at-work.webp",
     title: "Cook Service",
     categories: ["Cook", "Events"],
   },

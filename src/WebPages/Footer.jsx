@@ -1,5 +1,4 @@
 import {
-  Facebook,
   Instagram,
   Phone,
   Mail,
@@ -10,7 +9,7 @@ export default function Footer() {
     <footer className="bg-slate-900 text-white">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
         <div>
-          <h2 className="text-2xl font-bold text-orange-500 sm:text-3xl">Pandey Event Management</h2>
+          <h2 className="text-2xl font-bold text-orange-500 sm:text-3xl">Pandey Catering</h2>
           <p className="mt-4 text-sm leading-7 text-gray-400 sm:text-base">
             Event planning, catering, decoration, tent, photography, DJ and more for memorable occasions.
           </p>
@@ -19,10 +18,10 @@ export default function Footer() {
         <div>
           <h3 className="mb-4 text-xl font-semibold">Quick Links</h3>
           <ul className="space-y-3 text-gray-400">
-            <li><a className="transition hover:text-orange-400" href="#about">About</a></li>
-            <li><a className="transition hover:text-orange-400" href="#menu">Menu</a></li>
-            <li><a className="transition hover:text-orange-400" href="#gallery">Gallery</a></li>
-            <li><a className="transition hover:text-orange-400" href="#contact">Contact</a></li>
+            <li><a className="transition hover:text-orange-400" href="/#about">About</a></li>
+            <li><a className="transition hover:text-orange-400" href="/services">Services</a></li>
+            <li><a className="transition hover:text-orange-400" href="/#gallery">Gallery</a></li>
+            <li><a className="transition hover:text-orange-400" href="/#contact">Contact</a></li>
             <li><a className="transition hover:text-orange-400" href="/enqury">Enquiry</a></li>
           </ul>
         </div>
@@ -47,15 +46,12 @@ export default function Footer() {
             <a href="https://www.instagram.com/pandey_caterrs" target="_blank" rel="noreferrer" className="rounded-full border border-gray-700 p-2.5 transition hover:border-orange-500 hover:text-orange-400">
               <Instagram size={18} />
             </a>
-            <a href="#" className="rounded-full border border-gray-700 p-2.5 transition hover:border-orange-500 hover:text-orange-400">
-              <Facebook size={18} />
-            </a>
           </div>
         </div>
       </div>
 
       <div className="border-t border-slate-700 py-5 text-center text-sm text-gray-400">
-        © {new Date().getFullYear()} Pandey Event Management. All Rights Reserved.
+        © {new Date().getFullYear()} Pandey Catering. All Rights Reserved.
       </div>
     </footer>
   );

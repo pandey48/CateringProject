@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
@@ -35,7 +35,7 @@ const guestPackages = ["Small Gathering · 50–100 Guests", "Medium Event · 10
 const perks = ["10–1000+ Guests", "Custom Menu", "Experienced Staff", "Fresh Ingredients", "Hygienic Preparation"];
 const initialForm = { name: "", eventDate: "", guestCount: "" };
 
-export default function ServicesPage() {
+export default function ServicesPage({ embedded = false }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
   const [servicePage, setServicePage] = useState(0);
@@ -53,6 +53,7 @@ export default function ServicesPage() {
 
   const pageCount = Math.ceil(filtered.length / 4);
   const visibleServices = filtered.slice(servicePage * 4, servicePage * 4 + 4);
+  const TitleTag = embedded ? "h2" : "h1";
 
   useEffect(() => {
     setServicePage(0);
@@ -102,13 +103,13 @@ export default function ServicesPage() {
       {visibleServices.map((service) => {
         const Icon = service.icon;
         return (
-          <button type="button" key={service.id} onClick={() => openService(service)} aria-label={`View ${service.name} details`} className="group flex min-w-0 flex-col rounded-[1.2rem] border border-[#e9dfcf] bg-white p-1.5 text-left shadow-[0_6px_18px_rgba(34,47,39,.06)] transition duration-300 hover:-translate-y-0.5 hover:border-[#d4b260] hover:shadow-[0_12px_25px_rgba(34,47,39,.12)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bd861a] sm:rounded-[1.5rem] sm:p-2">
+          <button type="button" key={service.id} onClick={() => openService(service)} aria-label={service.name} className="group flex min-w-0 flex-col rounded-[1.2rem] border border-[#e9dfcf] bg-white p-1.5 text-left shadow-[0_6px_18px_rgba(34,47,39,.06)] transition duration-300 hover:-translate-y-0.5 hover:border-[#d4b260] hover:shadow-[0_12px_25px_rgba(34,47,39,.12)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bd861a] sm:rounded-[1.5rem] sm:p-2">
             <span className="relative aspect-[16/10] w-full overflow-hidden rounded-[.95rem] bg-[#eee5d7] sm:rounded-[1.15rem]">
-              <Image src={service.image} alt={`${service.name} for events`} fill unoptimized sizes="50vw" loading="lazy" className="object-cover transition duration-500 group-hover:scale-[1.04]" />
+              <Image src={service.image} alt={`${service.name} for events`} fill sizes="50vw" loading="lazy" className="object-cover transition duration-500 group-hover:scale-[1.04]" />
               <span className="absolute left-2 top-2 max-w-[calc(100%-2.75rem)] truncate rounded-full border border-white/70 bg-[#fffaf0]/95 px-2 py-1 text-[9px] font-bold text-[#835c12] shadow-sm sm:left-3 sm:top-3 sm:px-2.5 sm:text-[10px]">{service.category}</span>
               <span className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-xl border border-white/20 bg-[#123332]/95 text-[#efbd54] shadow-lg sm:bottom-3 sm:right-3 sm:h-10 sm:w-10"><Icon size={17} /></span>
             </span>
-            <span className="flex min-h-12 w-full items-center justify-between gap-1 px-1.5 py-2 sm:min-h-14 sm:px-2"><span className="line-clamp-2 font-serif text-xs font-bold leading-snug text-[#173332] sm:text-base">{service.name}</span><ArrowRight size={15} className="shrink-0 text-[#ad7915] transition-transform group-hover:translate-x-0.5" /></span>
+            <span className="flex min-h-12 w-full items-center gap-1 px-1.5 py-2 sm:min-h-14 sm:px-2"><span className="line-clamp-2 font-serif text-xs font-bold leading-snug text-[#173332] sm:text-base">{service.name}</span></span>
           </button>
         );
       })}
@@ -118,10 +119,11 @@ export default function ServicesPage() {
   return (
     <>
     
+    {!embedded && <Pnavbar />}
     <main className="bg-[#fffaf3] px-3 py-0 text-[#173332] sm:px-5">
       <section className="mx-auto max-w-7xl" aria-live="polite">
         <div className="mb-2 grid gap-2 sm:grid-cols-[minmax(200px,.8fr)_1.2fr] sm:items-center">
-          <h1 className="font-serif text-2xl font-bold text-[#173332] sm:text-3xl">Services</h1>
+          <TitleTag className="font-serif text-2xl font-bold text-[#173332] sm:text-3xl">Services</TitleTag>
           <label className="relative block">
             <Search size={17} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#9b7a42]" />
             <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search services..." className="w-full rounded-xl border border-[#e8dcc8] bg-white py-3 pl-10 pr-3 text-sm shadow-sm outline-none transition placeholder:text-slate-400 focus:border-[#bd861a] focus:ring-4 focus:ring-amber-100" />
@@ -136,7 +138,7 @@ export default function ServicesPage() {
       </section>
       {selected && <div className="fixed inset-0 z-[100] flex items-end justify-center bg-[#071c1b]/65 p-0 backdrop-blur-sm sm:items-center sm:p-4" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelected(null); }}>
         <section role="dialog" aria-modal="true" aria-labelledby="service-dialog-title" className="max-h-[94dvh] w-full max-w-3xl overflow-y-auto rounded-t-[1.6rem] border border-white/50 bg-[#fffdf9] shadow-2xl sm:rounded-[1.6rem]">
-          <div className="relative h-40 sm:h-52"><Image src={selected.image} alt="" fill unoptimized sizes="(max-width: 768px) 100vw, 768px" className="object-cover" /><div className="absolute inset-0 bg-gradient-to-t from-[#102b2b]/85 via-[#102b2b]/20 to-transparent" /><button type="button" onClick={() => setSelected(null)} aria-label="Close dialog" className="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-white/95 text-[#173332] shadow"><X size={19} /></button><div className="absolute bottom-4 left-5 right-5"><span className="rounded-full bg-[#f5d58d] px-3 py-1 text-xs font-bold text-[#63450c]">{selected.category}</span><h2 id="service-dialog-title" className="mt-2 font-serif text-2xl font-bold text-white sm:text-3xl">{selected.name}</h2></div></div>
+          <div className="relative h-40 sm:h-52"><Image src={selected.image} alt="" fill sizes="(max-width: 768px) 100vw, 768px" className="object-cover" /><div className="absolute inset-0 bg-gradient-to-t from-[#102b2b]/85 via-[#102b2b]/20 to-transparent" /><button type="button" onClick={() => setSelected(null)} aria-label="Close dialog" className="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-white/95 text-[#173332] shadow"><X size={19} /></button><div className="absolute bottom-4 left-5 right-5"><span className="rounded-full bg-[#f5d58d] px-3 py-1 text-xs font-bold text-[#63450c]">{selected.category}</span><h2 id="service-dialog-title" className="mt-2 font-serif text-2xl font-bold text-white sm:text-3xl">{selected.name}</h2></div></div>
           <div className="p-5 sm:p-7">
             {success ? <div className="py-7 text-center"><span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-emerald-50 text-emerald-700"><CircleCheck size={34} /></span><h3 className="mt-5 font-serif text-2xl font-bold text-[#173332]">Thanks for your enquiry!</h3><p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600">Your details are ready in WhatsApp. Tap Send there and our team will connect with you shortly.</p><button type="button" onClick={() => setSelected(null)} className="mt-6 block w-full rounded-xl bg-[#173332] px-5 py-3 font-semibold text-white">Done</button></div> : <>
               <div className="flex flex-wrap items-center justify-between gap-3"><p className="max-w-xl text-sm leading-6 text-slate-600">{selected.details}</p><button type="button" onClick={() => setMode(mode === "details" ? "enquiry" : "details")} className="inline-flex shrink-0 items-center gap-2 rounded-full bg-[#c58a19] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#a9700b]">{mode === "details" ? "Enquire Now" : "Service Details"}<ArrowRight size={16} /></button></div>

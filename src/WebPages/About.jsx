@@ -27,7 +27,7 @@ export default function About() {
             <a href="/booking" className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-full bg-[#173332] px-6 text-sm font-bold text-white transition hover:bg-[#bd861a]">Plan Your Event <ArrowUpRight size={17} /></a>
           </div>
           <div className="relative min-h-[280px] overflow-hidden rounded-3xl bg-[#e8dfd2] sm:min-h-[390px]">
-            <Image src="/images/event-celebration.jpg" alt="A celebration venue prepared for guests" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+            <Image src="/images/pandey-catering-wedding-celebration.webp" alt="A celebration venue prepared for guests" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#102b2b]/55 via-transparent to-transparent" />
             <p className="absolute bottom-5 left-5 rounded-full bg-white/95 px-4 py-2 text-sm font-semibold text-[#173332]">Thoughtful service for every occasion</p>
           </div>

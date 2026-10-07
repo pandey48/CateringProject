@@ -1,7 +1,9 @@
+import Image from "next/image";
+
 const cateringImages = [
-  { src: "/images/event-catering.jpg", alt: "Catering prepared for a special event" },
-  { src: "/images/event-celebration.jpg", alt: "A beautifully arranged celebration" },
-  { src: "/images/event-desserts.jpg", alt: "Desserts served at an event" },
+  { src: "/images/pandey-catering-event-buffet.webp", alt: "Buffet catering prepared for an event" },
+  { src: "/images/pandey-catering-wedding-celebration.webp", alt: "Wedding celebration venue set for guests" },
+  { src: "/images/pandey-catering-dessert-counter.webp", alt: "Dessert counter arranged for a catered event" },
 ];
 
 function ImageSet({ copy = false }) {
@@ -9,11 +11,13 @@ function ImageSet({ copy = false }) {
     <div className="catering-carousel__set" aria-hidden={copy || undefined}>
       {cateringImages.map((image) => (
         <div className="catering-carousel__item" key={image.src}>
-          <img
+          <Image
             src={image.src}
             alt={copy ? "" : image.alt}
+            fill
+            sizes="(max-width: 640px) 82vw, (max-width: 1280px) 40vw, 400px"
             loading="lazy"
-            decoding="async"
+            className="object-cover"
           />
           <span className="catering-carousel__shade" />
         </div>
