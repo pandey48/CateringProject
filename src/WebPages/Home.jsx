@@ -1,4 +1,6 @@
 
+"use client";
+
 import React from "react";
 import Pnavbar from "./Pnavbar";
 import Hero from "./Hero";

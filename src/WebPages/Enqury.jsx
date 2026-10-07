@@ -1,15 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight, CalendarDays, CheckCircle2, UsersRound } from "lucide-react";
 import Pnavbar from "./Pnavbar";
+import CitySelector from "../components/CitySelector";
 
-const initialForm = { name: "", eventDate: "", guestCount: "" };
+const initialForm = { city: "", address: "", name: "", eventDate: "", guestCount: "" };
 const inputClass = "mt-1.5 h-12 w-full rounded-xl border border-[#e4ddcf] bg-white px-3.5 text-sm font-normal text-[#243b38] outline-none transition placeholder:text-slate-400 focus:border-[#bd861a] focus:ring-4 focus:ring-amber-100/70";
 
 export default function Enqury() {
   const [form, setForm] = useState(initialForm);
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    const city = new URLSearchParams(window.location.search).get("city");
+    if (city) setForm((current) => ({ ...current, city }));
+  }, []);
 
   const handleChange = (event) => {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
@@ -21,6 +27,8 @@ export default function Enqury() {
     const message = [
       "Hello Pandey Catering & Event Services, I would like to enquire about an event.",
       `Name: ${form.name.trim()}`,
+      `City: ${form.city}`,
+      `Venue area/address: ${form.address.trim() || "Not provided"}`,
       `Event date: ${form.eventDate}`,
       `Number of guests: ${form.guestCount}`,
     ].join("\n");
@@ -42,8 +50,10 @@ export default function Enqury() {
 
           <form onSubmit={handleSubmit} className="grid gap-5 p-5 sm:grid-cols-2 sm:p-8">
             <Field label="Full Name *" name="name" value={form.name} onChange={handleChange} required autoComplete="name" placeholder="Your name" />
+            <CitySelector value={form.city} onChange={handleChange} required />
             <Field label="Event Date *" name="eventDate" value={form.eventDate} onChange={handleChange} required type="date" min={new Date().toISOString().slice(0, 10)} />
             <Field label="Number of Guests *" name="guestCount" value={form.guestCount} onChange={handleChange} required type="number" min="1" max="100000" placeholder="e.g. 300" />
+            <Field label="Venue area or address" name="address" value={form.address} onChange={handleChange} placeholder="Area, venue or landmark" />
 
             <div className="sm:col-span-2">
               <button type="submit" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#bd861a] px-6 py-3 font-bold text-white transition hover:bg-[#a87512] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#173332]">

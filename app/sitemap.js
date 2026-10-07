@@ -1,3 +1,4 @@
+
 import { cateringLocations } from "../src/seo/cateringLocations";
 
 const site = "https://www.pandeycatering.in";
