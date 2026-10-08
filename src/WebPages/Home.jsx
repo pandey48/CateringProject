@@ -32,10 +32,10 @@ function Home() {
           <div className="grid gap-6 lg:grid-cols-[1.1fr_1.5fr] lg:items-center">
             <div className="space-y-3">
               <p className="inline-flex items-center rounded-full bg-orange-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.22em] text-orange-700">
-                Puja Consultation
+                Catering Consultation
               </p>
               <h2 className="text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
-                Get Free Puja Consultation
+                Get Free Catering Consultation
               </h2>
               <p className="text-base leading-7 text-slate-600 sm:text-lg">
                 We&apos;ll call you back within 15 minutes.
@@ -62,14 +62,14 @@ function Home() {
               </label>
 
               <label className="block text-left sm:col-span-2">
-                <span className="mb-2 block text-sm font-semibold text-slate-700">Type of Puja</span>
+                <span className="mb-2 block text-sm font-semibold text-slate-700">Event Type</span>
                 <select className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800 focus:border-orange-400 focus:outline-none focus:ring-4 focus:ring-orange-100">
-                  <option value="">Select puja type</option>
-                  <option value="Ganesh Puja">Ganesh Puja</option>
-                  <option value="Navratri Puja">Navratri Puja</option>
-                  <option value="Wedding Puja">Wedding Puja</option>
-                  <option value="Housewarming Puja">Housewarming Puja</option>
-                  <option value="Shradh Puja">Shradh Puja</option>
+                  <option value="">Select event type</option>
+                  <option value="Wedding">Wedding</option>
+                  <option value="Birthday">Birthday</option>
+                  <option value="Corporate Event">Corporate Event</option>
+                  <option value="Family Function">Family Function</option>
+                  <option value="Religious Function">Religious Function</option>
                   <option value="Other">Other</option>
                 </select>
               </label>
@@ -78,7 +78,7 @@ function Home() {
                 type="submit"
                 className="sm:col-span-2 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-5 py-3.5 text-base font-bold text-white shadow-lg shadow-orange-500/20 transition hover:from-orange-600 hover:to-amber-600"
               >
-                🙏 Get Free Consultation
+                🍽️ Get Free Consultation
               </button>
 
               <div className="sm:col-span-2 flex flex-wrap items-center justify-center gap-4 text-sm font-medium text-slate-600">
