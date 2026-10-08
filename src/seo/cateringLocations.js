@@ -74,6 +74,51 @@ export const cateringLocations = {
       ["What information should I share first?", "Send your name, event date and expected guest count. The team will connect with you to discuss the venue and menu."],
     ],
   },
+  mirzapur: {
+    name: "Mirzapur",
+    region: "Uttar Pradesh",
+    heading: "Catering Service in Mirzapur",
+    title: "Catering Service in Mirzapur, Uttar Pradesh",
+    areas: ["Mirzapur city", "Nearby event venues"],
+    description: "Pandey Catering takes enquiries from event hosts in Mirzapur for weddings, parties and family gatherings. Share your event date, guest estimate and menu preferences to discuss arrangements with the team.",
+    metaDescription: "Looking for catering in Mirzapur, Uttar Pradesh? Contact Pandey Catering to discuss wedding, party, vegetarian and family function menus and event arrangements.",
+    localDetails: "For an event in Mirzapur, start with the date, venue and expected number of guests. Pandey Catering can discuss menu preferences, vegetarian choices and meal service timing for your gathering. Availability and venue arrangements are confirmed directly with the team.",
+    faq: [
+      ["Can I enquire about catering in Mirzapur?", "Yes. Share your event date, venue and guest estimate to discuss availability and service arrangements with Pandey Catering."],
+      ["Can I discuss vegetarian food for my event?", "Yes. Share your menu and dietary preferences so the team can discuss suitable choices."],
+      ["What details should I provide for an enquiry?", "Start with your name, event date, venue and expected guest count. The team can follow up about menu preferences."],
+    ],
+  },
+  prayagraj: {
+    name: "Prayagraj",
+    region: "Uttar Pradesh",
+    heading: "Catering Service in Prayagraj",
+    title: "Catering Service in Prayagraj, Uttar Pradesh",
+    areas: ["Prayagraj city", "Nearby event venues"],
+    description: "Pandey Catering takes enquiries from event hosts in Prayagraj for weddings, parties and family functions. Share your event date, guest estimate and food preferences to discuss a suitable service arrangement.",
+    metaDescription: "Plan wedding, party, vegetarian or family function catering in Prayagraj with Pandey Catering. Share your event details to discuss menus and arrangements.",
+    localDetails: "When planning catering for a Prayagraj event, share the venue schedule and expected number of guests. Pandey Catering can discuss menu preferences, vegetarian options and serving arrangements. Confirm availability for your date and venue directly with the team.",
+    faq: [
+      ["Does Pandey Catering take enquiries for Prayagraj?", "Yes. Contact the team with your date and venue to discuss availability and catering arrangements in Prayagraj."],
+      ["Can I enquire about wedding or party catering?", "Yes. Share the occasion, guest estimate and food preferences to discuss options for your event."],
+      ["How can I check availability?", "Call +91 73893 68597 or send an enquiry with your event date, venue and expected guest count."],
+    ],
+  },
+  jabalpur: {
+    name: "Jabalpur",
+    region: "Madhya Pradesh",
+    heading: "Catering Service in Jabalpur",
+    title: "Catering Service in Jabalpur, Madhya Pradesh",
+    areas: ["Jabalpur city", "Nearby event venues"],
+    description: "Pandey Catering takes enquiries from event hosts in Jabalpur for weddings, parties and family gatherings. Share your date, guest estimate and menu preferences to discuss the arrangements with the team.",
+    metaDescription: "Looking for catering in Jabalpur, Madhya Pradesh? Contact Pandey Catering to discuss wedding, party, vegetarian and family function catering.",
+    localDetails: "For a Jabalpur event, begin with the event date, venue and estimated guest count. Pandey Catering can discuss meal timing, menu preferences and serving arrangements for your gathering. Availability and venue arrangements are confirmed directly with the team.",
+    faq: [
+      ["Can I enquire about catering in Jabalpur?", "Yes. Share your event date, venue and guest estimate to discuss availability and service arrangements."],
+      ["Can the menu be planned around my event?", "Yes. Tell the team about your occasion, food preferences and guest requirements when you enquire."],
+      ["What details should I share first?", "Send your name, event date, venue and expected guest count. The team will connect with you to discuss the menu."],
+    ],
+  },
 };
 
 export function getLocationMetadata(slug) {

@@ -21,7 +21,25 @@ import FinalCTA from "../components/FinalCTA";
 import HeroBenefits from "../components/HeroBenefits";
 import ServicesPage from "./ServicesPage";
 import LocalCateringSEO from "../components/LocalCateringSEO";
+
 function Home() {
+  const handleConsultationSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const message = [
+      "Hello Pandey Catering, I would like a free catering consultation.",
+      `Name: ${formData.get("name")}`,
+      `Phone: ${formData.get("phone")}`,
+      `Event type: ${formData.get("eventType")}`,
+    ].join("\n");
+
+    window.open(
+      `https://wa.me/917389368597?text=${encodeURIComponent(message)}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+  };
+
   return (
     <div className="max-w-full bg-[#fffaf5] text-slate-800">
       <Pnavbar />
@@ -42,12 +60,14 @@ function Home() {
               </p>
             </div>
 
-            <form className="grid gap-4 sm:grid-cols-2" onSubmit={(event) => event.preventDefault()}>
+            <form className="grid gap-4 sm:grid-cols-2" onSubmit={handleConsultationSubmit}>
               <label className="block text-left sm:col-span-1">
                 <span className="mb-2 block text-sm font-semibold text-slate-700">Your Name</span>
                 <input
+                  name="name"
                   type="text"
                   placeholder="Enter your full name"
+                  required
                   className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 focus:border-orange-400 focus:outline-none focus:ring-4 focus:ring-orange-100"
                 />
               </label>
@@ -55,15 +75,21 @@ function Home() {
               <label className="block text-left sm:col-span-1">
                 <span className="mb-2 block text-sm font-semibold text-slate-700">Phone Number</span>
                 <input
+                  name="phone"
                   type="tel"
                   placeholder="+91 98765 43210"
+                  required
                   className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 focus:border-orange-400 focus:outline-none focus:ring-4 focus:ring-orange-100"
                 />
               </label>
 
               <label className="block text-left sm:col-span-2">
                 <span className="mb-2 block text-sm font-semibold text-slate-700">Event Type</span>
-                <select className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800 focus:border-orange-400 focus:outline-none focus:ring-4 focus:ring-orange-100">
+                <select
+                  name="eventType"
+                  required
+                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800 focus:border-orange-400 focus:outline-none focus:ring-4 focus:ring-orange-100"
+                >
                   <option value="">Select event type</option>
                   <option value="Wedding">Wedding</option>
                   <option value="Birthday">Birthday</option>
