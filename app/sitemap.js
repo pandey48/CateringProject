@@ -1,23 +1,15 @@
 
 import { cateringLocations } from "../src/seo/cateringLocations";
+import { cateringPages } from "../src/seo/cateringPages";
 
 const site = "https://www.pandeycatering.in";
 const urls = [
   "",
   "/services",
-  "/booking",
-  "/wedding-catering",
-  "/party-catering",
-  "/event-catering",
-  "/vegetarian-catering",
-  "/religious-function-catering",
+  ...Object.keys(cateringPages).map((slug) => `/${slug}`),
+  ...Object.keys(cateringLocations).map((slug) => `/catering-${slug}`),
 ];
-const locationUrls = Object.keys(cateringLocations).map((slug) => `/catering-${slug}`);
 
 export default function sitemap() {
-  return [...urls, ...locationUrls].map((path) => ({
-    url: `${site}${path}`,
-    changeFrequency: path === "" ? "weekly" : "monthly",
-    priority: path === "" ? 1 : path === "/services" ? 0.9 : 0.8,
-  }));
+  return urls.map((path) => ({ url: `${site}${path}` }));
 }
